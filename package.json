@@ -1,0 +1,24 @@
+{
+  "name": "sos1617-09",
+  "version": "1.0.0",
+  "description": "- **Integrantes**   - [Verónica](https://github.com/kkdekiki)   - [Manuel](https://github.com/mjtr)   - [Luis](https://github.com/lpontegc) - **Descripción breve del trabajo**: Nuestras fuentes de información están orientadas a analizar la relación que existe entre el uso de Internet,  los ciberdelitos y la media de gasto en tic en los hogares españoles.  - **Repositiorio**: [SOS1617/SOS1617-09](https://github.com/SOS1617/SOS1617-09) - **URL**:[por determinar](#)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOS1617/SOS1617-09.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SOS1617/SOS1617-09/issues"
+  },
+  "homepage": "https://github.com/SOS1617/SOS1617-09#readme",
+  "dependencies": {
+    "dateformat": "^2.0.0",
+    "express": "^4.14.1"
+  }
+}
