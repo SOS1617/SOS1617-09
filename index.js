@@ -22,6 +22,7 @@ app.get("/",(req,res)=>{
 app.get("/time", (req,res) => {
     var dateFormat = require('dateformat');
     var tim = new Date();
+    tim.setHours(tim.getHours() +1);
 
     dateFormat.masks.change = ' dS mmmm ';
     dateFormat.masks.line = ' yyyy, h:MM:ss' ; 
