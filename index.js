@@ -1,46 +1,7 @@
-var express = require("express");
-var port = (process.env.PORT || 16778);
-var path = require("path");
-var app = express();
 
+/*var express = require("express");
+var port = (process.env.PORT ||16700);
 
-app.use("/",express.static(path.join(__dirname,"public")));
-
-app.get("/hello", (req, res) => {
-    res.send("Hello");
-
-});
-
-
-app.listen(port, () => {
-
-    console.log("Server initialized on port" + port);
-}).on("error",(e)=>{
-     console.log("Error initializing on port" + e);
-     process.exit(1);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
 app.listen(port,(err)=>{
    
    if(!err)
@@ -72,3 +33,20 @@ app.get("/time", (req,res) => {
 	res.end();
 
 });*/
+
+var express = require("express");
+var path = require("path");
+
+var app = express();
+var port = (process.env.PORT || 16778);
+
+app.use("/",express.static(path.join(__dirname,"public")));
+
+
+app.listen(port, ()=> {
+    console.log("Magic is happening in port"+port);
+}).on("error",(e)=>{
+    console.log("Server can noy be started"+e);
+    process.exit(1);
+});
+
