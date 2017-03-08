@@ -1,51 +1,7 @@
 
 /*var express = require("express");
 var port = (process.env.PORT ||16700);
-=======
-var express = require("express");
-var port = (process.env.PORT || 16778);
-var path = require("path");
->>>>>>> 8cb763e29075198b0fa3b81faf2c3c8f9a7144d2
-var app = express();
 
-
-app.use("/",express.static(path.join(__dirname,"public")));
-
-app.get("/hello", (req, res) => {
-    res.send("Hello");
-
-});
-
-
-app.listen(port, () => {
-
-    console.log("Server initialized on port" + port);
-}).on("error",(e)=>{
-     console.log("Error initializing on port" + e);
-     process.exit(1);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
 app.listen(port,(err)=>{
    
    if(!err)
@@ -76,7 +32,6 @@ app.get("/time", (req,res) => {
 	res.write(time1 + "of" + time2 );
 	res.end();
 
-<<<<<<< HEAD
 });*/
 
 var express = require("express");
