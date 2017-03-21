@@ -1,0 +1,21 @@
+/*TEST EN CLOUD9 */
+
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/loadInitalData'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+
+
+curl -v -XPOST -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
+curl -v -XPOST -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : "2013" , "incidence": "3278", "total" : "29987" , "percentage" : "7.0"}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+
+
+curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 5436, "total" : 98764 , "percentage" : 10.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+
+curl -v -XDELETE -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/spain'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/spain'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
+
+/*TEST EN HEROKU*/
