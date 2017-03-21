@@ -28,7 +28,7 @@ app.listen(port, ()=> {
 
 
 /**************************API MANUEL*********************************/
-
+/*
 var routeManuel = "/api/v1/hiv-stats";
 
 var metodosManuel = require("./public/API/ApiManuel.js");
@@ -46,6 +46,6 @@ app.put(routeManuel + "/:name", metodosManuel.putData);
 app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 
-
+*/
 
 
