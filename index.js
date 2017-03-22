@@ -27,34 +27,11 @@ app.listen(port, ()=> {
 
 /**************************API VERO*********************************/
 
-var DataStore = require('nedb');
-var MongoClient = require ('mongodb').MongoClient;
-var url = 'mongodb://test:test@ds059316.mlab.com:59316/sandbox';
 
-var dbVero = new DataStore({
-    filename: dbFileName,
-    autoload: true //el archivo se carga directamente en memoria
-});
-dbVero.find({}, function (err, statsVero) {
-    console.log('INFO: Initialiting DB...');
+var mongoClient = require ('mongodb').MongoClient;
+var url = 'mongodb://kkdekiki:232323@ds137360.mlab.com:37360/internetandphones-stats';
 
-    if (err) {
-        console.error('WARNING: Error while getting initial data from DB');
-        return 0;
-    }
-    if (statsVero.length === 0) {
-        console.log('INFO: Empty DB, loading initial data');
-
-        var statsVero = [{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
-{"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
-{"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}];
-    
-        dbVero.insert(statsVero);
-    } else {
-        console.log('INFO: DB has ' + statsVero.length + ' internetandphones-stats ');
-    }
-});
-
+var db1;
 
 /*
 console.log("---BEGIN PROBAR LA API CON CURL---");
@@ -76,22 +53,30 @@ var vero = "/api/v1/internetandphones-stats";
 
 // Base GET
 app.get(vero + "/loadInitialData" ,(request, response)=>{
-
- statsVero = [{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
-{"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
-{"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}];
-    console.log("Datos creados con el get initialData");
-    // aqui un insert a la base de datos mongoDB
- response.sendStatus(200);
-   
+    mongoClient.connect(url,{native_parser:true},(error,database)=>{
+        if(error){
+            console.log("can't use db");
+            process.exit();
+        }
+        db1.database.collection("internetandphones-stats");
+    
+        db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
+                    {"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
+                    {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
+         console.log("OK");
+         response.sendStatus(201);
+    });
 });
+
+ 
+   
 
 // GET a collection
 app.get(vero,(request, response)=> {
     
     console.log("INFO: New resquest to /internetandphones-stats");
-    dbVero.find({},(err, statsVero)=>{
-      if (err) {
+    db1.find({}).toArray(function(error, stats1){
+      if (error) {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
         } else {
@@ -108,18 +93,22 @@ app.get(vero + "/:country",(request, response) =>{
         console.log("WARMING: There are noy any country");
         response.sendStatus(400);//bad request
     }else{
-        console.log("INFO: New GET");//ABAJO dbVero.find({country:country},)
-        var filteredCountry = statsVero.filter((s)=>{
-            return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
-        
-         });
-         if(filteredCountry.length>0){
-             var c = filteredCountry[0];
-             console.log("INFO: Sending country");
-             response.send(c);
-        }else{
-            console.log("WARMING: There are not any country with country" + country);
-            response.sendStatus(404);//not found
+        console.log("INFO: New GET");
+        db1.find({country:country}).toArray(function(error,stats1){
+            if(error){
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }else{
+                var filteredCountry = stats1.filter((s)=>{
+                return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0)});
+                if(filteredCountry.length>0){
+                    var c = filteredCountry[0];
+                    console.log("INFO: Sending country");
+                    response.send(c);
+                    
+                }else{
+                    console.log("WARMING: There are not any country with country" + country);
+                    response.sendStatus(404);//not found
         }
     }
 });
@@ -137,6 +126,7 @@ app.post(vero,(request, response)=> {
             console.log("WARMING: New POST incorrect");
             response.sendStatus(422);//incorrecto
         }else{
+            db1.find({})
             var internetandphonesBeforeInsertion=  statsVero.filter((i)=>{
                 return (i.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
             });
@@ -200,27 +190,5 @@ app.put(vero,(request, response) =>{
     
 });
 
-
-
-/**************************API MANUEL*********************************/
-/*
-var routeManuel = "/api/v1/hiv-stats";
-
-var metodosManuel = require("./public/API/ApiManuel.js");
-
-app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
-app.get(routeManuel,metodosManuel.getObtainStats);
-app.get(routeManuel + "/:name",metodosManuel.getData);
-
-app.post(routeManuel,metodosManuel.postNewData);
-app.post(routeManuel + "/:name",metodosManuel.badpost);
-
-app.put(routeManuel , metodosManuel.badPut);
-app.put(routeManuel + "/:name", metodosManuel.putData);
-
-app.delete(routeManuel,metodosManuel.deleteCollection);
-app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
-
-*/
 
 
