@@ -5,8 +5,8 @@ curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "yea
 curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
 
 curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/'
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+curl -v -XPUT -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
 
 
-curl -v -XDELETE -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/'
-curl -v -XDELETE -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'

@@ -30,3 +30,18 @@ curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp
 curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
 curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
 
+
+
+********************************API LUIS********************************************
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats'
+curl -v -XPOST -H 'Content-type: application/json' -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats'
+curl -v -XPUT -H 'Content-type: application/json' -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats/germany'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats/germany'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats/loadInitalData'
+curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats/germany'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats/germany'
+curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/ticsathome-stats'
+
+
+
