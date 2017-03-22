@@ -17,3 +17,15 @@ curl -v -XDELETE -H "Content-type: application/json" -d '{"country" : "spain" ,"
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'
+
+*********************************API VERO*****************************************
+
+
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
+curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
+curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/estonia'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/estonia'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stat"curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/austria'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/austria'
+curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
+curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'

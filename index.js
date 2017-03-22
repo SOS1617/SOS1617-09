@@ -54,17 +54,17 @@ var db1;
 
 /*
 console.log("---BEGIN PROBAR LA API CON CURL---");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats'");
-console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'http://localhost:8080/api/v1/internetandphones-stats'");
+console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
+console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
 console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'http://localhost:8080/api/v1/internetandphones-stats'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'http://localhost:8080/api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats'");
+console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
+console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
+console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
+console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
+console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
+console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
+console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
+console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
 console.log("---END PROBAR LA API CON CURL---");
 */
 
@@ -99,8 +99,8 @@ app.get(vero,(request, response)=> {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
         } else {
-            console.log("INFO: Sending contacts: " + JSON.stringify(statsVero, 2, null));
-            response.send(statsVero);
+            console.log("INFO: Sending stats");
+            response.send(stats1);
         }
     });
 });
@@ -119,7 +119,7 @@ app.get(vero + "/:country",(request, response) =>{
                 response.sendStatus(500); // internal server error
             }else{
                 var filteredCountry = stats1.filter((s)=>{
-                    return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0)
+                    return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
                 });
                 if(filteredCountry.length>0){
                     var c = filteredCountry[0];
@@ -153,7 +153,7 @@ app.post(vero,(request, response)=> {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 }else{
-                     var internetandphonesBeforeInsertion=  statsVero.filter((i)=>{
+                     var internetandphonesBeforeInsertion=  stats1.filter((i)=>{
                         return (i.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
                      });
                     if(internetandphonesBeforeInsertion.length>0){
@@ -171,22 +171,21 @@ app.post(vero,(request, response)=> {
 });
 
 //PUT a un recurso
-app.update(vero +"/:country" ,(request, response) =>{ 
+app.put(vero +"/:country" ,(request, response) =>{ 
     var updateStat= request.body;
-    var countryParam= request.params.country;
-   if (!updatedCountry) {
-        console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
+    if (!updateStat) {
+        console.log("WARNING: New PUT");
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New PUT");
-        if(!newInternetandphones.country || !newInternetandphones.year || !newInternetandphones.usageinternet  || !newInternetandphones.usagephoneline){
-            console.log("WARMING: New POST incorrect");
+        if(!updateStat.country || !updateStat.year || !updateStat.usageinternet  || !updateStat.usagephoneline){
+            console.log("WARMING: New PUT incorrect");
             response.sendStatus(422);//incorrecto
         } else {
-            db1.update({country:updatedStat.country},
+            db1.update({country:updateStat.country},
             {
-                country:updatedStat.country, 
-                year:updatedStat.year,
+                country:updateStat.country, 
+                year:updateStat.year,
                 usageinternet: updateStat.usageinternet,
                 usagephoneline: updateStat.usagephoneline
                 
@@ -199,7 +198,7 @@ app.update(vero +"/:country" ,(request, response) =>{
 app.delete(vero+"/:country",(request, response) =>{
     var country = request.params.country;
     if (!country) {
-        console.log("WARNING: New DELETE request to /contacts/:name without name, sending 400...");
+        console.log("WARNING: New DELETE");
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New DELETE");
@@ -223,7 +222,7 @@ app.delete(vero+"/:country",(request, response) =>{
 //DELETE a collection
 app.delete(vero,(request, response)=>{
     console.log("INFO: New DELETE");
-    db.remove({}, {multi: true}, function (error, stats1) {
+    db1.remove({}, {multi: true}, function (error, stats1) {
         if (error) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
@@ -232,7 +231,7 @@ app.delete(vero,(request, response)=>{
                 console.log("INFO: All stats are removed");
                 response.sendStatus(204); // no content
             } else {
-                console.log("WARNING: There are no contacts to delete");
+                console.log("WARNING: There are no stats to delete");
                 response.sendStatus(404); // not found
             }
         }
