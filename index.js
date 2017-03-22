@@ -119,7 +119,8 @@ app.get(vero + "/:country",(request, response) =>{
                 response.sendStatus(500); // internal server error
             }else{
                 var filteredCountry = stats1.filter((s)=>{
-                return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0)});
+                    return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0)
+                });
                 if(filteredCountry.length>0){
                     var c = filteredCountry[0];
                     console.log("INFO: Sending country");
@@ -128,7 +129,9 @@ app.get(vero + "/:country",(request, response) =>{
                 }else{
                     console.log("WARMING: There are not any country with country" + country);
                     response.sendStatus(404);//not found
-        }
+                }
+            }
+        });
     }
 });
 
@@ -145,18 +148,24 @@ app.post(vero,(request, response)=> {
             console.log("WARMING: New POST incorrect");
             response.sendStatus(422);//incorrecto
         }else{
-            db1.find({})
-            var internetandphonesBeforeInsertion=  statsVero.filter((i)=>{
-                return (i.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
+            db1.find({}).toArray(function(error,stats1){
+                if(error){
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                }else{
+                     var internetandphonesBeforeInsertion=  statsVero.filter((i)=>{
+                        return (i.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
+                     });
+                    if(internetandphonesBeforeInsertion.length>0){
+                        console.log("WARMING: This data already exists");
+                        response.sendStatus(409);
+                    }else{
+                        console.log("INFO: adding Internetandphones");
+                        db1.insert(newInternetandphones);
+                        response.sendStatus(201);
+                    }
+                }
             });
-            if(internetandphonesBeforeInsertion.length>0){
-                console.log("WARMING: This data already exists");
-                response.sendStatus(409);
-            }else{
-                console.log("INFO: adding Internetandphones");
-                statsVero.push(newInternetandphones);
-                response.sendStatus(201);
-            }
         }
     }
 });
@@ -165,37 +174,71 @@ app.post(vero,(request, response)=> {
 app.update(vero +"/:country" ,(request, response) =>{ 
     var updateStat= request.body;
     var countryParam= request.params.country;
-    statsVero= statsVero.map((c)=>{
-        if(c.country===countryParam){//ESTADISTICA QUE VAMOS A MODIFICAR
-            return updateStat;//si es igual al de parametro se actualiza y se devuelve la estadistica actualizada
-            
-        }else{//si es distinto lo deja igual y devulve la estadistica 
-            return c;
+   if (!updatedCountry) {
+        console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New PUT");
+        if(!newInternetandphones.country || !newInternetandphones.year || !newInternetandphones.usageinternet  || !newInternetandphones.usagephoneline){
+            console.log("WARMING: New POST incorrect");
+            response.sendStatus(422);//incorrecto
+        } else {
+            db1.update({country:updatedStat.country},
+            {
+                country:updatedStat.country, 
+                year:updatedStat.year,
+                usageinternet: updateStat.usageinternet,
+                usagephoneline: updateStat.usagephoneline
+                
+            });
+        
         }
-    });
-    response.sendStatus(204);
-    
-    
+    }
 });
 //DELETE a un recurso
 app.delete(vero+"/:country",(request, response) =>{
     var country = request.params.country;
-    var a1= statsVero.length;
-    statsVero=statsVero.filter((c)=>{
-        return c.country!==country;
-    });
-    var a2= statsVero.length;
-    if(a1==a2){
-        response.sendStatus(404);
-    }else{
-        response.sendStatus(204);
+    if (!country) {
+        console.log("WARNING: New DELETE request to /contacts/:name without name, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New DELETE");
+        db1.remove({country: country}, {}, function (error, stats1) {
+            if (error) {
+                console.error('WARNING: Error removing data from DB');
+                response.sendStatus(500); // internal server error
+            } else {
+                console.log("INFO: Stats remove");
+                if ( stats1 === 1) {
+                    console.log("INFO: The stats is removed");
+                    response.sendStatus(204); // no content
+                } else {
+                    console.log("WARNING: There are no stats to delete");
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
     }
 });
 //DELETE a collection
 app.delete(vero,(request, response)=>{
-    statsVero.length=0;
-    response.sendStatus(204);
+    console.log("INFO: New DELETE");
+    db.remove({}, {multi: true}, function (error, stats1) {
+        if (error) {
+            console.error('WARNING: Error removing data from DB');
+            response.sendStatus(500); // internal server error
+        } else {
+            if (stats1 > 0) {
+                console.log("INFO: All stats are removed");
+                response.sendStatus(204); // no content
+            } else {
+                console.log("WARNING: There are no contacts to delete");
+                response.sendStatus(404); // not found
+            }
+        }
+    });
 });
+
 
 //POST a un recurso
 app.post(vero +"/:country",(request, response)=>{
@@ -203,7 +246,7 @@ app.post(vero +"/:country",(request, response)=>{
 });
 
 
-//PUT a coleection
+//PUT a collection
 app.put(vero,(request, response) =>{
     response.sendStatus(405);
     
