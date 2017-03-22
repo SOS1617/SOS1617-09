@@ -65,7 +65,7 @@ app.get(vero + "/loadInitialData" ,(request, response)=>{
         db1=database.collection("internetandphones-stats");
     
         db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
-                    {"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
+                    {"country": "belgium" , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
                     {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
          console.log("OK");
          response.sendStatus(201);
