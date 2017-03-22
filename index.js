@@ -44,6 +44,31 @@ app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 
 
+/***API LUIS*****/
+
+var bd2 = "/api/v1/ticsathome-stats";
+var funciones = require("./public/API/ApiLuis.js");
+
+
+app.get(bd2 + "/loadInitialData",funciones.getNewStats);
+app.get(bd2,funciones.getStats);
+app.get(bd2+ "/:name",funciones.getData);
+
+
+app.post(path,funciones.errorInPost);
+app.post(path+ "/:name",funciones.putInsertData);
+
+app.post(path,funciones.postNewStat);
+app.post(path+ "/:name",funciones.errorInPost);
+
+app.delete(path,funciones.deleteStats);
+app.delete(path+ "/:name",funciones.deleteData);
+
+
+
+
+
+
 /**************************API VERO*********************************/
 
 

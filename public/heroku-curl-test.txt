@@ -29,3 +29,4 @@ curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp
 curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/austria'
 curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
 curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats'
+
