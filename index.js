@@ -52,21 +52,6 @@ var url = 'mongodb://kkdekiki:232323@ds137360.mlab.com:37360/internetandphones-s
 
 var db1;
 
-/*
-console.log("---BEGIN PROBAR LA API CON CURL---");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("---END PROBAR LA API CON CURL---");
-*/
 
 var vero = "/api/v1/internetandphones-stats";
 
@@ -77,7 +62,7 @@ app.get(vero + "/loadInitialData" ,(request, response)=>{
             console.log("can't use db");
             process.exit();
         }
-        db1.database.collection("internetandphones-stats");
+        db1=database.collection("internetandphones-stats");
     
         db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
                     {"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
