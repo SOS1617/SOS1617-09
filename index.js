@@ -44,6 +44,31 @@ app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 
 
+/***API LUIS*****/
+
+var bd2 = "/api/v1/ticsathome-stats";
+var funciones = require("./public/API/ApiLuis.js");
+
+
+app.get(bd2 + "loadInitialData",funciones.getNewStats);
+app.get(bd2,funciones.getStats);
+app.get(bd2+ "/country",funciones.getData);
+
+
+app.post(path,funciones.errorInPost);
+app.post(path+ "/country",funciones.putInsertData);
+
+app.post(path,funciones.postNewStat);
+app.post(path+ "/country",funciones.errorInPost);
+
+app.delete(path,funciones.deleteStats);
+app.delete(path+ "/country",funciones.deleteData);
+
+
+
+
+
+
 /**************************API VERO*********************************/
 
 
@@ -51,22 +76,6 @@ var mongoClient = require ('mongodb').MongoClient;
 var url = 'mongodb://kkdekiki:232323@ds137360.mlab.com:37360/internetandphones-stats';
 
 var db1;
-
-/*
-console.log("---BEGIN PROBAR LA API CON CURL---");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"}' 'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/estonia'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats/austria'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'https://sos1617-09.herokuapp.com//api/v1/internetandphones-stats'");
-console.log("---END PROBAR LA API CON CURL---");
-*/
 
 var vero = "/api/v1/internetandphones-stats";
 
