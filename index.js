@@ -171,7 +171,7 @@ app.post(vero,(request, response)=> {
 });
 
 //PUT a un recurso
-app.update(vero +"/:country" ,(request, response) =>{ 
+app.put(vero +"/:country" ,(request, response) =>{ 
     var updateStat= request.body;
     if (!updateStat) {
         console.log("WARNING: New PUT");
