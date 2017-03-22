@@ -50,7 +50,7 @@ var bd2 = "/api/v1/ticsathome-stats";
 var funciones = require("./public/API/ApiLuis.js");
 
 
-app.get(bd2 + "loadInitialData",funciones.getNewStats);
+app.get(bd2 + "/loadInitialData",funciones.getNewStats);
 app.get(bd2,funciones.getStats);
 app.get(bd2+ "/country",funciones.getData);
 
@@ -77,6 +77,7 @@ var url = 'mongodb://kkdekiki:232323@ds137360.mlab.com:37360/internetandphones-s
 
 var db1;
 
+
 var vero = "/api/v1/internetandphones-stats";
 
 // Base GET
@@ -86,7 +87,7 @@ app.get(vero + "/loadInitialData" ,(request, response)=>{
             console.log("can't use db");
             process.exit();
         }
-        db1.database.collection("internetandphones-stats");
+        db1=database.collection("internetandphones-stats");
     
         db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
                     {"country": "belgium," , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
