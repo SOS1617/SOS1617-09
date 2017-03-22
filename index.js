@@ -87,17 +87,34 @@ app.get(vero + "/loadInitialData" ,(request, response)=>{
             console.log("can't use db");
             process.exit();
         }
-        db1=database.collection("internetandphones-stats");
-    
-        db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
+         db1=database.collection("internetandphones-stats");
+        db1.find({}).toArray(function(error, stats1){
+      if (error) {
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        } else {
+            if(stats1.length==0){
+                db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
                     {"country": "belgium" , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
                     {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
-         console.log("OK");
-         response.sendStatus(201);
+                console.log("OK");
+               response.sendStatus(201);
+            }else{
+                response.sendStatus(409);
+            }
+        }
+    });
+        
+        
     });
 });
 
  
+//POST a un recurso
+app.post(vero +"/:country",(request, response)=>{
+    response.sendStatus(405);
+});
+
    
 
 // GET a collection
@@ -248,11 +265,6 @@ app.delete(vero,(request, response)=>{
     });
 });
 
-
-//POST a un recurso
-app.post(vero +"/:country",(request, response)=>{
-    response.sendStatus(405);
-});
 
 
 //PUT a collection
