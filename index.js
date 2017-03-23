@@ -32,16 +32,23 @@ var metodosManuel = require("./public/API/ApiManuel.js");
 
 app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
-app.get(routeManuel + "/:name",metodosManuel.getData);
+app.get(routeManuel + "/:name",metodosManuel.getDataName);
+app.get(routeManuel + "/:name/:year",metodosManuel.getDataName);
+app.get(routeManuel + "/:year",metodosManuel.getDataName);
 
 app.post(routeManuel,metodosManuel.postNewData);
 app.post(routeManuel + "/:name",metodosManuel.badpost);
+app.post(routeManuel + "/:year",metodosManuel.badpost);
+app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
 
 app.put(routeManuel , metodosManuel.badPut);
 app.put(routeManuel + "/:name", metodosManuel.putData);
+app.put(routeManuel + "/:name/:year", metodosManuel.putData);
 
 app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
+app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteData);
+
 
 
 /***API LUIS*****/
