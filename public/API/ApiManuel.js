@@ -18,7 +18,14 @@ module.exports.getCreateStats = (req,res) => {
     }
 
      db = database.collection("hiv-stats");
-     
+      
+      db.find({}).toArray(function(error, conjunto){
+      if (error) {
+            console.error(' Error from DB');
+            res.sendStatus(500); // internal server error
+        } else {
+            
+            if(conjunto.length==0){ //Si mi base de datos está ya vacía
      
      db.insert([
 			     { "country" : "estonia" , 	"year" : 2013	,"incidence" : 325 ,	"total" : 8702	, "percentage" : 24.6},
@@ -26,17 +33,25 @@ module.exports.getCreateStats = (req,res) => {
                  {"country" : "portugal" , 	"year" : 2013	,"incidence" : 1093 ,	"total" : 47390	, "percentage" : 10.4},
                  {"country" : "belgium" , 	"year" : 2013	,"incidence" : 1115 ,	"total" : 266850	, "percentage" : 10.0}
 			    ]);
-         
+            }else{
+                console.log("Los datos ya estaban creados!");
+                res.sendStatus(409);
+            }
+        
+        }
+      });
        console.log("OK");
 			res.sendStatus(201);
      
 });
- 
+
+    
+}
     	
       
 		
 			    
-};
+
 
 
 /**********************GET********************/
@@ -130,15 +145,15 @@ module.exports.postNewData =  (req,res) =>{
         
     }else if(!nuevoDato.country || !nuevoDato.year || !nuevoDato.incidence || !nuevoDato.percentage || !nuevoDato.total){
         
-     res.sendStatus(400);
-     console.log("falta algún parámetro del dato que queremos insertar");
+     res.sendStatus(422);
+     console.log("something wrong in your data post");
         
         
     }else {
             db.find({}).toArray(function(error,conjunto){  
                 
                 if(conjunto.length === 0){
-                    console.log("Algo pasa con la base de datos que está vacía");
+                    console.log("DB empty");
                     res.sendStatus(404);
                 }else{
                     
@@ -153,8 +168,8 @@ module.exports.postNewData =  (req,res) =>{
                     
                   if(sol === false){
                       db.insert(nuevoDato);
-                      
-                  }  
+                      res.sendStatus(201);//CREATED 
+                  } 
                 }
                 
             } );
@@ -201,7 +216,7 @@ module.exports.putData = (req,res)=>{
         
     }else if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
-     res.sendStatus(400);
+     res.sendStatus(422);
      console.log("falta algún parámetro del dato que queremos insertar");
         
         
@@ -216,6 +231,7 @@ module.exports.putData = (req,res)=>{
             percentage : actualiza.percentage
             
         }) ;
+        res.send(200); //OK
     }  
     
 };
@@ -263,7 +279,7 @@ module.exports.deleteData = (req,res)=>{
                 }else{
                    
                     console.log("El dato se ha borrado satisfactoriamente");  
-                    
+                    res.sendStatus(200);
                 }
                 
             });
