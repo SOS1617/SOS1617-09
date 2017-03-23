@@ -25,7 +25,7 @@ module.exports.getCreateStats = (req,res) => {
             res.sendStatus(500); // internal server error
         } else {
             
-            if(conjunto.length==0){ //Si mi base de datos está ya vacía
+            if(conjunto.length === 0){ //Si mi base de datos está ya vacía
      
      db.insert([
 			     { "country" : "estonia" , 	"year" : 2013	,"incidence" : 325 ,	"total" : 8702	, "percentage" : 24.6},
@@ -33,6 +33,10 @@ module.exports.getCreateStats = (req,res) => {
                  {"country" : "portugal" , 	"year" : 2013	,"incidence" : 1093 ,	"total" : 47390	, "percentage" : 10.4},
                  {"country" : "belgium" , 	"year" : 2013	,"incidence" : 1115 ,	"total" : 266850	, "percentage" : 10.0}
 			    ]);
+			    
+			       console.log("OK");
+			res.sendStatus(201);
+			    
             }else{
                 console.log("Los datos ya estaban creados!");
                 res.sendStatus(409);
@@ -40,8 +44,7 @@ module.exports.getCreateStats = (req,res) => {
         
         }
       });
-       console.log("OK");
-			res.sendStatus(201);
+    
      
 });
 
