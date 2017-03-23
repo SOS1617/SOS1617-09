@@ -26,8 +26,8 @@ module.exports.getCreateStats = (req,res) => {
         } else {
             
             if(conjunto.length !== 0){ //Si mi base de datos está ya vacía
-            
-                res.sendStatus(409);//Conflicto,la base de datos ya contenía datos
+                res.write("No necesary create new datas,the databes had data ");
+                res.sendStatus(200);//OK,la base de datos ya contenía datos,por lo que ya está inicializada
                 
             }else{
      db.insert([
