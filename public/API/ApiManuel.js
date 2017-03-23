@@ -87,7 +87,7 @@ module.exports.getObtainStats = (req, res) => {
 module.exports.getDataName =  function (req, res) {
    
     var nameParam = req.params.name;
-    var yearParam = req.params.year;
+    //var yearParam = req.params.year;
     var aux = [];
     
     if (!nameParam) {
@@ -106,8 +106,9 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 aux = encuentraYmete(conjunto,aux,nameParam,yearParam);
-                    
+                // aux = encuentraYmete(conjunto,aux,nameParam,yearParam);
+                 aux = encuentraYmete(conjunto,aux,nameParam );
+
                     if(aux.length === 0){
                         res.sendStatus(404);
                     }
@@ -289,7 +290,7 @@ module.exports.deleteData = (req,res)=>{
 /*************************FUNCIONES AUXILIARES*******************************/
 
 
-var encuentraYmete = function(conjunto,conjaux,parametroNombre,parametroYear){
+/*var encuentraYmete = function(conjunto,conjaux,parametroNombre,parametroYear){
     
     if(parametroNombre && !parametroYear ){
         for(var i = 0;i<conjunto.length;i++){
@@ -318,5 +319,20 @@ var encuentraYmete = function(conjunto,conjaux,parametroNombre,parametroYear){
     }
     return conjaux;
 }
+*/
 
+var encuentraYmete = function(conjunto,conjaux,parametroNombre){
+    
+    if(parametroNombre ){
+        for(var i = 0;i<conjunto.length;i++){
+                        
+            if(conjunto[i].country === parametroNombre){
+                 conjaux.push(conjunto[i]);
+            }
+        }
+        
+    } 
+    
+    return conjaux;
+};
 
