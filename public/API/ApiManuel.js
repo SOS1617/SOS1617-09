@@ -91,7 +91,7 @@ module.exports.getDataName =  function (req, res) {
     var yearParam = req.params.year;
     var aux = [];
     
-    if (!nameParam || !yearParam) {
+    if (!nameParam) {
         console.log("BAD Request,try again with new data");
         res.sendStatus(400); // bad request
         
