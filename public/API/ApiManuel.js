@@ -55,8 +55,6 @@ module.exports.getCreateStats = (req,res) => {
 
 //Get conjunto datos
 
-
-// GET a collection
 module.exports.getObtainStats = (req, res) => {
     
     console.log("INFO: New GET request to /hiv-stats");
@@ -107,7 +105,7 @@ module.exports.getDataName =  function (req, res) {
                 }else{
                  
                 // aux = encuentraYmete(conjunto,aux,nameParam,yearParam);
-                 aux = encuentraYmete(conjunto,aux,nameParam );
+                 aux = encuentraName(conjunto,aux,nameParam );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -124,6 +122,43 @@ module.exports.getDataName =  function (req, res) {
 };
 
 
+module.exports.getDataYear =  function (req, res) {
+   
+    var yearParam = req.params.year;
+    //var yearParam = req.params.year;
+    var aux = [];
+    
+    if (yearParam) {
+        console.log("BAD Request,try again with new data");
+        res.sendStatus(400); // bad request
+        
+    } else if(!db)
+    { 
+        res.sendStatus(404);//Base de datos está vacía
+        }
+        else {
+            db.find({}).toArray(function(error,conjunto){  
+                
+                if(conjunto.length === 0){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                 
+                 aux = encuentraYear(conjunto,aux,yearParam );
+
+                    if(aux.length === 0){
+                        res.sendStatus(404);
+                    }
+                    res.send(aux);
+                    
+                }
+                
+            } );
+                
+                
+            
+    }
+};
 
 
 /**********************POST********************/
@@ -321,7 +356,7 @@ module.exports.deleteData = (req,res)=>{
 }
 */
 
-var encuentraYmete = function(conjunto,conjaux,parametroNombre){
+var encuentraName = function(conjunto,conjaux,parametroNombre){
     
     if(parametroNombre ){
         for(var i = 0;i<conjunto.length;i++){
@@ -336,3 +371,17 @@ var encuentraYmete = function(conjunto,conjaux,parametroNombre){
     return conjaux;
 };
 
+var encuentraYear = function(conjunto,conjaux,parametroyear){
+    
+    if(parametroyear ){
+        for(var i = 0;i<conjunto.length;i++){
+                        
+            if(conjunto[i].year === parametroyear){
+                 conjaux.push(conjunto[i]);
+            }
+        }
+        
+    } 
+    
+    return conjaux;
+};
