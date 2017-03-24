@@ -80,7 +80,7 @@ module.exports.getObtainStats = (req, res) => {
 };
 
 
-//GET a un recurso en concreto por el nombre o el año
+//GET a un recurso en concreto por el nombre
 
 module.exports.getDataName =  function (req, res) {
    
@@ -136,7 +136,7 @@ module.exports.getDataYear =  function (req, res) {
     { 
         res.sendStatus(404);//Base de datos está vacía
         }
-        else {
+        else { 
             db.find({}).toArray(function(error,conjunto){  
                 
                 if(conjunto.length === 0){
