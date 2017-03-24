@@ -33,6 +33,7 @@ module.exports.getCreateStats = (req,res) => {
 			     { "country" : "estonia" , 	"year" : 2013	,"incidence" : 325 ,	"total" : 8702	, "percentage" : 24.6},
                  {"country" : "latvia" , 	"year" : 2013	,"incidence" : 340 ,	"total" : 5867	, "percentage" : 16.8},
                  {"country" : "portugal" , 	"year" : 2013	,"incidence" : 1093 ,	"total" : 47390	, "percentage" : 10.4},
+                {"country" : "portugal" , 	"year" : 2014	,"incidence" : 1433 ,	"total" : 49050	, "percentage" : 11.2},
                  {"country" : "belgium" , 	"year" : 2013	,"incidence" : 1115 ,	"total" : 266850	, "percentage" : 10.0}
 			    ]);
 			    
@@ -84,11 +85,11 @@ module.exports.getObtainStats = (req, res) => {
 
 module.exports.getDataName =  function (req, res) {
    
-    var nameParam = req.params.name;
+    var Param = req.params.name;
     //var yearParam = req.params.year;
     var aux = [];
     
-    if (!nameParam) {
+    if (!Param) {
         console.log("BAD Request,try again with new data");
         res.sendStatus(400); // bad request
         
@@ -104,8 +105,7 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                // aux = encuentraYmete(conjunto,aux,nameParam,yearParam);
-                 aux = encuentraName(conjunto,aux,nameParam );
+                 aux = encuentraName(conjunto,aux,Param );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -144,36 +144,6 @@ module.exports.getTwoMartial = (req,res)=>{
 	  res.sendStatus(200); }
 }};
 */
-module.exports.getDataYear =  function (req, res) {
-   
-    var year = req.params.year;
-    //var yearParam = req.params.year;
-    var aux = [];
-    
-    if (!year) {
-        console.log("BAD Request,try again with new data");
-        res.sendStatus(400); // bad request
-        
-    } else if(!db)
-    { 
-        res.sendStatus(404);//Base de datos está vacía
-        }
-        else { 
-            db.find({}).toArray(function(error,conjunto){  
-                
-                 
-                 aux = encuentraYear(conjunto,aux,year );
-
-                    if(aux.length === 0){
-                        res.sendStatus(404);
-                    }
-                    res.send(aux);
-                    
-                });
-                
-          
-    }
-};
 
 
 /**********************POST********************/
@@ -371,13 +341,16 @@ module.exports.deleteData = (req,res)=>{
 }
 */
 
-var encuentraName = function(conjunto,conjaux,parametroNombre){
+var encuentraName = function(conjunto,conjaux,parametro){
     
-    if(parametroNombre ){
+    if(parametro ){
         for(var i = 0;i<conjunto.length;i++){
                         
-            if(conjunto[i].country === parametroNombre){
+            if(conjunto[i].country === parametro){
                  conjaux.push(conjunto[i]);
+            }else if (conjunto[i].year === parametro){
+                
+                conjaux.push(conjunto[i]);
             }
         }
         
@@ -386,17 +359,4 @@ var encuentraName = function(conjunto,conjaux,parametroNombre){
     return conjaux;
 };
 
-var encuentraYear = function(conjunto,conjaux,parametroyear){
-    
-    if(parametroyear ){
-        for(var i = 0;i<conjunto.length;i++){
-                        
-            if(conjunto[i].year.toString() === parametroyear.toString()){
-                 conjaux.push(conjunto[i]);
-            }
-        }
-        
-    } 
-    
-    return conjaux;
-};
+
