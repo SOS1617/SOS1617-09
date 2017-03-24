@@ -14,7 +14,7 @@ module.exports.getCreateStats = (req,res) => {
     
     if(error){
         console.log("No podemos usar la base de datos" + error);
-        process.exit();
+            res.sendStatus(500); // internal server error
     }
 
      db = database.collection("hiv-stats");
