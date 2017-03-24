@@ -120,15 +120,37 @@ module.exports.getDataName =  function (req, res) {
             
     }
 };
+/*
+module.exports.getTwoMartial = (req,res)=>{
+		var type = req.params.name;
+		var yer = req.params.year;
+		var aux = null;
+		var arr = [];
 
-
+		for(var i=0; i<arts.length;i++){
+      var helpp = arts[i];
+			if (isNaN(type) && isNaN(yer) === false){
+    if(helpp.name == type && helpp.year == yer){
+			aux = arts[i];
+			arr.push(aux);
+}
+		}
+ /*Tratamiento de errores*/
+/*
+		if(aux === null){
+			res.sendStatus(404);
+		}else{
+		res.send(arr);
+	  res.sendStatus(200); }
+}};
+*/
 module.exports.getDataYear =  function (req, res) {
    
-    var yearParam = req.params.year;
+    var year = req.params.year;
     //var yearParam = req.params.year;
     var aux = [];
     
-    if (yearParam) {
+    if (!year) {
         console.log("BAD Request,try again with new data");
         res.sendStatus(400); // bad request
         
@@ -139,24 +161,17 @@ module.exports.getDataYear =  function (req, res) {
         else { 
             db.find({}).toArray(function(error,conjunto){  
                 
-                if(conjunto.length === 0){
-                    console.log("Algo pasa con la base de datos que está vacía");
-                    res.sendStatus(404);
-                }else{
                  
-                 aux = encuentraYear(conjunto,aux,yearParam );
+                 aux = encuentraYear(conjunto,aux,year );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
                     }
                     res.send(aux);
                     
-                }
+                });
                 
-            } );
-                
-                
-            
+          
     }
 };
 
