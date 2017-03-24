@@ -282,7 +282,7 @@ module.exports.deleteCollection = (req,res)=>{
         } else {
             if (borr > 0) {
                 console.log("Todo borrado ");
-                res.sendStatus(204); // no content
+                res.sendStatus(204);  // no content
             } else {
                 console.log("No hay contactos que borrar");
                 res.sendStatus(404); // not found
