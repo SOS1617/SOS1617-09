@@ -376,7 +376,7 @@ var encuentraYear = function(conjunto,conjaux,parametroyear){
     if(parametroyear ){
         for(var i = 0;i<conjunto.length;i++){
                         
-            if(conjunto[i].year === parametroyear){
+            if(conjunto[i].year.toString() === parametroyear.toString()){
                  conjaux.push(conjunto[i]);
             }
         }
