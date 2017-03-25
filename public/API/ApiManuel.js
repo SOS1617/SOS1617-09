@@ -348,7 +348,7 @@ var encuentraName = function(conjunto,conjaux,parametro){
                         
             if(conjunto[i].country === parametro){
                  conjaux.push(conjunto[i]);
-            }else if (conjunto[i].year === parametro){
+            }else if (conjunto[i].year === parseInt(parametro)){
                 
                 conjaux.push(conjunto[i]);
             }
