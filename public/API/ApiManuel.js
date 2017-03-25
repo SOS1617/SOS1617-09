@@ -249,6 +249,9 @@ module.exports.badPut = (req,res)=> {
 
 module.exports.putData = (req,res)=>{
     
+    //Me falta comprobar si tengo uno o mas datos para poder actualizar con solo indicar el nombre
+    //o como tengo más de dos datos especifico por el nombre y por el año
+    
      var actualiza= req.body;
      
     if(!actualiza){
