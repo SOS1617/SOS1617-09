@@ -104,7 +104,7 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 aux = encuentraName(conjunto,aux,Param );
+                 //aux = encuentraName(conjunto,aux,Param );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -119,55 +119,6 @@ module.exports.getDataName =  function (req, res) {
             
     }
 };
-
-module.exports.getDataNameYear =  function (req, res) {
-    
-    var nombre = req.params.name;
-    var year = req.params.year;
-    var aux = [];
-    
-    if (!nombre || !year) {
-        console.log("BAD Request,try again with new data");
-        res.sendStatus(400); // bad request
-        
-    } else if(!db)
-    { 
-        res.sendStatus(404);//Base de datos está vacía
-        }
-        else {
-            db.find({}).toArray(function(error,conjunto){  
-                
-                if(conjunto.length === 0){
-                    console.log("Algo pasa con la base de datos que está vacía");
-                    res.sendStatus(404);
-                }else{
-                 
-                 for(var j = 0;j<conjunto.length;j++){
-                     
-                     var helpp = conjunto[j];
-                     if (isNaN(nombre) && isNaN(parseInt(year)) === false){
-                        if(helpp.country == nombre && helpp.year == parseInt(year)){
-		                	aux.push(helpp);
-                     
-                        }
-                         
-                     } 
-                 }
-
-                    if(aux.length === 0){
-                        res.sendStatus(404);
-                    }
-                    res.send(aux);
-                    
-                }
-                
-            } );
-                
-                
-            
-    }
-    
-}
 
 
 
@@ -266,7 +217,7 @@ module.exports.putData = (req,res)=>{
         
     }else {
 
-        db.update({country: actualiza.country,year : actualiza.year },
+        db.update({country: actualiza.country },
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -336,13 +287,12 @@ module.exports.deleteData = (req,res)=>{
 module.exports.deleteTwoData = (req,res)=>{
     
     var country = req.params.country;
-    var year = parseInt(req.params.year);
 
     if(!country ){
         res.sendStatus(404);
         
     }else {
-            db.remove({country : country , year : year},function(error,conjunto){  
+            db.remove({country : country },function(error,conjunto){  
                 
                 if(error){
                     console.log("Algo pasa con la base de datos que está vacía");
@@ -358,30 +308,6 @@ module.exports.deleteTwoData = (req,res)=>{
                 
             
     }
-};
-
-
-/*************************FUNCIONES AUXILIARES*******************************/
-
-
-
-
-var encuentraName = function(conjunto,conjaux,parametro){
-    
-    if(parametro ){
-        for(var i = 0;i<conjunto.length;i++){
-                        
-            if(conjunto[i].country === parametro){
-                 conjaux.push(conjunto[i]);
-            }else if (conjunto[i].year === parseInt(parametro)){
-                
-                conjaux.push(conjunto[i]);
-            }
-        }
-        
-    } 
-    
-    return conjaux;
 };
 
 
