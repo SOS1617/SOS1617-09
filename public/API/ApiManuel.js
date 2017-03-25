@@ -86,7 +86,6 @@ module.exports.getObtainStats = (req, res) => {
 module.exports.getDataName =  function (req, res) {
    
     var Param = req.params.name;
-    //var yearParam = req.params.year;
     var aux = [];
     
     if (!Param) {
@@ -120,30 +119,56 @@ module.exports.getDataName =  function (req, res) {
             
     }
 };
-/*
-module.exports.getTwoMartial = (req,res)=>{
-		var type = req.params.name;
-		var yer = req.params.year;
-		var aux = null;
-		var arr = [];
 
-		for(var i=0; i<arts.length;i++){
-      var helpp = arts[i];
-			if (isNaN(type) && isNaN(yer) === false){
-    if(helpp.name == type && helpp.year == yer){
-			aux = arts[i];
-			arr.push(aux);
+module.exports.getDataNameYear =  function (req, res) {
+    
+    var nombre = req.params.name;
+    var year = req.params.year;
+    var aux = [];
+    
+    if (!nombre || !year) {
+        console.log("BAD Request,try again with new data");
+        res.sendStatus(400); // bad request
+        
+    } else if(!db)
+    { 
+        res.sendStatus(404);//Base de datos está vacía
+        }
+        else {
+            db.find({}).toArray(function(error,conjunto){  
+                
+                if(conjunto.length === 0){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                 
+                 for(var j = 0;j<conjunto.length;j++){
+                     
+                     var helpp = conjunto[j];
+                     if (isNaN(nombre) && isNaN(year) === false){
+                        if(helpp.name == nombre && helpp.year == year){
+		                	aux.push(helpp);
+                     
+                        }
+                         
+                     } 
+                 }
+
+                    if(aux.length === 0){
+                        res.sendStatus(404);
+                    }
+                    res.send(aux);
+                    
+                }
+                
+            } );
+                
+                
+            
+    }
+    
 }
-		}
- /*Tratamiento de errores*/
-/*
-		if(aux === null){
-			res.sendStatus(404);
-		}else{
-		res.send(arr);
-	  res.sendStatus(200); }
-}};
-*/
+
 
 
 /**********************POST********************/
@@ -310,36 +335,7 @@ module.exports.deleteData = (req,res)=>{
 /*************************FUNCIONES AUXILIARES*******************************/
 
 
-/*var encuentraYmete = function(conjunto,conjaux,parametroNombre,parametroYear){
-    
-    if(parametroNombre && !parametroYear ){
-        for(var i = 0;i<conjunto.length;i++){
-                        
-            if(conjunto[i].country === parametroNombre){
-                 conjaux.push(conjunto[i]);
-            }
-        }
-        
-    } else if(!parametroNombre && parametroYear){
-        for(var j = 0;j<conjunto.length;j++){
-                        
-            if(conjunto[j].year === parametroYear){
-                conjaux.push(conjunto[j]);
-                        }}
-        
-    }else if(parametroNombre && parametroYear){
-        
-        for (var k = 0;k<conjunto.length;k++){
-            
-        if(conjunto[k].nombre === parametroNombre && conjunto[k].year === parametroYear){
-            
-            conjaux.push(conjunto[k]);
-        }
-        } 
-    }
-    return conjaux;
-}
-*/
+
 
 var encuentraName = function(conjunto,conjaux,parametro){
     
