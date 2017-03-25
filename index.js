@@ -40,12 +40,11 @@ app.post(routeManuel + "/:name",metodosManuel.badpost);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
 
 app.put(routeManuel , metodosManuel.badPut);
-app.put(routeManuel + "/:name", metodosManuel.putData);
 app.put(routeManuel + "/:name/:year", metodosManuel.putData);
 
 app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
-app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteData);
+app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
 
 
 

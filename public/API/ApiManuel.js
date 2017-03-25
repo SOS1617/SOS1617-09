@@ -263,7 +263,7 @@ module.exports.putData = (req,res)=>{
         
     }else {
 
-        db.update({country: actualiza.country },
+        db.update({country: actualiza.country,year : actualiza.year },
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -330,6 +330,32 @@ module.exports.deleteData = (req,res)=>{
     }
 };
 
+module.exports.deleteTwoData = (req,res)=>{
+    
+    var country = req.params.country;
+    var year = req.params.year;
+
+    if(!country ){
+        res.sendStatus(404);
+        
+    }else {
+            db.remove({country : country , year : year},function(error,conjunto){  
+                
+                if(error){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                   
+                    console.log("El dato se ha borrado satisfactoriamente");  
+                    res.sendStatus(200);
+                }
+                
+            });
+                
+                
+            
+    }
+};
 
 
 /*************************FUNCIONES AUXILIARES*******************************/
