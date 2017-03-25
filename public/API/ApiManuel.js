@@ -251,6 +251,8 @@ module.exports.badPut = (req,res)=> {
 
 module.exports.putData = (req,res)=>{
     
+    var taux = [];
+    
     //Me falta comprobar si tengo uno o mas datos para poder actualizar con solo indicar el nombre
     //o como tengo más de dos datos especifico por el nombre y por el año
     
@@ -267,8 +269,28 @@ module.exports.putData = (req,res)=>{
         
         
     }else {
+        
+        db.find({}).toArray(function(error,conjunto){
+            
+            taux = encuentraName(conjunto,taux,actualiza.name );
+        });
 
-        db.update({country: actualiza.country,year : actualiza.year },
+if(taux.length === 1){ //Significa que sólo hay un elemto con el nombre buscamos que queremos actualizar
+//por lo que no nos hace falta poner el año para actualizarlo,ya que no hay ninguno más 
+    
+     db.update({country: actualiza.country },
+        {
+            country:actualiza.country ,
+            year : actualiza.year , 
+            incidence : actualiza.incidence , 
+            total : actualiza.total ,
+            percentage : actualiza.percentage
+            
+        }) ;
+    res.send(200);
+    
+}else{
+        db.update({country: actualiza.country,year : parseInt(actualiza.year) },
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -279,7 +301,7 @@ module.exports.putData = (req,res)=>{
         }) ;
         res.send(200); //OK
     }  
-    
+    }
 };
 
 
