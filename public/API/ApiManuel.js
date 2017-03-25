@@ -145,8 +145,8 @@ module.exports.getDataNameYear =  function (req, res) {
                  for(var j = 0;j<conjunto.length;j++){
                      
                      var helpp = conjunto[j];
-                     if (isNaN(nombre) && isNaN(year) === false){
-                        if(helpp.name == nombre && helpp.year == year){
+                     if (isNaN(nombre) && isNaN(parseInt(year)) === false){
+                        if(helpp.country == nombre && helpp.year == parseInt(year)){
 		                	aux.push(helpp);
                      
                         }
