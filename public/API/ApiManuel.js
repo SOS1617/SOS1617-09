@@ -192,7 +192,7 @@ module.exports.postNewData =  (req,res) =>{
      console.log("something wrong in your data post");
         
         
-    }else {
+    }else { 
             db.find({}).toArray(function(error,conjunto){  
                 
                 if(conjunto.length === 0){
