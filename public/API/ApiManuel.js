@@ -333,7 +333,7 @@ module.exports.deleteData = (req,res)=>{
 module.exports.deleteTwoData = (req,res)=>{
     
     var country = req.params.country;
-    var year = req.params.year;
+    var year = parseInt(req.params.year);
 
     if(!country ){
         res.sendStatus(404);
