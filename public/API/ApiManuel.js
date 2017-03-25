@@ -108,9 +108,9 @@ module.exports.getDataName =  function (req, res) {
 
                     if(aux.length === 0){
                         res.sendStatus(404);
-                    }
+                    }else{
                     res.send(aux);
-                    
+                    }  
                 }
                 
             } );
