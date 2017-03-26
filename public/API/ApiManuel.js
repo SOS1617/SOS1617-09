@@ -189,8 +189,8 @@ module.exports.postNewData =  (req,res) =>{
         
     }else if(!nuevoDato.country || !nuevoDato.year || !nuevoDato.incidence || !nuevoDato.percentage || !nuevoDato.total){
         
-     res.sendStatus(422);
-     console.log("something wrong in your data post");
+     res.sendStatus(400);
+     console.log("something wrong in your data post,bad request");
         
         
     }else { 
@@ -254,6 +254,7 @@ module.exports.putData = (req,res)=>{
     
     var taux = [];
     var actualiza = null;
+    var res = false;
     
     //Me falta comprobar si tengo uno o mas datos para poder actualizar con solo indicar el nombre
     //o como tengo más de dos datos especifico por el nombre y por el año
@@ -292,6 +293,7 @@ if(taux.length === 1){ //Significa que sólo hay un elemto con el nombre buscamo
     res.send(200);
     
 }else{
+        res = true;
         db.update({country: actualiza.country,year : parseInt(actualiza.year) },
         {
             country:actualiza.country ,
@@ -303,6 +305,10 @@ if(taux.length === 1){ //Significa que sólo hay un elemto con el nombre buscamo
         }) ;
         res.send(200); //OK
     }  
+    }
+    if(res === false && taux.length > 1 ){
+        res.sendStatus(400);
+        
     }
 };
 
