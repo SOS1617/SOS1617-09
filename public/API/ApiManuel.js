@@ -256,6 +256,7 @@ module.exports.putData = (req,res)=>{
      var actualiza= req.body;
      var country = req.params.name;
      var year = req.params.year;
+     var aux = [];
      
    if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
@@ -264,6 +265,28 @@ module.exports.putData = (req,res)=>{
         
         
     }
+    
+    if(country && !year){
+    db.find({}).toArray(function(error,conjunto){  
+                
+                if(conjunto.length === 0){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                 
+                 aux = encuentraName(conjunto,aux,country );
+
+                    if(aux.length === 0){
+                        res.sendStatus(404);
+                    }else{
+                    if(aux.length > 1){
+                        res.sendStatus(400);
+                    }
+                    }  
+                }
+                
+            } );
+
         if(country.name === actualiza.name & !req.params.year){
         db.update({country: country},
         {
@@ -276,8 +299,8 @@ module.exports.putData = (req,res)=>{
         }) ;
         res.send(200); //OK
        
-    }else{
-        db.update({country: country,year : year},
+    }}else{
+        db.update({country: country,year : parseInt(year)},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -286,7 +309,8 @@ module.exports.putData = (req,res)=>{
             percentage : actualiza.percentage
             
         }) ;
-        
+                res.send(200); //OK
+
     }
 
 };
