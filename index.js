@@ -34,7 +34,7 @@ app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
 app.get(routeManuel + "/:name",metodosManuel.getDataName);
 app.get(routeManuel + "/:name/:year",metodosManuel.getDataNameYear);
-
+app.get(routeManuel + "/test",metodosManuel.getTest);
 app.post(routeManuel,metodosManuel.postNewData);
 app.post(routeManuel + "/:name",metodosManuel.badpost);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);

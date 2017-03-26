@@ -389,6 +389,47 @@ module.exports.deleteTwoData = (req,res)=>{
 };
 
 
+
+
+/**********************TEST DE POSTMAN*************************/
+
+
+
+module.exports.getTest = (req,res)=>{
+  /*
+  
+    <div class="postman-run-button"
+data-postman-action="collection/import"
+data-postman-var-1="641d27751c0c6442175f"></div>
+<script type="text/javascript">
+  (function (p,o,s,t,m,a,n) {
+    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
+    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
+      (n = o.createElement("script")),
+      (n.id = s+t), (n.async = 1), (n.src = m), n
+    ));
+  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
+</script>
+ res.write("<br/>");*/
+res.write("------------------------------------------------");
+res.write("<h4>Manuel Jesus, * Data:hiv-stats*</h4>");
+res.write("<ul>");
+
+	res.write("<div class='postman-run-button'data-postman-action='collection/import' data-postman-var-1='641d27751c0c6442175f">"</div>");
+    res.write("<script type='text/javascript"> 
+  +  (function (p,o,s,t,m,a,n) { !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); }); 
+   + !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
+    +    (n = o.createElement("script")),
+     + (n.id = s+t), (n.async = 1), (n.src = m), n));}(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"))
++ "</script>");
+
+	res.write("</ul>");
+	res.write("------------------------------------------------");
+	res.write("<br/>");
+
+    
+};
+
 /*************************FUNCIONES AUXILIARES*******************************/
 
 
