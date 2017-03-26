@@ -265,9 +265,9 @@ module.exports.putData = (req,res)=>{
         
     }else {
       
-       if(actualiza.name === name && actualiza.year === parseInt(year)){
+       if(actualiza.name === name && actualiza.year === year){
         
-        db.update({country: actualiza.country,year : parseInt(actualiza.year) },
+        db.update({country: name,year : year },
         {
             country:actualiza.country ,
             year : actualiza.year , 
