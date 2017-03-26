@@ -264,7 +264,7 @@ module.exports.putData = (req,res)=>{
         
         
     }
-        if(country.name === actualiza.name){
+        if(country.name === actualiza.name && !req.params.year){
         db.update({country: country},
         {
             country:actualiza.country ,
@@ -276,6 +276,17 @@ module.exports.putData = (req,res)=>{
         }) ;
         res.send(200); //OK
        
+    }else{
+        db.update({country: country,year : year},
+        {
+            country:actualiza.country ,
+            year : actualiza.year , 
+            incidence : actualiza.incidence , 
+            total : actualiza.total ,
+            percentage : actualiza.percentage
+            
+        }) ;
+        
     }
 
 };
