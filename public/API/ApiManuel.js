@@ -254,10 +254,10 @@ module.exports.putData = (req,res)=>{
     
 
      var actualiza= req.body;
-     var name = req.params.name;
-     var year = req.params.year;
+     var country = req.params.name;
+     //var year = req.params.year;
      
-   if(!actualiza || !actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
+   if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
      res.sendStatus(400);
      console.log("falta algún parámetro del dato que queremos insertar");
@@ -265,9 +265,8 @@ module.exports.putData = (req,res)=>{
         
     }else {
       
-       if(actualiza.name === name){
-        
-        db.update({country: name},
+
+        db.update({country: country},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -277,11 +276,8 @@ module.exports.putData = (req,res)=>{
             
         }) ;
         res.send(200); //OK
-       }else{
-           
-           res.sendStatus(400);
-       }
-    }  
+       
+    }     
 
 };
 
