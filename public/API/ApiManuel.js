@@ -252,48 +252,21 @@ module.exports.badPut = (req,res)=> {
 
 module.exports.putData = (req,res)=>{
     
-    var taux = [];
-    var actualiza = null;
-    var res = false;
-    
-    //Me falta comprobar si tengo uno o mas datos para poder actualizar con solo indicar el nombre
-    //o como tengo más de dos datos especifico por el nombre y por el año
-    
-     actualiza= req.body;
+
+     var actualiza= req.body;
+     var name = req.params.name;
+     var year = req.params.year;
      
-    if(actualiza == null){
+   if(!actualiza || !actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
-        res.sendStatus(400); //BAD REQUEST
-        
-    }else if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
-        
-     res.sendStatus(422);
+     res.sendStatus(400);
      console.log("falta algún parámetro del dato que queremos insertar");
         
         
     }else {
+      
+       if(actualiza.name === name && actualiza.year === parseInt(year)){
         
-        db.find({}).toArray(function(error,conjunto){
-            
-            taux = encuentraName(conjunto,taux,actualiza.name );
-        });
-
-if(taux.length === 1){ //Significa que sólo hay un elemto con el nombre buscamos que queremos actualizar
-//por lo que no nos hace falta poner el año para actualizarlo,ya que no hay ninguno más 
-    
-     db.update({country: actualiza.country },
-        {
-            country:actualiza.country ,
-            year : actualiza.year , 
-            incidence : actualiza.incidence , 
-            total : actualiza.total ,
-            percentage : actualiza.percentage
-            
-        }) ;
-    res.send(200);
-    
-}else{
-        res = true;
         db.update({country: actualiza.country,year : parseInt(actualiza.year) },
         {
             country:actualiza.country ,
@@ -304,12 +277,12 @@ if(taux.length === 1){ //Significa que sólo hay un elemto con el nombre buscamo
             
         }) ;
         res.send(200); //OK
+       }else{
+           
+           res.sendStatus(400);
+       }
     }  
-    }
-    if(res === false && taux.length > 1 ){
-        res.sendStatus(400);
-        
-    }
+
 };
 
 
