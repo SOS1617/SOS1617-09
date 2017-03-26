@@ -179,10 +179,11 @@ module.exports.getDataNameYear =  function (req, res) {
 
 module.exports.postNewData =  (req,res) =>{
     
-    var nuevoDato = req.body;
+    var nuevoDato = null;
+    nuevoDato = req.body;
     var sol = false;
     
-    if(!nuevoDato){
+    if(nuevoDato == null){
         
         res.sendStatus(400); //BAD REQUEST
         
