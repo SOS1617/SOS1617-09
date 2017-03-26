@@ -397,7 +397,7 @@ module.exports.deleteTwoData = (req,res)=>{
 
 module.exports.getTest = (req,res)=>{
   
-  var pagina = require("./public/API/ManuelTest.html");
+  var pagina = require("./public/index.html");
   res.send(pagina);
 
 };
