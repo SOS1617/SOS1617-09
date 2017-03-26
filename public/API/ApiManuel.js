@@ -264,7 +264,7 @@ module.exports.putData = (req,res)=>{
         
         
     }
-        if(country.name === actualiza.name && !req.params.year){
+        if(country.name === actualiza.name & !req.params.year){
         db.update({country: country},
         {
             country:actualiza.country ,
