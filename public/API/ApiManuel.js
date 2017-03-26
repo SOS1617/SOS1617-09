@@ -253,13 +253,14 @@ module.exports.badPut = (req,res)=> {
 module.exports.putData = (req,res)=>{
     
     var taux = [];
+    var actualiza = null;
     
     //Me falta comprobar si tengo uno o mas datos para poder actualizar con solo indicar el nombre
     //o como tengo más de dos datos especifico por el nombre y por el año
     
-     var actualiza= req.body;
+     actualiza= req.body;
      
-    if(!actualiza){
+    if(actualiza == null){
         
         res.sendStatus(400); //BAD REQUEST
         
