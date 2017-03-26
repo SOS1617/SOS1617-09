@@ -24,6 +24,13 @@ app.listen(port, ()=> {
 });
 
 
+
+/***HTML PARA EL BOTÓN DEL TEST DE POSTMAN **/
+
+app.use("/api/v1/test",express.static(path.join(__dirname,"./public/API/Test.html")));
+
+
+
 /**************************API MANUEL*********************************/
 
 var routeManuel = "/api/v1/hiv-stats";
@@ -34,7 +41,6 @@ app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
 app.get(routeManuel + "/:name",metodosManuel.getDataName);
 app.get(routeManuel + "/:name/:year",metodosManuel.getDataNameYear);
-app.use("/api/v1/test",express("./public/API/ManuelTest.html"));
 app.post(routeManuel,metodosManuel.postNewData);
 app.post(routeManuel + "/:name",metodosManuel.badpost);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
