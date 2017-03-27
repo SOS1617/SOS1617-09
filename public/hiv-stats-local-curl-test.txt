@@ -9,11 +9,13 @@ curl -v -XPOST -H "Content-type: application/json" -d '{"country" : "spain" ,"ye
 curl -v -XPOST -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : "2013" , "incidence": "3278", "total" : "29987" , "percentage" : "7.0"}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
 
 
-curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2014 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal/2014'
 curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
 curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 5436, "total" : 98764 , "percentage" : 10.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "latvia" ,"year" : 2013 , "incidence": 5436, "total" : 98764 , "percentage" : 10.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/latvia'
 
-curl -v -XDELETE -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/spain'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal/2013'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/portugal'
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/spain'
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats/'
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709mjtr-sos161709mjtr.c9users.io/api/v1/hiv-stats'
@@ -33,7 +35,7 @@ curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"
 curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'
 curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"year" : 2013 , "incidence": 5436, "total" : 98764 , "percentage" : 10.0}' 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats//portugal'
 
-curl -v -XDELETE -H "Content-type: application/json" -d '{"country" : "spain" ,"year" : 2013 , "incidence": 3278, "total" : 29987 , "percentage" : 7.0}' 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'

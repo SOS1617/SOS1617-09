@@ -2,7 +2,7 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617"
+var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
 
 var db;
 
@@ -14,37 +14,48 @@ module.exports.getCreateStats = (req,res) => {
     
     if(error){
         console.log("No podemos usar la base de datos" + error);
-        process.exit();
+            res.sendStatus(500); // internal server error
     }
 
      db = database.collection("hiv-stats");
-     
-     
+      
+      db.find({}).toArray(function(error, conjunto){
+      if (error) {
+            console.error(' Error from DB');
+            res.sendStatus(500); // internal server error
+        } else {
+            
+            if(conjunto.length !== 0){ //Si mi base de datos está ya vacía
+                res.sendStatus(200);//OK,la base de datos ya contenía datos,por lo que ya está inicializada
+                
+            }else{
      db.insert([
 			     { "country" : "estonia" , 	"year" : 2013	,"incidence" : 325 ,	"total" : 8702	, "percentage" : 24.6},
                  {"country" : "latvia" , 	"year" : 2013	,"incidence" : 340 ,	"total" : 5867	, "percentage" : 16.8},
                  {"country" : "portugal" , 	"year" : 2013	,"incidence" : 1093 ,	"total" : 47390	, "percentage" : 10.4},
+                {"country" : "portugal" , 	"year" : 2014	,"incidence" : 1433 ,	"total" : 49050	, "percentage" : 11.2},
                  {"country" : "belgium" , 	"year" : 2013	,"incidence" : 1115 ,	"total" : 266850	, "percentage" : 10.0}
 			    ]);
-         
-       console.log("OK");
+			    
+			       console.log("OK");
 			res.sendStatus(201);
+			    
+            }
+        
+        }
+      });
+    
      
 });
- 
-    	
-      
-		
-			    
-};
 
+    
+};
+    	
 
 /**********************GET********************/
 
 //Get conjunto datos
 
-
-    // GET a collection
 module.exports.getObtainStats = (req, res) => {
     
     console.log("INFO: New GET request to /hiv-stats");
@@ -70,20 +81,20 @@ module.exports.getObtainStats = (req, res) => {
 };
 
 
-//GET a un recurso en concreto 
+//GET a un recurso en concreto por el nombre
 
-module.exports.getData =  function (req, res) {
+module.exports.getDataName =  function (req, res) {
    
-    var nameParam = req.params.name;
+    var Param = req.params.name;
     var aux = [];
     
-    if (!nameParam) {
+    if (!Param) {
         console.log("BAD Request,try again with new data");
         res.sendStatus(400); // bad request
         
     } else if(!db)
     { 
-        res.sendStatus(404);
+        res.sendStatus(404);//Base de datos está vacía
         }
         else {
             db.find({}).toArray(function(error,conjunto){  
@@ -92,14 +103,59 @@ module.exports.getData =  function (req, res) {
                     console.log("Algo pasa con la base de datos que está vacía");
                     res.sendStatus(404);
                 }else{
-                    
-                    for(var i = 0;i<conjunto.length;i++){
-                        
-                        if(conjunto[i].country === nameParam){
-                            aux.push(conjunto[i]);
+                 
+                 aux = encuentraName(conjunto,aux,Param );
+
+                    if(aux.length === 0){
+                        res.sendStatus(404);
+                    }else{
+                    res.send(aux);
+                    }  
+                }
+                
+            } );
+                
+                
+            
+    }
+};
+
+//GET A UN RECURSO POR NOMBRE Y AÑO
+
+module.exports.getDataNameYear =  function (req, res) {
+    
+    var nombre = req.params.name;
+    var year = req.params.year;
+    var aux = [];
+    
+    if (!nombre || !year) {
+        console.log("BAD Request,try again with new data");
+        res.sendStatus(400); // bad request
+        
+    } else if(!db)
+    { 
+        res.sendStatus(404);//Base de datos está vacía
+        }
+        else {
+            db.find({}).toArray(function(error,conjunto){  
+                
+                if(conjunto.length === 0){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                 
+                 for(var j = 0;j<conjunto.length;j++){
+                     
+                     var helpp = conjunto[j];
+                     if (isNaN(nombre) && isNaN(parseInt(year)) === false){
+                        if(helpp.country == nombre && helpp.year == parseInt(year)){
+		                	aux.push(helpp);
+                     
                         }
-                    }
-                    
+                         
+                     } 
+                 }
+
                     if(aux.length === 0){
                         res.sendStatus(404);
                     }
@@ -112,7 +168,9 @@ module.exports.getData =  function (req, res) {
                 
             
     }
+    
 };
+
 
 
 /**********************POST********************/
@@ -121,30 +179,31 @@ module.exports.getData =  function (req, res) {
 
 module.exports.postNewData =  (req,res) =>{
     
-    var nuevoDato = req.body;
+    var nuevoDato = null;
+    nuevoDato = req.body;
     var sol = false;
     
-    if(!nuevoDato){
+    if(nuevoDato == null){
         
         res.sendStatus(400); //BAD REQUEST
         
     }else if(!nuevoDato.country || !nuevoDato.year || !nuevoDato.incidence || !nuevoDato.percentage || !nuevoDato.total){
         
      res.sendStatus(400);
-     console.log("falta algún parámetro del dato que queremos insertar");
+     console.log("something wrong in your data post,bad request");
         
         
-    }else {
+    }else { 
             db.find({}).toArray(function(error,conjunto){  
                 
                 if(conjunto.length === 0){
-                    console.log("Algo pasa con la base de datos que está vacía");
+                    console.log("DB empty");
                     res.sendStatus(404);
                 }else{
                     
                     for(var i = 0;i<conjunto.length;i++){
                         
-                        if(conjunto[i].country === nuevoDato.country){
+                        if(conjunto[i].country === nuevoDato.country && conjunto[i].year === parseInt(nuevoDato.year)){
                             res.sendStatus(409);
                             console.log("Error,el dato ya estaba en el conjunto");
                             sol = true;
@@ -153,8 +212,8 @@ module.exports.postNewData =  (req,res) =>{
                     
                   if(sol === false){
                       db.insert(nuevoDato);
-                      
-                  }  
+                      res.sendStatus(201);//CREATED 
+                  } 
                 }
                 
             } );
@@ -193,21 +252,19 @@ module.exports.badPut = (req,res)=> {
 
 module.exports.putData = (req,res)=>{
     
+
      var actualiza= req.body;
-     
-    if(!actualiza){
-        
-        res.sendStatus(400); //BAD REQUEST
-        
-    }else if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
+     var country = req.params.name;
+
+   if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
      res.sendStatus(400);
      console.log("falta algún parámetro del dato que queremos insertar");
         
         
-    }else {
-
-        db.update({country: actualiza.country },
+    }
+        if(country.name === actualiza.name){
+        db.update({country: country},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -216,8 +273,39 @@ module.exports.putData = (req,res)=>{
             percentage : actualiza.percentage
             
         }) ;
-    }  
+        res.send(200); //OK
+       
+    }
+
+};
+
+module.exports.putTwoData = (req,res)=>{
     
+
+     var actualiza= req.body;
+     var country = req.params.name;
+     var year = req.params.year;
+     
+   if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
+        
+     res.sendStatus(400);
+     console.log("falta algún parámetro del dato que queremos insertar");
+        
+    }
+        if(country.name === actualiza.name & parseInt(year) === parseInt(actualiza.year) ){
+        db.update({country: country, year : year},
+        {
+            country:actualiza.country ,
+            year : actualiza.year , 
+            incidence : actualiza.incidence , 
+            total : actualiza.total ,
+            percentage : actualiza.percentage
+            
+        }) ;
+        res.send(200); //OK
+       
+    }
+
 };
 
 
@@ -235,7 +323,7 @@ module.exports.deleteCollection = (req,res)=>{
         } else {
             if (borr > 0) {
                 console.log("Todo borrado ");
-                res.sendStatus(204); // no content
+                res.sendStatus(204);  // no content
             } else {
                 console.log("No hay contactos que borrar");
                 res.sendStatus(404); // not found
@@ -263,7 +351,7 @@ module.exports.deleteData = (req,res)=>{
                 }else{
                    
                     console.log("El dato se ha borrado satisfactoriamente");  
-                    
+                    res.sendStatus(200);
                 }
                 
             });
@@ -271,6 +359,70 @@ module.exports.deleteData = (req,res)=>{
                 
             
     }
+};
+
+module.exports.deleteTwoData = (req,res)=>{
+    
+    var country = req.params.country;
+    var year = parseInt(req.params.year);
+
+    if(!country ){
+        res.sendStatus(404);
+        
+    }else {
+            db.remove({country : country , year : year},function(error,conjunto){  
+                
+                if(error){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                   
+                    console.log("El dato se ha borrado satisfactoriamente");  
+                    res.sendStatus(200);
+                }
+                
+            });
+                
+                
+            
+    }
+};
+
+
+
+
+/**********************TEST DE POSTMAN*************************/
+
+
+
+module.exports.getTest = (req,res)=>{
+  
+  var pagina = require("./public/index.html");
+  res.send(pagina);
+
+};
+
+/*************************FUNCIONES AUXILIARES*******************************/
+
+
+
+
+var encuentraName = function(conjunto,conjaux,parametro){
+    
+    if(parametro ){
+        for(var i = 0;i<conjunto.length;i++){
+                        
+            if(conjunto[i].country === parametro){
+                 conjaux.push(conjunto[i]);
+            }else if (conjunto[i].year === parseInt(parametro)){
+                
+                conjaux.push(conjunto[i]);
+            }
+        }
+        
+    } 
+    
+    return conjaux;
 };
 
 
