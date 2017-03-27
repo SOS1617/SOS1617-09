@@ -89,7 +89,7 @@ app.get(vero + "/:country",metodosVero.getRecurso);
 app.post(vero,metodosVero.postCollection);
 app.post(vero +"/:country",metodosVero.postRecurso);
 
-app.put(vero,metodosVero.putColection);
+app.put(vero,metodosVero.putCollection);
 app.put(vero +"/:country" ,metodosVero.putRecurso); 
 
 
