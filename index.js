@@ -55,14 +55,14 @@ app.get(bd2,funciones.getStats);
 app.get(bd2+ "/:name",funciones.getData);
 
 
-app.post(path,funciones.errorInPost);
-app.post(path+ "/:name",funciones.putInsertData);
+app.post(bd2,funciones.errorInPost);
+app.post(bd2+ "/:name",funciones.putInsertData);
 
-app.post(path,funciones.postNewStat);
-app.post(path+ "/:name",funciones.errorInPost);
+app.post(bd2,funciones.postNewStat);
+app.post(bd2+ "/:name",funciones.errorInPost);
 
-app.delete(path,funciones.deleteStats);
-app.delete(path+ "/:name",funciones.deleteData);
+app.delete(bd2,funciones.deleteStats);
+app.delete(bd2+ "/:name",funciones.deleteData);
 
 
 
