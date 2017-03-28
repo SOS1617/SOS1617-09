@@ -1,33 +1,23 @@
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
-
-curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
-
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/'
-curl -v -XPUT -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
-
-
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/'
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
 
 
 
 -------
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/loadInitalData'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/loadInitialData'
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/england'
 
 
-curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XPOST -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+curl -v -XPOST -H "Content-type: application/json" -d '{"country":"england", "year": 2016,"smartphone": 55, "tablet": 88}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
+curl -v -XPOST -H "Content-type: application/json" -d '{"country":"england", "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/england'
 
 
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country":"england", "year": 2018,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country":"england", "year": 2018,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/england'
 
-curl -v -XDELETE -H "Content-type: application/json" -d '{"country":"germany, "year": 2016,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany'
+
+
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/england'
+
