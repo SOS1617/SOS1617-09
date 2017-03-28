@@ -113,7 +113,7 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 aux = encuentraName(conjunto,aux,Param );
+               //  aux = encuentraName(conjunto,aux,Param );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
