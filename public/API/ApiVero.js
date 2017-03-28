@@ -15,6 +15,11 @@ mongoClient.connect(url,{native_parser:true}, (error,database)=>{
      db1 = database.collection("internetandphones-stats");
 });
 /*****************API*************/
+exports.postRecurso= function(request,response){
+    response.sendStatus(405);
+    console.log("No se puede hacer un post a un recurso en concreto");
+
+};
 
 exports.getLoadInitial= function(request,response){
     db1.find({}).toArray(function(error, stats1){
@@ -38,16 +43,6 @@ exports.getLoadInitial= function(request,response){
             
         
      };
-
-    
-
-
-
-exports.postRecurso= function(request,response){
-    response.sendStatus(405);
-    console.log("No se puede hacer un post a un recurso en concreto");
-
-};
 
 exports.getCollection=function(request,response){
     console.log("INFO: New resquest to /internetandphones-stats");
@@ -74,23 +69,24 @@ exports.getCollection=function(request,response){
 };
 
 exports.getRecurso=function(request,response){
- var country = require.params.country;
-    if(!country){
-        console.log("WARMING: There are noy any country");
-        response.sendStatus(400);//bad request
-    }else{
-        console.log("INFO: New GET");
-        db1.find({country:country}).toArray(function(error,stats1){
-            if(error){
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            }else{
-                var filteredCountry = stats1.filter((s)=>{
-                    return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
-                });
-                if(filteredCountry.length>0){
-                    var c = filteredCountry[0];
-                    console.log("INFO: Sending country");
+ var country = request.params.country;
+ if(!country){
+     console.log("WARMING: There are noy any country");
+     response.sendStatus(400);//bad request
+}else{
+    console.log("INFO: New GET");
+    db1.find({country:country}).toArray(function(error,stats1){
+        if(error){
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        }else{
+            var filteredCountry = stats1.filter((s)=>{
+                return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
+                
+            });
+            if(filteredCountry.length>0){
+                var c = filteredCountry[0];
+                console.log("INFO: Sending country");
                     response.send(c);
                     
                 }else{
@@ -172,13 +168,13 @@ exports.deleteCollection=function(request,response) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
         } else {
-            if (stats1 > 0) {
-                console.log("INFO: All stats are removed");
-                response.sendStatus(204); // no content
-            } else {
-                console.log("WARNING: There are no stats to delete");
-                response.sendStatus(404); // not found
-            }
+             if (stats1.length >0) {
+                    console.log("INFO: The stats is removed");
+                    response.sendStatus(204); // no content
+                } else {
+                    console.log("WARNING: There are no stats to delete");
+                    response.sendStatus(404); // not found
+                }
         }
     });
 };
