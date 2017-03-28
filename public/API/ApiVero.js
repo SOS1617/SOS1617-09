@@ -7,7 +7,7 @@ var exports= module.exports={};
 
 
 /*****************API*************/
-exports.getLoadInitial= function(requiere,response){
+exports.getLoadInitial= function(request,response){
     mongoClient.connect(url,{native_parser:true},(error,database)=>{
         if(error){
             console.log("can't use db");
@@ -34,26 +34,31 @@ exports.getLoadInitial= function(requiere,response){
     });
 };
 
-exports.postRecurso= function(requiere,response){
+exports.postRecurso= function(request,response){
     response.sendStatus(405);
     console.log("No se puede hacer un post a un recurso en concreto");
 
 };
 
-exports.getCollection=function(require,response){
- console.log("INFO: New resquest to /internetandphones-stats");
-    db1.find({}).toArray(function(error, stats1){
-      if (error) {
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        } else {
-            console.log("INFO: Sending stats");
-            response.send(stats1);
+exports.getCollection=function(request,response){
+    console.log("INFO: New resquest to /internetandphones-stats");
+     db1.find({}).toArray(function(error, stats1){
+         if (error) {
+             console.error('WARNING: Error getting data from DB');
+             response.sendStatus(500); // internal server error
+        }else {
+            if(stats1.length==0){
+                console.log("INFO: Sending stats");
+                response.sendStatus(404);
+            }else{
+                response.send(stats1);
+            }
         }
     });
+ 
 };
 
-exports.getRecurso=function(require,response){
+exports.getRecurso=function(request,response){
  var country = require.params.country;
     if(!country){
         console.log("WARMING: There are noy any country");
@@ -82,9 +87,9 @@ exports.getRecurso=function(require,response){
     }
 };
 
-exports.postCollection=function(require,response){
- var country = require.params.country;
-    var newInternetandphones= require.body;
+exports.postCollection=function(request,response){
+ var country = request.params.country;
+    var newInternetandphones= request.body;
     if(!newInternetandphones){
         console.log("WARMING: New POST without Internetandphones");
         response.sendStatus(400);//bad request
@@ -116,8 +121,8 @@ exports.postCollection=function(require,response){
     }
 };
 
-exports.putRecurso=function(require,response){
- var updateStat= require.body;
+exports.putRecurso=function(request,response){
+ var updateStat= request.body;
     if (!updateStat) {
         console.log("WARNING: New PUT");
         response.sendStatus(400); // bad request
@@ -140,11 +145,11 @@ exports.putRecurso=function(require,response){
     }
 };
 
-exports.putCollection=function(require,response){
+exports.putCollection=function(request,response){
     response.sendStatus(405);
 };
 
-exports.deleteCollection=function(require,response) {
+exports.deleteCollection=function(request,response) {
    console.log("INFO: New DELETE");
     db1.remove({}, {multi: true}, function (error, stats1) {
         if (error) {
@@ -162,31 +167,30 @@ exports.deleteCollection=function(require,response) {
     });
 };
 
-exports.deleteRecurso=function(require,resonse){
-    var country = require.params.country;
+exports.deleteRecurso=function(request,response){
+    var country = request.params.country;
     if (!country) {
         console.log("WARNING: New DELETE");
-        require.sendStatus(400); // bad request
+        response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New DELETE");
         db1.remove({country: country}, {}, function (error, stats1) {
             if (error) {
                 console.error('WARNING: Error removing data from DB');
-                require.sendStatus(500); // internal server error
+                response.sendStatus(500); // internal server error
             } else {
                 console.log("INFO: Stats remove");
                 if ( stats1 === 1) {
                     console.log("INFO: The stats is removed");
-                    require.sendStatus(204); // no content
+                    response.sendStatus(204); // no content
                 } else {
                     console.log("WARNING: There are no stats to delete");
-                    require.sendStatus(404); // not found
+                    response.sendStatus(404); // not found
                 }
             }
         });
     }
 };
     
-
 
 
