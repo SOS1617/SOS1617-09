@@ -2,22 +2,27 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
+var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617"
 
 var db;
+
+/************************CONECTAR CON LA BASE DE DATOS**************/
+
+ mongoClient.connect(mongoURL,{native_parser:true}, (error,database)=>{
+    
+    if(error){
+        console.log("No podemos usar la base de datos" + error);
+    }
+
+     db = database.collection("hiv-stats");
+
+});
 
 /**************************LOAD INITIAL DATA ****************/
 
 module.exports.getCreateStats = (req,res) => {
 
-    mongoClient.connect(mongoURL,{native_parser:true}, (error,database)=>{
-    
-    if(error){
-        console.log("No podemos usar la base de datos" + error);
-            res.sendStatus(500); // internal server error
-    }
-
-     db = database.collection("hiv-stats");
+   if(db){
       
       db.find({}).toArray(function(error, conjunto){
       if (error) {
@@ -26,7 +31,7 @@ module.exports.getCreateStats = (req,res) => {
         } else {
             
             if(conjunto.length !== 0){ //Si mi base de datos está ya vacía
-                res.sendStatus(200);//OK,la base de datos ya contenía datos,por lo que ya está inicializada
+                res.sendStatus(409);//Conflicto,la base de datos ya estaba inicializada
                 
             }else{
      db.insert([
@@ -43,13 +48,17 @@ module.exports.getCreateStats = (req,res) => {
             }
         
         }
-      });
+      
     
      
 });
-
+}else{
+    console.log("No se ha inicialiazado la base de datos correctamente");
+    res.send(500);
     
-};
+}
+    
+}
     	
 
 /**********************GET********************/
@@ -104,7 +113,7 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 aux = encuentraName(conjunto,aux,Param );
+               //  aux = encuentraName(conjunto,aux,Param );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -144,17 +153,7 @@ module.exports.getDataNameYear =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 for(var j = 0;j<conjunto.length;j++){
-                     
-                     var helpp = conjunto[j];
-                     if (isNaN(nombre) && isNaN(parseInt(year)) === false){
-                        if(helpp.country == nombre && helpp.year == parseInt(year)){
-		                	aux.push(helpp);
-                     
-                        }
-                         
-                     } 
-                 }
+                 
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -169,7 +168,7 @@ module.exports.getDataNameYear =  function (req, res) {
             
     }
     
-};
+}
 
 
 
@@ -200,16 +199,7 @@ module.exports.postNewData =  (req,res) =>{
                     console.log("DB empty");
                     res.sendStatus(404);
                 }else{
-                    
-                    for(var i = 0;i<conjunto.length;i++){
-                        
-                        if(conjunto[i].country === nuevoDato.country && conjunto[i].year === parseInt(nuevoDato.year)){
-                            res.sendStatus(409);
-                            console.log("Error,el dato ya estaba en el conjunto");
-                            sol = true;
-                        }
-                    }
-                    
+                  
                   if(sol === false){
                       db.insert(nuevoDato);
                       res.sendStatus(201);//CREATED 
@@ -292,8 +282,8 @@ module.exports.putTwoData = (req,res)=>{
      console.log("falta algún parámetro del dato que queremos insertar");
         
     }
-        if(country.name === actualiza.name & parseInt(year) === parseInt(actualiza.year) ){
-        db.update({country: country, year : year},
+        
+        db.update({country: country},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -304,7 +294,7 @@ module.exports.putTwoData = (req,res)=>{
         }) ;
         res.send(200); //OK
        
-    }
+    
 
 };
 
@@ -338,11 +328,14 @@ module.exports.deleteCollection = (req,res)=>{
 module.exports.deleteData = (req,res)=>{
     
     var country = req.params.country;
+    var year = req.params.year;
 
-    if(!country ){
+    if(!country && !year){
         res.sendStatus(404);
         
     }else {
+        
+        if(country){
             db.remove({country : country},function(error,conjunto){  
                 
                 if(error){
@@ -355,74 +348,19 @@ module.exports.deleteData = (req,res)=>{
                 }
                 
             });
-                
+       
                 
             
     }
-};
+}};
 
 module.exports.deleteTwoData = (req,res)=>{
     
-    var country = req.params.country;
-    var year = parseInt(req.params.year);
-
-    if(!country ){
-        res.sendStatus(404);
-        
-    }else {
-            db.remove({country : country , year : year},function(error,conjunto){  
-                
-                if(error){
-                    console.log("Algo pasa con la base de datos que está vacía");
-                    res.sendStatus(404);
-                }else{
-                   
-                    console.log("El dato se ha borrado satisfactoriamente");  
-                    res.sendStatus(200);
-                }
-                
-            });
-                
-                
-            
-    }
-};
-
-
-
-
-/**********************TEST DE POSTMAN*************************/
-
-
-
-module.exports.getTest = (req,res)=>{
   
-  var pagina = require("./public/index.html");
-  res.send(pagina);
-
 };
 
-/*************************FUNCIONES AUXILIARES*******************************/
 
 
 
-
-var encuentraName = function(conjunto,conjaux,parametro){
-    
-    if(parametro ){
-        for(var i = 0;i<conjunto.length;i++){
-                        
-            if(conjunto[i].country === parametro){
-                 conjaux.push(conjunto[i]);
-            }else if (conjunto[i].year === parseInt(parametro)){
-                
-                conjaux.push(conjunto[i]);
-            }
-        }
-        
-    } 
-    
-    return conjaux;
-};
 
 
