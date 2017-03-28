@@ -2,22 +2,27 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
+var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617"
 
 var db;
+
+/************************CONECTAR CON LA BASE DE DATOS**************/
+
+ mongoClient.connect(mongoURL,{native_parser:true}, (error,database)=>{
+    
+    if(error){
+        console.log("No podemos usar la base de datos" + error);
+    }
+
+     db = database.collection("hiv-stats");
+
+});
 
 /**************************LOAD INITIAL DATA ****************/
 
 module.exports.getCreateStats = (req,res) => {
 
-    mongoClient.connect(mongoURL,{native_parser:true}, (error,database)=>{
-    
-    if(error){
-        console.log("No podemos usar la base de datos" + error);
-            res.sendStatus(500); // internal server error
-    }
-
-     db = database.collection("hiv-stats");
+   if(db){
       
       db.find({}).toArray(function(error, conjunto){
       if (error) {
@@ -43,13 +48,17 @@ module.exports.getCreateStats = (req,res) => {
             }
         
         }
-      });
+      
     
      
 });
-
+}else{
+    console.log("No se ha inicialiazado la base de datos correctamente");
+    res.send(500);
     
-};
+}
+    
+}
     	
 
 /**********************GET********************/
@@ -169,7 +178,7 @@ module.exports.getDataNameYear =  function (req, res) {
             
     }
     
-};
+}
 
 
 
@@ -338,11 +347,14 @@ module.exports.deleteCollection = (req,res)=>{
 module.exports.deleteData = (req,res)=>{
     
     var country = req.params.country;
+    var year = req.params.year;
 
-    if(!country ){
+    if(!country && !year){
         res.sendStatus(404);
         
     }else {
+        
+        if(country){
             db.remove({country : country},function(error,conjunto){  
                 
                 if(error){
@@ -355,7 +367,23 @@ module.exports.deleteData = (req,res)=>{
                 }
                 
             });
+        }else if(year){
+            
+            db.remove({year : year},function(error,conjunto){  
                 
+                if(error){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                   
+                    console.log("El dato se ha borrado satisfactoriamente");  
+                    res.sendStatus(200);
+                }
+                
+            });
+            
+            
+        }       
                 
             
     }
@@ -390,17 +418,6 @@ module.exports.deleteTwoData = (req,res)=>{
 
 
 
-
-/**********************TEST DE POSTMAN*************************/
-
-
-
-module.exports.getTest = (req,res)=>{
-  
-  var pagina = require("./public/index.html");
-  res.send(pagina);
-
-};
 
 /*************************FUNCIONES AUXILIARES*******************************/
 
