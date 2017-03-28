@@ -6,33 +6,42 @@ var db1;
 var exports= module.exports={};
 
 
+mongoClient.connect(url,{native_parser:true}, (error,database)=>{
+    
+    if(error){
+        console.log("No podemos usar la base de datos" + error);
+          process.exit();
+    }
+     db1 = database.collection("internetandphones-stats");
+});
 /*****************API*************/
+
 exports.getLoadInitial= function(request,response){
-    mongoClient.connect(url,{native_parser:true},(error,database)=>{
-        if(error){
-            console.log("can't use db");
-            process.exit();
-        }
-         db1=database.collection("internetandphones-stats");
-        db1.find({}).toArray(function(error, stats1){
-      if (error) {
+    db1.find({}).toArray(function(error, stats1){
+        if(error) {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
-        } else {
-            if(stats1.length==0){
+            }else {
+                if(stats1.length===0){
                 db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
-                    {"country": "belgium" , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
-                    {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
+                {"country": "belgium" , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
+                {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
                 console.log("OK");
-               response.sendStatus(201);
-            }else{
-                response.sendStatus(409);
+                response.sendStatus(201);
+                    
+                }else{
+                    response.sendStatus(409);
+                }
+                    
             }
+        });
+            
         
-        }
-      });
-    });
-};
+     };
+
+    
+
+
 
 exports.postRecurso= function(request,response){
     response.sendStatus(405);
@@ -42,19 +51,25 @@ exports.postRecurso= function(request,response){
 
 exports.getCollection=function(request,response){
     console.log("INFO: New resquest to /internetandphones-stats");
+    if(!db1){
+        console.log("BD is empty");
+        response.sendStatus(404);
+    }else{
      db1.find({}).toArray(function(error, stats1){
          if (error) {
              console.error('WARNING: Error getting data from DB');
              response.sendStatus(500); // internal server error
         }else {
-            if(stats1.length==0){
+            if(stats1.length===0){
                 console.log("INFO: Sending stats");
                 response.sendStatus(404);
             }else{
                 response.send(stats1);
             }
         }
+     
     });
+    }
  
 };
 
@@ -119,6 +134,7 @@ exports.postCollection=function(request,response){
             });
         }
     }
+    
 };
 
 exports.putRecurso=function(request,response){
