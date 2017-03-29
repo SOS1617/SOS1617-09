@@ -66,7 +66,8 @@ module.exports.getCreateStats = (req,res) => {
 //Get conjunto datos
 
 module.exports.getObtainStats = (req, res) => {
-    
+  
+
     console.log("INFO: New GET request to /hiv-stats");
     if(!db){
         console.log("No hay nada en la base de datos");
