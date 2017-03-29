@@ -168,9 +168,45 @@ module.exports.getDataNameYear =  function (req, res) {
             
     }
     
-}
+};
 
+module.exports.getDataYear = function(req,res){
+    
+    var year = req.params.year;
+    var aux = [];
+    
+    if (!year) {
+        console.log("BAD Request,try again with new data");
+        res.sendStatus(400); // bad request
+        
+    } else if(!db)
+    { 
+        res.sendStatus(404);//Base de datos está vacía
+        }
+        else {
+            db.find({}).toArray(function(error,conjunto){  
+                
+                if(conjunto.length === 0){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                 
+                 aux = encuentraYear(conjunto,aux,year );
 
+                    if(aux.length === 0){
+                        res.sendStatus(404);
+                    }else{
+                    res.send(aux);
+                    }  
+                }
+                
+            } );
+                
+                
+            
+    }
+    
+};
 
 /**********************POST********************/
 
