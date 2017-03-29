@@ -272,7 +272,7 @@ module.exports.putData = (req,res)=>{
         
         
     }
-        if(country === actualiza.name){
+        if(country === actualiza.country){
         db.update({country: country},
         {
             country:actualiza.country ,
@@ -303,7 +303,7 @@ module.exports.putTwoData = (req,res)=>{
      console.log("falta algún parámetro del dato que queremos insertar");
         
     }
-        if(country === actualiza.name && parseInt(year) === parseInt(actualiza.year) ){
+        if(country === actualiza.country && parseInt(year) === parseInt(actualiza.year) ){
         db.update({country: country, year : year},
         {
             country:actualiza.country ,
