@@ -264,8 +264,6 @@ module.exports.putData = (req,res)=>{
 
      var actualiza= req.body;
      var country = req.params.name;
-     var aux = [];
-     var bol = true;
 
    if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
@@ -273,33 +271,9 @@ module.exports.putData = (req,res)=>{
      console.log("falta algún parámetro del dato que queremos insertar");
         
         
-    }else {
-    
-                    
-    
-    db.find({}).toArray(function(error,conjunto){  
-                 
-                 for(var i = 0;i<conjunto.length;i++){
-                        
-                     if(conjunto[i].id === actualiza.id && conjunto[i].country === actualiza.country){
-                        aux.push(conjunto[i]);
-                        
-                    }
-                    }
-                    
-              
-                
-            } );
-    
+    }
         if(country.name === actualiza.name){
-            
-            if(aux.length === 0){
-                
-                res.sendStatus(400);
-            }else{
-            
-            
-        db.update({country: country,id : actualiza.id},
+        db.update({country: country},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -309,8 +283,8 @@ module.exports.putData = (req,res)=>{
             
         }) ;
         res.send(200); //OK
-            }   
-    }}
+       
+    }
 
 };
 

@@ -27,7 +27,7 @@ app.listen(port, ()=> {
 
 /***HTML PARA EL BOTÓN DEL TEST DE POSTMAN **/
 
-app.use("/api/v1/test",express.static(path.join(__dirname,"./public/API/Test.html")));
+app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
 
 
