@@ -42,7 +42,7 @@ app.get(routeManuel,metodosManuel.getObtainStats);
 app.get(routeManuel + "/:name",metodosManuel.getDataName);
 app.get(routeManuel + "/:name/:year",metodosManuel.getDataNameYear);
 app.post(routeManuel,metodosManuel.postNewData);
-app.post(routeManuel + "/:name",metodosManuel.badpost);
+app.post(routeManuel + "/:name",metodosManuel.postNewData);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
 app.put(routeManuel , metodosManuel.badPut);
 app.put(routeManuel + "/:name", metodosManuel.putData);
