@@ -313,8 +313,10 @@ module.exports.putTwoData = (req,res)=>{
             percentage : actualiza.percentage
             
         }) ;
-        res.send(200); //OK
+        res.sendStatus(200); //OK
        
+    }else{
+        res.sendStatus(400);
     }
 
 };
