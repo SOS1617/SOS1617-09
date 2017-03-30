@@ -2,9 +2,11 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617"
+var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
 
 var db;
+
+var key = "manuel";
 
 /************************CONECTAR CON LA BASE DE DATOS**************/
 
@@ -448,3 +450,12 @@ var encuentraName = function(conjunto,conjaux,parametro){
 };
 
 
+var tieneKey  = function(llave){
+    
+    var sol = false;
+    
+    if(llave === key){
+        sol = true;
+    }
+    return sol;
+};
