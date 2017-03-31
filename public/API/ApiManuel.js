@@ -374,48 +374,6 @@ var key = req.query.apikey;
 
 //PUT a un recurso en concreto
 
-module.exports.putData = (req, res) => {
-
-    var key = req.query.apikey;
-
-    if (!key) {
-        res.sendStatus(401); //No ha puesto la apikey
-
-    }
-    else if (!tieneKey(key)) {
-
-        res.sendStatus(403); //Está mal puesta la apikey
-    }
-    else {
-        var actualiza = req.body;
-        var country = req.params.name;
-
-        if (!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total) {
-
-            res.sendStatus(400);
-            console.log("falta algún parámetro del dato que queremos insertar");
-
-
-        }
-        if (country === actualiza.country) {
-            db.update({
-                country: country
-            }, {
-                country: actualiza.country,
-                year: actualiza.year,
-                incidence: actualiza.incidence,
-                total: actualiza.total,
-                percentage: actualiza.percentage
-
-            });
-            res.send(200); //OK
-
-        }
-        else {
-            res.sendStatus(400);
-        }
-    }
-};
 
 module.exports.putTwoData = (req, res) => {
 
