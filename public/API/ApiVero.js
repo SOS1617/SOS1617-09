@@ -28,9 +28,9 @@ exports.getLoadInitial= function(request,response){
             response.sendStatus(500); // internal server error
             }else {
                 if(stats1.length===0){
-                db1.insert([{"country": "austria" , "year": "2010" , "usageinternet": "75.2", "usagephoneline": "40"},
-                {"country": "belgium" , "year": "2010" , "usageinternet": "75" , "usagephoneline": "42"},
-                {"country": "denmark" , "year": "2010" , "usageinternet": "88.7" , "usagephoneline": "47"}]);
+                db1.insert([{"country": "austria" , "year": 2010 , "usageinternet": "75.2", "usagephoneline": "40"},
+                {"country": "belgium" , "year": 2010 , "usageinternet": "75" , "usagephoneline": "42"},
+                {"country": "denmark" , "year": 2010 , "usageinternet": "88.7" , "usagephoneline": "47"}]);
                 console.log("OK");
                 response.sendStatus(201);
                     
@@ -68,24 +68,51 @@ exports.getCollection=function(request,response){
  
 };
 
-exports.getRecurso=function(request,response){
+exports.getRecursoYearIntentoDosParametros=function(request,response){
+var country = request.params.country;
+var year = parseInt(request.params.year);
+if (!country || !year) {
+    console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
+    response.sendStatus(400); // bad request
+}else {
+    console.log("INFO: New GET request to /export-and-import-stats/" + country + year);
+    db1.find({"country": country,"year": year}).toArray(function(error, stats1) {
+                if (error) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                }
+                else {
+                    if (stats1.length > 0) {
+                        var c = stats1[0];
+                        console.log("INFO: Sending stats: " + JSON.stringify((c), 2, null));
+                        response.send(c);
+                    }
+                    else {
+                        console.log("WARNING: There are not any area stats with name " + country);
+                        response.sendStatus(404); // not found
+                    }
+                }
+            });
+        }
+    };
+
+/*exports.getRecurso=function(request,response){
  var country = request.params.country;
  if(!country){
      console.log("WARMING: There are noy any country");
      response.sendStatus(400);//bad request
-}else{
+ } else if(!db1){ 
+     response.sendStatus(404);//Base de datos está vacía
+ }else{
     console.log("INFO: New GET");
-    db1.find({country:country}).toArray(function(error,stats1){
+    db1.find({"country":country}).toArray(function(error,stats1){
         if(error){
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
         }else{
-            var filteredCountry = stats1.filter((s)=>{
-                return (s.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
-                
-            });
-            if(filteredCountry.length>0){
-                var c = filteredCountry[0];
+    
+            if(stats1.length>0){
+                var c = stats1[0];
                 console.log("INFO: Sending country");
                     response.send(c);
                     
@@ -96,7 +123,84 @@ exports.getRecurso=function(request,response){
             }
         });
     }
-};
+};*/
+/*exports.getRecursoYear=function(request,response){
+ var year= parseInt(request.params.year);
+ console.log("Qué llega"+year);
+ if(!year){
+     console.log("WARMING: There are noy any year");
+     response.sendStatus(400);//bad request
+ } else if(!db1){ 
+     response.sendStatus(404);//Base de datos está vacía
+ }else{
+    console.log("INFO: New GET");
+    db1.find({"year":year}).toArray(function(error,stats1){
+        if(error){
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        }else{
+            
+            if(stats1.length>0){
+                var c = stats1[0];
+                console.log("INFO: Sending year");
+                    response.send(c);
+                    
+                }else{
+                    console.log("WARMING: There are not any year with" + year);
+                    response.sendStatus(404);//not found
+                }
+            }
+        });
+    }
+};*/
+
+/*exports.getRecursoYearIntentoDosParametros=function(request,response){
+ var year= parseInt(request.params.year);
+ var country= request.params.country;
+ console.log("Qué llega"+ year +country);
+ if(!year || !country){
+     console.log("WARMING: There are noy any year");
+     response.sendStatus(400);//bad request
+ }else if(!country){
+    console.log("INFO: New GET");
+    db1.find({"year":year}).toArray(function(error,stats1){
+        if(error){
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        }else{
+            
+            if(stats1.length>0){
+                var c = stats1[0];
+                console.log("INFO: Sending year");
+                    response.send(c);
+                    
+                }else{
+                    console.log("WARMING: There are not any year with" + year);
+                    response.sendStatus(404);//not found
+                }
+            }
+        });
+}else if(!year){
+    db1.find({"country":country}).toArray(function(error,stats2){
+        if(error){
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        }else{
+            
+            if(stats2.length>0){
+                var c2 = stats2[0];
+                console.log("INFO: Sending country");
+                    response.send(c2);
+                    
+                }else{
+                    console.log("WARMING: There are not any country with" + country);
+                    response.sendStatus(404);//not found
+                }
+            }
+        });
+    }
+
+};*/
 
 exports.postCollection=function(request,response){
  var country = request.params.country;
@@ -116,7 +220,7 @@ exports.postCollection=function(request,response){
                     response.sendStatus(500); // internal server error
                 }else{
                      var internetandphonesBeforeInsertion=  stats1.filter((i)=>{
-                        return (i.country.localeCompare(country,"en",{"sensitiviry":"base"})===0);
+                        return (i.country.localCompare(country,"en",{"sensitiviry":"base"})===0);
                      });
                     if(internetandphonesBeforeInsertion.length>0){
                         console.log("WARMING: This data already exists");
