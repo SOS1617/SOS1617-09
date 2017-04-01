@@ -13,9 +13,7 @@ con una apikey inválida se debe devolver el código 403.
 
 /************************CONECTAR CON LA BASE DE DATOS**************/
 
-mongoClient.connect(mongoURL, {
-    native_parser: true
-}, (error, database) => {
+mongoClient.connect(mongoURL, { native_parser: true}, (error, database) => {
 
     if (error) {
         console.log("No podemos usar la base de datos" + error);
@@ -80,6 +78,7 @@ module.exports.getCreateStats = (req, res) => {
 module.exports.getObtainStats = (req, res) => {
 
     var key = req.query.apikey;
+    var aux = [];
 
     if (!key) {
         res.sendStatus(401); //No ha puesto la apikey
@@ -101,7 +100,12 @@ module.exports.getObtainStats = (req, res) => {
         else {
             var limit = parseInt(req.query.limit);
             var offset = parseInt(req.query.offset);
+            var from = req.query.from;
+            var to = req.query.to;
+
+
             if (limit && offset) {
+
                 db.find({}).skip(offset).limit(limit).toArray(function(err, data) {
                     if (err) {
                         console.error('ERROR from database');
@@ -112,7 +116,19 @@ module.exports.getObtainStats = (req, res) => {
                             res.sendStatus(404);
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
-                        res.send(data);
+                        if (from && to) {
+
+                            aux = buscameDatos(data, aux, from, to);
+                            if (aux.length > 0) {
+                                res.send(aux);
+                            }
+                            else {
+                                res.sendStatus(404); //Está el from y el to pero está mal hecho
+                            }
+                        }
+                        else {
+                            res.send(data);
+                        }
                     }
                 });
             }
@@ -128,7 +144,19 @@ module.exports.getObtainStats = (req, res) => {
                             res.sendStatus(404);
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
-                        res.send(data);
+                        if (from && to) {
+
+                            aux = buscameDatos(data, aux, from, to);
+                            if (aux.length > 0) {
+                                res.send(aux);
+                            }
+                            else {
+                                res.sendStatus(404); //Está el from y el to pero está mal hecho
+                            }
+                        }
+                        else {
+                            res.send(data);
+                        }
                     }
                 });
             }
@@ -341,12 +369,12 @@ module.exports.badpost = (req, res) => {
     }
     else {
 
-    res.sendStatus(405); //Method Not Allowed
+        res.sendStatus(405); //Method Not Allowed
 
-    console.log("No se puede hacer un post a un recurso en concreto");
-}
-        
-    };
+        console.log("No se puede hacer un post a un recurso en concreto");
+    }
+
+};
 
 
 /**********************PUT************************/
@@ -355,7 +383,7 @@ module.exports.badpost = (req, res) => {
 //PUT a una coleccion de datos
 
 module.exports.badPut = (req, res) => {
-var key = req.query.apikey;
+    var key = req.query.apikey;
 
     if (!key) {
         res.sendStatus(401); //No ha puesto la apikey
@@ -366,8 +394,8 @@ var key = req.query.apikey;
         res.sendStatus(403); //Está mal puesta la apikey
     }
     else {
-    res.sendStatus(405);
-    console.log("No se puede hacer un put a una coleccion de datos");
+        res.sendStatus(405);
+        console.log("No se puede hacer un put a una coleccion de datos");
     }
 };
 
@@ -427,7 +455,7 @@ module.exports.putTwoData = (req, res) => {
 
 module.exports.deleteCollection = (req, res) => {
 
-var key = req.query.apikey;
+    var key = req.query.apikey;
 
     if (!key) {
         res.sendStatus(401); //No ha puesto la apikey
@@ -440,25 +468,25 @@ var key = req.query.apikey;
     else {
 
 
-    db.remove({}, {
-        multi: true
-    }, function(err, borr) {
-        if (err) {
-            console.error('Error no funciona el Delete de toda la coleccion');
-            res.sendStatus(500); // internal server error
-        }
-        else {
-            if (borr > 0) {
-                console.log("Todo borrado ");
-                res.sendStatus(204); // no content
+        db.remove({}, {
+            multi: true
+        }, function(err, borr) {
+            if (err) {
+                console.error('Error no funciona el Delete de toda la coleccion');
+                res.sendStatus(500); // internal server error
             }
             else {
-                console.log("No hay contactos que borrar");
-                res.sendStatus(404); // not found
+                if (borr > 0) {
+                    console.log("Todo borrado ");
+                    res.sendStatus(204); // no content
+                }
+                else {
+                    console.log("No hay contactos que borrar");
+                    res.sendStatus(404); // not found
+                }
             }
-        }
-    });
-}
+        });
+    }
 };
 
 //DELETE a un recurso en concreto
@@ -637,10 +665,46 @@ var meteDatos = function(base) {
         "percentage": 11.2
     }, {
         "country": "belgium",
+        "year": 2016,
+        "incidence": 14354,
+        "total": 23450,
+        "percentage": 16.2
+    }, {
+        "country": "spain",
+        "year": 2012,
+        "incidence": 11233,
+        "total": 76854,
+        "percentage": 17.2
+    }, {
+        "country": "portugal",
+        "year": 2016,
+        "incidence": 14123,
+        "total": 98023,
+        "percentage": 17.2
+    }, {
+        "country": "belgium",
         "year": 2013,
         "incidence": 1115,
         "total": 266850,
         "percentage": 10.0
     }]);
+
+};
+
+
+var buscameDatos = function(base, conjaux, desde, hasta) {
+
+    var from = parseInt(desde);
+    var to = parseInt(hasta);
+
+    for (var j = 0; j < base.length; j++) {
+        var t = base[j].year;
+        if (from === t || (to >= t && from <= t)) {
+
+            conjaux.push(base[j]);
+        }
+    }
+
+    return conjaux;
 
 };
