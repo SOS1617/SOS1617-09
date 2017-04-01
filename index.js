@@ -27,7 +27,7 @@ app.listen(port, ()=> {
 
 /***HTML PARA EL BOTÓN DEL TEST DE POSTMAN **/
 
-app.use("/api/v1/test",express.static(path.join(__dirname,"./public/API/Test.html")));
+app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
 
 
@@ -41,12 +41,13 @@ app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
 app.get(routeManuel + "/:name",metodosManuel.getDataName);
 app.get(routeManuel + "/:name/:year",metodosManuel.getDataNameYear);
+
 app.post(routeManuel,metodosManuel.postNewData);
 app.post(routeManuel + "/:name",metodosManuel.badpost);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
 
 app.put(routeManuel , metodosManuel.badPut);
-app.put(routeManuel + "/:name", metodosManuel.putData);
+app.put(routeManuel + "/:name", metodosManuel.badPut);
 app.put(routeManuel + "/:name/:year", metodosManuel.putTwoData);
 
 app.delete(routeManuel,metodosManuel.deleteCollection);
@@ -57,23 +58,26 @@ app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
 
 /***API LUIS*****/
 
-var bd2 = "/api/v1/ticsathome-stats";
+var urlDir = "/api/v1/ticsathome-stats";
 var funciones = require("./public/API/ApiLuis.js");
 
 
-app.get(bd2 + "/loadInitialData",funciones.getNewStats);
-app.get(bd2,funciones.getStats);
-app.get(bd2+ "/:name",funciones.getData);
+app.get(urlDir + "/loadInitialData",funciones.getNewStats);
+app.get(urlDir,funciones.getGeneral);
+app.get(urlDir+ "/:country",funciones.getSpecific);
 
 
-app.post(path,funciones.errorInPost);
-app.post(path+ "/:name",funciones.putInsertData);
+app.put(urlDir,funciones.errorInPut);
+app.put(urlDir+ "/:country",funciones.putSpecific);
 
-app.post(path,funciones.postNewStat);
-app.post(path+ "/:name",funciones.errorInPost);
+app.post(urlDir,funciones.postGeneral);
+app.post(urlDir+ "/:country",funciones.errorInPost);
 
-app.delete(path,funciones.deleteStats);
-app.delete(path+ "/:name",funciones.deleteData);
+app.delete(urlDir,funciones.deleteStats);
+app.delete(urlDir+ "/:country",funciones.deleteData);
+
+
+
 
 
 /*****************************API VERO*********************************/

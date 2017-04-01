@@ -2,9 +2,11 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617"
+var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
 
 var db;
+
+var key = "manuel";
 
 /************************CONECTAR CON LA BASE DE DATOS**************/
 
@@ -66,7 +68,8 @@ module.exports.getCreateStats = (req,res) => {
 //Get conjunto datos
 
 module.exports.getObtainStats = (req, res) => {
-    
+  
+
     console.log("INFO: New GET request to /hiv-stats");
     if(!db){
         console.log("No hay nada en la base de datos");
@@ -113,7 +116,7 @@ module.exports.getDataName =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-               //  aux = encuentraName(conjunto,aux,Param );
+                 aux = encuentraName(conjunto,aux,Param );
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -153,7 +156,17 @@ module.exports.getDataNameYear =  function (req, res) {
                     res.sendStatus(404);
                 }else{
                  
-                 
+                 for(var j = 0;j<conjunto.length;j++){
+                     
+                     var helpp = conjunto[j];
+                     if (isNaN(nombre) && isNaN(parseInt(year)) === false){
+                        if(helpp.country == nombre && helpp.year == parseInt(year)){
+		                	aux.push(helpp);
+                     
+                        }
+                         
+                     } 
+                 }
 
                     if(aux.length === 0){
                         res.sendStatus(404);
@@ -199,7 +212,16 @@ module.exports.postNewData =  (req,res) =>{
                     console.log("DB empty");
                     res.sendStatus(404);
                 }else{
-                  
+                    
+                    for(var i = 0;i<conjunto.length;i++){
+                        
+                        if(conjunto[i].country === nuevoDato.country && conjunto[i].year === parseInt(nuevoDato.year)){
+                            res.sendStatus(409);
+                            console.log("Error,el dato ya estaba en el conjunto");
+                            sol = true;
+                        }
+                    }
+                    
                   if(sol === false){
                       db.insert(nuevoDato);
                       res.sendStatus(201);//CREATED 
@@ -253,7 +275,7 @@ module.exports.putData = (req,res)=>{
         
         
     }
-        if(country.name === actualiza.name){
+        if(country === actualiza.country){
         db.update({country: country},
         {
             country:actualiza.country ,
@@ -265,6 +287,8 @@ module.exports.putData = (req,res)=>{
         }) ;
         res.send(200); //OK
        
+    }else{
+        res.sendStatus(400);
     }
 
 };
@@ -274,7 +298,7 @@ module.exports.putTwoData = (req,res)=>{
 
      var actualiza= req.body;
      var country = req.params.name;
-     var year = req.params.year;
+     var year = parseInt(req.params.year);
      
    if(!actualiza.country || !actualiza.year || !actualiza.incidence || !actualiza.percentage || !actualiza.total){
         
@@ -282,8 +306,8 @@ module.exports.putTwoData = (req,res)=>{
      console.log("falta algún parámetro del dato que queremos insertar");
         
     }
-        
-        db.update({country: country},
+        if(country === actualiza.country && parseInt(year) === parseInt(actualiza.year) ){
+        db.update({country: country, year : year},
         {
             country:actualiza.country ,
             year : actualiza.year , 
@@ -292,9 +316,11 @@ module.exports.putTwoData = (req,res)=>{
             percentage : actualiza.percentage
             
         }) ;
-        res.send(200); //OK
+        res.sendStatus(200); //OK
        
-    
+    }else{
+        res.sendStatus(400);
+    }
 
 };
 
@@ -348,19 +374,88 @@ module.exports.deleteData = (req,res)=>{
                 }
                 
             });
-       
+        }else if(year){
+            
+            db.remove({year : year},function(error,conjunto){  
+                
+                if(error){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                   
+                    console.log("El dato se ha borrado satisfactoriamente");  
+                    res.sendStatus(200);
+                }
+                
+            });
+            
+            
+        }       
                 
             
     }
-}};
+};
 
 module.exports.deleteTwoData = (req,res)=>{
     
-  
+    var country = req.params.country;
+    var year = parseInt(req.params.year);
+
+    if(!country ){
+        res.sendStatus(404);
+        
+    }else {
+            db.remove({country : country , year : year},function(error,conjunto){  
+                
+                if(error){
+                    console.log("Algo pasa con la base de datos que está vacía");
+                    res.sendStatus(404);
+                }else{
+                   
+                    console.log("El dato se ha borrado satisfactoriamente");  
+                    res.sendStatus(200);
+                }
+                
+            });
+                
+                
+            
+    }
 };
 
 
 
 
+/*************************FUNCIONES AUXILIARES*******************************/
 
 
+
+
+var encuentraName = function(conjunto,conjaux,parametro){
+    
+    if(parametro ){
+        for(var i = 0;i<conjunto.length;i++){
+                        
+            if(conjunto[i].country === parametro){
+                 conjaux.push(conjunto[i]);
+            }else if (conjunto[i].year === parseInt(parametro)){
+                
+                conjaux.push(conjunto[i]);
+            }
+        }
+        
+    } 
+    
+    return conjaux;
+};
+
+
+var tieneKey  = function(llave){
+    
+    var sol = false;
+    
+    if(llave === key){
+        sol = true;
+    }
+    return sol;
+};
