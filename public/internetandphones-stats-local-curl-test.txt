@@ -9,3 +9,5 @@ curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api
 ***curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09-lab-sos161709vvp.c9users.io/api/v1/internetandphones-stats/estonia'
 
 curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "estonia", "year": "2010", "usageinternet": "74.1", "usagephoneline": "30" }' 'https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/estonia'
+
+curl -v -XPUT -H 'Content-type: application/json' -d '{"country": "austria" , "year": "2015" , "usageinternet": "75.2", "usagephoneline": "40"}' 'http://localhost:8080/api/v1/internetandphones-stats/austria/2010'

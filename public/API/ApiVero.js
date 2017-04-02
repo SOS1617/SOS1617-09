@@ -167,6 +167,29 @@ exports.postCollection=function(request,response){
 
 exports.putRecurso=function(request,response){
  var updateStat= request.body;
+    if (!updateStat) {
+        console.log("WARNING: New PUT");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New PUT");
+        if(!updateStat.country || !updateStat.year || !updateStat.usageinternet  || !updateStat.usagephoneline){
+            console.log("WARMING: New PUT incorrect");
+            response.sendStatus(422);//incorrecto
+        } else {
+            db1.update({country:updateStat.country},
+            {
+                country:updateStat.country, 
+                year:updateStat.year,
+                usageinternet: updateStat.usageinternet,
+                usagephoneline: updateStat.usagephoneline
+                
+            });
+        
+        }
+    }
+};
+exports.putRecursoDosParametros=function(request,response){
+ var updateStat= request.body;
  var country = request.params.name;
  var year = parseInt(request.params.year);
     if (!updateStat) {
@@ -210,6 +233,30 @@ exports.deleteCollection=function(request,response) {
 
 exports.deleteRecurso=function(request,response){
     var country = request.params.country;
+    if (!country) {
+        console.log("WARNING: New DELETE");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New DELETE");
+        db1.remove({country: country}, {}, function (error, stats1) {
+            if (error) {
+                console.error('WARNING: Error removing data from DB');
+                response.sendStatus(500); // internal server error
+            } else {
+                console.log("INFO: Stats remove");
+                if ( stats1 === 1) {
+                    console.log("INFO: The stats is removed");
+                    response.sendStatus(204); // no content
+                } else {
+                    console.log("WARNING: There are no stats to delete");
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
+    }
+};
+exports.deleteRecursoDosParametros=function(request,response){
+    var country = request.params.country;
     var year = parseInt(request.params.year);
         if (!country && !year) {
             console.log("WARNING: New DELETE request");
@@ -238,8 +285,6 @@ exports.deleteRecurso=function(request,response){
         }
     
 };
-
-
     
 
 

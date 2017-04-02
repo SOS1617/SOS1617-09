@@ -87,21 +87,20 @@ var metodosVero = require("./public/API/ApiVero.js");
 
 app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);
-
 app.get(vero + "/:country",metodosVero.getRecurso);
-
 app.get(vero + "/:country/:year",metodosVero.getRecursoDosParametros);
-
 
 app.post(vero,metodosVero.postCollection);
 app.post(vero +"/:country",metodosVero.postRecurso);
+app.post(vero +"/:country/:year",metodosVero.postRecurso);
 
 app.put(vero,metodosVero.putCollection);
-app.put(vero +"/:country" ,metodosVero.putRecurso); 
-
+app.put(vero +"/:country" ,metodosVero.putRecurso);
+app.put(vero +"/:country/:year" ,metodosVero.putRecursoDosParametros);
 
 app.delete(vero,metodosVero.deleteCollection);
 app.delete(vero+"/:country",metodosVero.deleteRecurso);
+app.delete(vero+"/:country/:year",metodosVero.deleteRecursoDosParametros);
 
 
 
