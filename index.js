@@ -89,8 +89,8 @@ app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);
 
 app.get(vero + "/:country",metodosVero.getRecurso);
-//app.get(vero + "/:year",metodosVero.getRecursoYear);
-//app.get(vero + "/:year",metodosVero.getRecursoYearIntentoDosParametros);
+
+app.get(vero + "/:country/:year",metodosVero.getRecursoDosParametros);
 
 
 app.post(vero,metodosVero.postCollection);

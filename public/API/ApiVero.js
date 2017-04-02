@@ -28,21 +28,18 @@ exports.getLoadInitial= function(request,response){
             response.sendStatus(500); // internal server error
             }else {
                 if(stats1.length===0){
-                db1.insert([{"country": "austria" , "year": 2010 , "usageinternet": "75.2", "usagephoneline": "40"},
-                {"country": "belgium" , "year": 2010 , "usageinternet": "75" , "usagephoneline": "42"},
-                {"country": "denmark" , "year": 2010 , "usageinternet": "88.7" , "usagephoneline": "47"}]);
-                console.log("OK");
-                response.sendStatus(201);
+                    db1.insert([{"country": "austria" , "year": 2010 , "usageinternet": "75.2", "usagephoneline": "40"},
+                    {"country": "belgium" , "year": 2010 , "usageinternet": "75" , "usagephoneline": "42"},
+                    {"country": "denmark" , "year": 2010 , "usageinternet": "88.7" , "usagephoneline": "47"}]);
+                    console.log("OK");
+                    response.sendStatus(201);
                     
                 }else{
                     response.sendStatus(409);
                 }
-                    
             }
-        });
-            
-        
-     };
+    });
+};
 
 exports.getCollection=function(request,response){
     console.log("INFO: New resquest to /internetandphones-stats");
@@ -50,157 +47,88 @@ exports.getCollection=function(request,response){
         console.log("BD is empty");
         response.sendStatus(404);
     }else{
-     db1.find({}).toArray(function(error, stats1){
-         if (error) {
-             console.error('WARNING: Error getting data from DB');
-             response.sendStatus(500); // internal server error
-        }else {
-            if(stats1.length===0){
-                console.log("INFO: Sending stats");
-                response.sendStatus(404);
-            }else{
-                response.send(stats1);
+        db1.find({}).toArray(function(error, stats1){
+            if (error) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }else {
+                if(stats1.length===0){
+                    console.log("INFO: Sending stats");
+                    response.sendStatus(404);
+                }else{
+                    response.send(stats1);
+                }
             }
-        }
      
-    });
+        });
     }
  
 };
 
-exports.getRecursoYearIntentoDosParametros=function(request,response){
-var country = request.params.country;
-var year = parseInt(request.params.year);
-if (!country || !year) {
-    console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
-    response.sendStatus(400); // bad request
-}else {
-    console.log("INFO: New GET request to /export-and-import-stats/" + country + year);
-    db1.find({"country": country,"year": year}).toArray(function(error, stats1) {
-                if (error) {
-                    console.error('WARNING: Error getting data from DB');
-                    response.sendStatus(500); // internal server error
+exports.getRecurso=function(request,response){
+    var country = request.params.country;
+    var a = [];
+    if (!country) {
+        console.log("BAD Request");
+        response.sendStatus(400);
+     } else if (!db1) {
+        response.sendStatus(404);
+    }else {
+        db1.find({}).toArray(function(error, stats1) {
+            if (stats1.length === 0) {
+                    console.log("WARNING: Error getting data from DB");
+                    response.sendStatus(404);
+            }else {
+                 if (country) {
+                     for (var i = 0; i < stats1.length; i++) {
+                         if (stats1[i].country === country) {
+                             a.push(stats1[i]);
+                             response.send(a);
+                             
+                         }else if(stats1[i].year === parseInt(country)) {
+                             a.push(stats1[i]);
+                             response.send(a);
+                         }
+                     }
                 }
-                else {
-                    if (stats1.length > 0) {
-                        var c = stats1[0];
-                        console.log("INFO: Sending stats: " + JSON.stringify((c), 2, null));
-                        response.send(c);
+            }
+        });
+    }
+};
+
+exports.getRecursoDosParametros=function(request,response){
+   var country = request.params.country;
+    var a = [];
+    if (!country) {
+        console.log("Bad Request");
+        response.sendStatus(400);
+        
+    } else if (!db1) {
+        response.sendStatus(404);
+    }else {
+        db1.find({}).toArray(function(error, stats1) {
+            if (stats1.length === 0) {
+                    console.log("WARNING: Error getting data from DB");
+                    response.sendStatus(404);
+            }else {
+                 if (country) {
+                     for (var i = 0; i < stats1.length; i++) {
+                         if (stats1[i].country === country) {
+                             a.push(stats1[i]);
+                             for(var i=0; a.length; i++){
+                                 if(a[i].year === parseInt(country)){
+                                     a.push(stats1[i]);
+                                     response.send(a);
+                                 }
+                             }
+                         }
                     }
-                    else {
-                        console.log("WARNING: There are not any area stats with name " + country);
-                        response.sendStatus(404); // not found
-                    }
-                }
-            });
-        }
-    };
-
-/*exports.getRecurso=function(request,response){
- var country = request.params.country;
- if(!country){
-     console.log("WARMING: There are noy any country");
-     response.sendStatus(400);//bad request
- } else if(!db1){ 
-     response.sendStatus(404);//Base de datos está vacía
- }else{
-    console.log("INFO: New GET");
-    db1.find({"country":country}).toArray(function(error,stats1){
-        if(error){
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        }else{
-    
-            if(stats1.length>0){
-                var c = stats1[0];
-                console.log("INFO: Sending country");
-                    response.send(c);
-                    
-                }else{
-                    console.log("WARMING: There are not any country with country" + country);
-                    response.sendStatus(404);//not found
-                }
+                 }
             }
         });
     }
-};*/
-/*exports.getRecursoYear=function(request,response){
- var year= parseInt(request.params.year);
- console.log("Qué llega"+year);
- if(!year){
-     console.log("WARMING: There are noy any year");
-     response.sendStatus(400);//bad request
- } else if(!db1){ 
-     response.sendStatus(404);//Base de datos está vacía
- }else{
-    console.log("INFO: New GET");
-    db1.find({"year":year}).toArray(function(error,stats1){
-        if(error){
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        }else{
-            
-            if(stats1.length>0){
-                var c = stats1[0];
-                console.log("INFO: Sending year");
-                    response.send(c);
-                    
-                }else{
-                    console.log("WARMING: There are not any year with" + year);
-                    response.sendStatus(404);//not found
-                }
-            }
-        });
-    }
-};*/
+};
 
-/*exports.getRecursoYearIntentoDosParametros=function(request,response){
- var year= parseInt(request.params.year);
- var country= request.params.country;
- console.log("Qué llega"+ year +country);
- if(!year || !country){
-     console.log("WARMING: There are noy any year");
-     response.sendStatus(400);//bad request
- }else if(!country){
-    console.log("INFO: New GET");
-    db1.find({"year":year}).toArray(function(error,stats1){
-        if(error){
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        }else{
-            
-            if(stats1.length>0){
-                var c = stats1[0];
-                console.log("INFO: Sending year");
-                    response.send(c);
-                    
-                }else{
-                    console.log("WARMING: There are not any year with" + year);
-                    response.sendStatus(404);//not found
-                }
-            }
-        });
-}else if(!year){
-    db1.find({"country":country}).toArray(function(error,stats2){
-        if(error){
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        }else{
-            
-            if(stats2.length>0){
-                var c2 = stats2[0];
-                console.log("INFO: Sending country");
-                    response.send(c2);
-                    
-                }else{
-                    console.log("WARMING: There are not any country with" + country);
-                    response.sendStatus(404);//not found
-                }
-            }
-        });
-    }
-
-};*/
 
 exports.postCollection=function(request,response){
  var country = request.params.country;
@@ -239,6 +167,8 @@ exports.postCollection=function(request,response){
 
 exports.putRecurso=function(request,response){
  var updateStat= request.body;
+ var country = request.params.name;
+ var year = parseInt(request.params.year);
     if (!updateStat) {
         console.log("WARNING: New PUT");
         response.sendStatus(400); // bad request
@@ -247,13 +177,8 @@ exports.putRecurso=function(request,response){
         if(!updateStat.country || !updateStat.year || !updateStat.usageinternet  || !updateStat.usagephoneline){
             console.log("WARMING: New PUT incorrect");
             response.sendStatus(422);//incorrecto
-        } else {
-            db1.update({country:updateStat.country},
-            {
-                country:updateStat.country, 
-                year:updateStat.year,
-                usageinternet: updateStat.usageinternet,
-                usagephoneline: updateStat.usagephoneline
+        } else if (country === updateStat.country && parseInt(year) === parseInt(updateStat.year)) { 
+            db1.update({"country": country, "year": year}, {country:updateStat.country, year:updateStat.year, usageinternet: updateStat.usageinternet, usagephoneline: updateStat.usagephoneline
                 
             });
         
@@ -285,28 +210,36 @@ exports.deleteCollection=function(request,response) {
 
 exports.deleteRecurso=function(request,response){
     var country = request.params.country;
-    if (!country) {
-        console.log("WARNING: New DELETE");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New DELETE");
-        db1.remove({country: country}, {}, function (error, stats1) {
-            if (error) {
-                console.error('WARNING: Error removing data from DB');
-                response.sendStatus(500); // internal server error
-            } else {
-                console.log("INFO: Stats remove");
-                if ( stats1 === 1) {
-                    console.log("INFO: The stats is removed");
-                    response.sendStatus(204); // no content
-                } else {
-                    console.log("WARNING: There are no stats to delete");
-                    response.sendStatus(404); // not found
+    var year = parseInt(request.params.year);
+        if (!country && !year) {
+            console.log("WARNING: New DELETE request");
+            response.sendStatus(400); 
+        }
+        else {
+            console.log("INFO: New DELETE" + country);
+            db1.remove({country: country,year: year}, {}, function(error, stats1) {
+                var a = JSON.parse(stats1);
+                if (error) {
+                    console.error('WARNING: Error removing data from DB');
+                    response.sendStatus(500); // internal server error
                 }
-            }
-        });
-    }
+                else {
+                    console.log("INFO: stat removed: " + a.n);
+                    if (a.n === 1) {
+                        console.log("INFO: The stat with country " + country + " has been succesfully deleted");
+                        response.sendStatus(204); // no content
+                    }
+                    else {
+                        console.log("WARNING: There are not anything to delete");
+                        response.sendStatus(404); // not found
+                    }
+                }
+            });
+        }
+    
 };
+
+
     
 
 
