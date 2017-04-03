@@ -37,5 +37,5 @@ curl -v -XPUT -H "Content-type: application/json" -d '{"country" : "portugal" ,"
 
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/spain'
-curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats?apikey=manuel'
 curl -v -XGET -H "Content-type: application/json" 'https://sos1617-09.herokuapp.com/api/v1/hiv-stats/'

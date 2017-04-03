@@ -27,7 +27,7 @@ app.listen(port, ()=> {
 
 /***HTML PARA EL BOTÓN DEL TEST DE POSTMAN **/
 
-app.use("/api/v1/test",express.static(path.join(__dirname,"./public/API/Test.html")));
+app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
 
 
@@ -41,12 +41,13 @@ app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
 app.get(routeManuel + "/:name",metodosManuel.getDataName);
 app.get(routeManuel + "/:name/:year",metodosManuel.getDataNameYear);
+
 app.post(routeManuel,metodosManuel.postNewData);
 app.post(routeManuel + "/:name",metodosManuel.badpost);
 app.post(routeManuel + "/:name/:year",metodosManuel.badpost);
 
 app.put(routeManuel , metodosManuel.badPut);
-app.put(routeManuel + "/:name", metodosManuel.putData);
+app.put(routeManuel + "/:name", metodosManuel.badPut);
 app.put(routeManuel + "/:name/:year", metodosManuel.putTwoData);
 
 app.delete(routeManuel,metodosManuel.deleteCollection);
@@ -92,17 +93,19 @@ var metodosVero = require("./public/API/ApiVero.js");
 app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);
 app.get(vero + "/:country",metodosVero.getRecurso);
-
+app.get(vero + "/:country/:year",metodosVero.getRecursoDosParametros);
 
 app.post(vero,metodosVero.postCollection);
 app.post(vero +"/:country",metodosVero.postRecurso);
+app.post(vero +"/:country/:year",metodosVero.postRecurso);
 
 app.put(vero,metodosVero.putCollection);
-app.put(vero +"/:country" ,metodosVero.putRecurso); 
-
+app.put(vero +"/:country" ,metodosVero.putRecurso);
+app.put(vero +"/:country/:year" ,metodosVero.putRecursoDosParametros);
 
 app.delete(vero,metodosVero.deleteCollection);
 app.delete(vero+"/:country",metodosVero.deleteRecurso);
+app.delete(vero+"/:country/:year",metodosVero.deleteRecursoDosParametros);
 
 
 
