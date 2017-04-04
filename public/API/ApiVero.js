@@ -236,7 +236,7 @@ exports.putRecursoDosParametros = function(request, response) {
     else {
         console.log("INFO: New PUT request to stat" + countryPar + " and year " + yearPar + " with data " + JSON.stringify(updateStat, 2, null));
         if (!updateStat.country || !updateStat.year || !updateStat.usageinternet || !updateStat.usagephoneline) {
-            console.log("WARNING: The stat " + JSON.stringify(updateStat, 2, null) + " is not well-formed, sending 422...");
+            console.log("WARNING: The stat " + JSON.stringify(updateStat, 2, null));
             response.sendStatus(422); // unprocessable entity
         }
         else {
