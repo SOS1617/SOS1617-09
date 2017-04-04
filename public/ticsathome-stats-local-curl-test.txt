@@ -10,7 +10,7 @@ curl -v -XPOST -H "Content-type: application/json" -d '{"country":"england", "ye
 
 
 curl -v -XPUT -H "Content-type: application/json" -d '{"country":"england", "year": 2018,"smartphone": 30, "tablet": 18}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XPUT -H "Content-type: application/json" -d '{"country":"england", "year": 2018,"smartphone": 30, "tablet": 66}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/jamaica'
+curl -v -XPUT -H "Content-type: application/json" -d '{"country":"belgium", "year": 2018,"smartphone": 330, "tablet": 66}' 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/belgium/2019'
 
 
 

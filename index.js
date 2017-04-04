@@ -69,7 +69,7 @@ app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
 
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);
-app.put(urlDir+ "/:country/:year",funciones.putSpecific);
+app.put(urlDir+ "/:country/:year",funciones.putTwoSpecific);
 
 app.post(urlDir,funciones.postGeneral);
 app.post(urlDir+ "/:country",funciones.errorInPost);
