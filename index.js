@@ -64,17 +64,21 @@ var funciones = require("./public/API/ApiLuis.js");
 
 app.get(urlDir + "/loadInitialData",funciones.getNewStats);
 app.get(urlDir,funciones.getGeneral);
-app.get(urlDir+ "/:country",funciones.getSpecific);
-
+app.get(urlDir+ "/:country",funciones.getOneParam);
+app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
 
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);
+app.put(urlDir+ "/:country/:year",funciones.putSpecific);
 
 app.post(urlDir,funciones.postGeneral);
 app.post(urlDir+ "/:country",funciones.errorInPost);
+app.post(urlDir+ "/:country/:year",funciones.errorInPost);
 
 app.delete(urlDir,funciones.deleteStats);
-app.delete(urlDir+ "/:country",funciones.deleteData);
+app.delete(urlDir+ "/:country",funciones.deleteOne);
+app.delete(urlDir+ "/:country/:year",funciones.deleteTwo);
+
 
 
 
