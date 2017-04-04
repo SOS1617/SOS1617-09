@@ -66,7 +66,6 @@ app.get(urlDir + "/loadInitialData",funciones.getNewStats);
 app.get(urlDir,funciones.getGeneral);
 app.get(urlDir+ "/:country",funciones.getOneParam);
 app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
-app.get(urlDir+ "/:year",funciones.getYear);
 
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);

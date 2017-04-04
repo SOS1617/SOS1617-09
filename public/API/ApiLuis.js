@@ -78,11 +78,15 @@ exports.getNewStats = function(req, res) {
 // GET a coleccion
 exports.getGeneral = function(req, res) {
 
+
+
+
     console.log("INFO: New GET request to /ticsathome-stats");
     if (!db) {
         console.log("DataBase empty, sorry");
         res.sendStatus(404);
     }
+    
     else {
 
         db.find({}).toArray(function(err, data) {
@@ -109,8 +113,13 @@ exports.getGeneral = function(req, res) {
 
 exports.getOneParam = function(req, res) {
 
+var from = req.query.from;
+var to = req.query.to;
+
     var paramCountry = req.params.country;
+    var paramYear = req.params.year;
     var arr = [];
+    var filt = [];
 
     if (!paramCountry) {
         console.log("Specific request does not exists,try again");
@@ -133,12 +142,20 @@ exports.getOneParam = function(req, res) {
 
                     if (datos[i].country === paramCountry) {
                         arr.push(datos[i]);
-                        // console.log("Esto es como se organiza el vector: "+datos[i]);
+                       
+                    }else if(datos[i].year === parseInt(paramCountry)) {
+                        arr.push(datos[i]);
+                        
                     }
 
                 }
 
-
+/*for(int i = 0;i<arr.length;i++){
+    if(from === datos[i].year){
+        filt.push(datos[i])
+        
+    }
+}*/
                 if (arr.length === 0) {
                     res.sendStatus(404);
                 }else{
@@ -197,47 +214,6 @@ exports.getTwoSpecific = function(req, res) {
 };
 
 
-/*****************************************POR YEAR**********************************/
-
-exports.getYear = function(req, res) {
-
-    var paramYear = parseInt(req.params.year);
-   //var arr = [];
-console.log(paramYear);
-    if (isNaN(paramYear.charAt(0))) {
-        console.log(paramYear);
-        console.log("Specific request does not exists,try again");
-        res.sendStatus(400); // bad request
-
-    }
-    else {
-        db.find({year: paramYear}).toArray(function(error, datos) {
-
-            if (error || datos.length === 0) {
-                console.log("Something is wrong");
-                res.sendStatus(404);
-            }
-            else {
-
-                var filtro = datos.filter((c)=>{
-                    return c.year ==paramYear;
-                });
-
-
-                if (filtro.length === 0) {
-                     console.log("DataBase empty, sorry2");
-                    res.sendStatus(404);
-                }else{
-                res.send(filtro);
-}
-            }
-
-        });
-
-
-
-    }
-};
 
 
 /**********************POST********************/
@@ -328,13 +304,14 @@ exports.errorInPut = function(request, response) {
 
 exports.putSpecific = function(req, res) {
     var updatedSpecific = req.body;
-    var country = req.params.country;
+    var paramCountry = req.params.country;
+    var paramYear = parseInt(req.params.year);
     if (!updatedSpecific) {
         console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
         res.sendStatus(400); // bad request
     }
     else {
-        console.log("INFO: New PUT request to /contacts/" + country + " with data " + JSON.stringify(updatedSpecific, 2, null));
+        console.log("INFO: New PUT request to /contacts/" + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
         if (!updatedSpecific.country || !updatedSpecific.year || !updatedSpecific.smartphone || !updatedSpecific.tablet) {
             console.log("WARNING: The specific data " + JSON.stringify(updatedSpecific, 2, null) + " is not well-formed, sending 422...");
             res.sendStatus(422); // unprocessable entity
@@ -346,20 +323,56 @@ exports.putSpecific = function(req, res) {
                     res.sendStatus(500); // internal server error
                 }
                 else {
-                    var statsBeforeInsertion = stats.filter((stat) => {
-                        return (stat.country.localeCompare(country, "en", {
-                            'sensitivity': 'base'
-                        }) === 0);
-                    });
-                    if (statsBeforeInsertion.length > 0) {
+                    
+                    if (paramCountry === updatedSpecific.country) {
                         db.update({
-                            country: country
+                            country: paramCountry,
                         }, updatedSpecific);
-                        console.log("INFO: Modifying data with country " + country + " with data " + JSON.stringify(updatedSpecific, 2, null));
+                        console.log("INFO: Modifying data with country " + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
                         res.send(updatedSpecific); // return the updated contact
                     }
                     else {
-                        console.log("WARNING: There are not any data with country " + country);
+                        console.log("WARNING: There are not any data with country " + paramCountry);
+                        res.sendStatus(404); // not found
+                    }
+                }
+            });
+        }
+    }
+};
+
+
+exports.putTwoSpecific = function(req, res) {
+    var updatedSpecific = req.body;
+    var paramCountry = req.params.country;
+    var paramYear = parseInt(req.params.year);
+    if (!updatedSpecific) {
+        console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
+        res.sendStatus(400); // bad request
+    }
+    else {
+        console.log("INFO: New PUT request to /contacts/" + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
+        if (!updatedSpecific.country || !updatedSpecific.year || !updatedSpecific.smartphone || !updatedSpecific.tablet) {
+            console.log("WARNING: The specific data " + JSON.stringify(updatedSpecific, 2, null) + " is not well-formed, sending 422...");
+            res.sendStatus(422); // unprocessable entity
+        }
+        else {
+            db.find({}, function(err, stats) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    res.sendStatus(500); // internal server error
+                }
+                else {
+                    
+                    if (paramCountry === updatedSpecific.country && paramYear ===parseInt(updatedSpecific.year)) {
+                        db.update({
+                            country: paramCountry, year: paramYear
+                        }, updatedSpecific);
+                        console.log("INFO: Modifying data with country " + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
+                        res.send(updatedSpecific); // return the updated contact
+                    }
+                    else {
+                        console.log("WARNING: There are not any data with country " + paramCountry);
                         res.sendStatus(404); // not found
                     }
                 }
@@ -435,11 +448,41 @@ exports.deleteOne = function(req, res) {
     }
 };
 
+
+/*exports.deleteTwo = function(req, res) {
+
+    var paramCountry = req.params.country;
+    var paramYear = parseInt(req.params.year);
+
+    if (!paramCountry|| !paramYear) {
+        res.sendStatus(400);
+
+    }
+    else {
+        db.remove({country: paramCountry, year:paramYear}, {}, function(error, Sremove) {
+
+            if (error) {
+                console.log("Something wrong on DataBase");
+                res.sendStatus(500);
+            }
+            else {
+
+              
+                    console.log("INFO: The country with name " + paramCountry + paramYear+ " has been succesfully deleted, sending 204...");
+                    res.sendStatus(204); // no content
+               
+            }
+
+        });
+
+
+
+    }
+};*/
 exports.deleteTwo = function(req, res) {
 
     var paramCountry = req.params.country;
-    var paramYear = req.params.year;
-    var arr = [];
+    var paramYear = parseInt(req.params.year);
 
     if (!paramCountry || !paramYear) {
         res.sendStatus(400);
@@ -454,17 +497,24 @@ exports.deleteTwo = function(req, res) {
             }
             else {
 
-                for (var i = 0; i < stats.length; i++) {
+                var aux = stats.filter(c=>c.year==paramYear &&  c.country===paramCountry);
+                db.remove({country: paramCountry,year: parseInt(paramYear)}, {}, function(error, Sremove) {
+                    console.log(aux);
 
-                    if (stats[i].country === paramCountry /*&& stats[i].year ===paramYear*/ ) {
-                        arr.push(stats[i]);
-                    }
-                }
-                var aux = arr.filter(c=>c.year==paramYear);
-                    
-                console.log(aux);
-                db.remove(aux);
-                 res.sendStatus(204);
+            if (error) {
+                console.log("Something wrong on DataBase");
+                res.sendStatus(500);
+            }
+            else {
+
+              
+                    console.log("INFO: The country with name " + paramCountry + " has been succesfully deleted, sending 204...");
+                    res.sendStatus(204); // no content
+               
+            }
+
+        });
+
             }
         });
        
