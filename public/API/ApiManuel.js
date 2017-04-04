@@ -132,7 +132,61 @@ module.exports.getObtainStats = (req, res) => {
                     }
                 });
             }
-            else {
+            else if (limit) {
+
+                db.find({}).limit(limit).toArray(function(err, data) {
+                    if (err) {
+                        console.error('ERROR from database');
+                        res.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (data.length === 0) {
+                            res.sendStatus(404);
+                        }
+                        console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
+                        if (from && to) {
+
+                            aux = buscameDatos(data, aux, from, to);
+                            if (aux.length > 0) {
+                                res.send(aux);
+                            }
+                            else {
+                                res.sendStatus(404); //Está el from y el to pero está mal hecho
+                            }
+                        }
+                        else {
+                            res.send(data);
+                        }
+                    }
+                });
+            }else if (offset) {
+
+                db.find({}).skip(offset).toArray(function(err, data) {
+                    if (err) {
+                        console.error('ERROR from database');
+                        res.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (data.length === 0) {
+                            res.sendStatus(404);
+                        }
+                        console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
+                        if (from && to) {
+
+                            aux = buscameDatos(data, aux, from, to);
+                            if (aux.length > 0) {
+                                res.send(aux);
+                            }
+                            else {
+                                res.sendStatus(404); //Está el from y el to pero está mal hecho
+                            }
+                        }
+                        else {
+                            res.send(data);
+                        }
+                    }
+                });
+            } else {
 
                 db.find({}).toArray(function(err, data) {
                     if (err) {
@@ -165,7 +219,7 @@ module.exports.getObtainStats = (req, res) => {
 };
 
 
-//GET a un recurso en concreto por el nombre
+//GET a un recurso en concreto por el nombre o por el año
 
 module.exports.getDataName = function(req, res) {
 
