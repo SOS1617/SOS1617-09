@@ -67,6 +67,7 @@ exports.getCollection=function(request,response){
 
 exports.getRecurso=function(request,response){
     var country = request.params.country;
+    var year = parseInt(request.params.year);
     var a = [];
     if (!country) {
         console.log("BAD Request");
@@ -83,13 +84,18 @@ exports.getRecurso=function(request,response){
                      for (var i = 0; i < stats1.length; i++) {
                          if (stats1[i].country === country) {
                              a.push(stats1[i]);
-                             response.send(a);
+                            
+                            
+                            
                              
                          }else if(stats1[i].year === parseInt(country)) {
                              a.push(stats1[i]);
-                             response.send(a);
+                              
+                              
+                             
                          }
-                     }
+                        
+                     } response.send(a);
                 }
             }
         });
@@ -98,6 +104,7 @@ exports.getRecurso=function(request,response){
 
 exports.getRecursoDosParametros=function(request,response){
    var country = request.params.country;
+   var year = parseInt(request.params.year);
     var a = [];
     if (!country) {
         console.log("Bad Request");
@@ -115,14 +122,9 @@ exports.getRecursoDosParametros=function(request,response){
                      for (var i = 0; i < stats1.length; i++) {
                          if (stats1[i].country === country) {
                              a.push(stats1[i]);
-                             for(var i=0; a.length; i++){
-                                 if(a[i].year === parseInt(country)){
-                                     a.push(stats1[i]);
-                                     response.send(a);
-                                 }
-                             }
                          }
-                    }
+                    }var b = a.filter(f=>f.year===year);
+                    response.send(b);
                  }
             }
         });
@@ -184,6 +186,7 @@ exports.putRecurso=function(request,response){
                 usagephoneline: updateStat.usagephoneline
                 
             });
+            response.sendStatus(200);
         
         }
     }
@@ -200,12 +203,15 @@ exports.putRecursoDosParametros=function(request,response){
         if(!updateStat.country || !updateStat.year || !updateStat.usageinternet  || !updateStat.usagephoneline){
             console.log("WARMING: New PUT incorrect");
             response.sendStatus(422);//incorrecto
-        } else if (country === updateStat.country && parseInt(year) === parseInt(updateStat.year)) { 
-            db1.update({"country": country, "year": year}, {country:updateStat.country, year:updateStat.year, usageinternet: updateStat.usageinternet, usagephoneline: updateStat.usagephoneline
-                
-            });
+        } else if (country === updateStat.country && year=== parseInt(updateStat.year)) { 
+            db1.update({country:country, year:year}, {country:updateStat.country, year:updateStat.year, usageinternet:updateStat.usageinternet, usagephoneline:updateStat.usagephoneline
+           
+        });response.sendStatus(200);
+          
         
         }
+           console.log("Hecho");
+           
     }
 };
 
