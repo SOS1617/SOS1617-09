@@ -312,7 +312,7 @@ exports.postGeneral = function(req, res) {
                             res.sendStatus(500); // internal server error
                         }
                         else {
-                            var statsBeforeInsertion = stats.filter((contact) => {
+                            var statsBeforeInsertion = stats.filter((contact) => { 
                                 return (contact.country.localeCompare(newGeneral.country, "en", {
                                     'sensitivity': 'base'
                                 }) === 0);
