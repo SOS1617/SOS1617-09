@@ -89,8 +89,7 @@ exports.getNewStats = function(req, res) {
 exports.getGeneral = function(req, res) {
 
 
-
-    var limit = parseInt(req.query.limit);
+ var limit = parseInt(req.query.limit);
     var offset = parseInt(req.query.offset);
 
     var paramKey = req.query.apikey;
@@ -386,7 +385,6 @@ exports.errorInPut = function(req, res) {
 exports.putSpecific = function(req, res) {
     var updatedSpecific = req.body;
     var paramCountry = req.params.country;
-    var paramYear = parseInt(req.params.year);
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
