@@ -291,7 +291,7 @@ exports.postCollection = function(request, response) {
                      }
                      else {
                          var internetandphonesBeforeInsertion = stats1.filter((i) => {
-                             return (i.country.localeCompare(country.country, "en", {
+                             return (i.country.localeCompare(newInternetandphones.country, "en", {
                                  "sensitiviry": "base"
                              }) === 0);
                          });
