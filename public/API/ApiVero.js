@@ -465,7 +465,7 @@ exports.deleteRecurso = function(request, response) {
                      if (error) {
                          console.error('WARNING: Error removing data from DB');
                          response.sendStatus(500); // internal server error
-                     }
+                     } 
                      else {
                          console.log("INFO: Stats remove");
                          if (stats1 === 1) {
