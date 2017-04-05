@@ -98,7 +98,8 @@ exports.getGeneral = function(req, res) {
     else if (!checkKey(paramKey)) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
-    else {var limit = parseInt(req.query.limit);
+    else {
+        var limit = parseInt(req.query.limit);
     var offset = parseInt(req.query.offset);
 
         console.log("INFO: New GET request to /ticsathome-stats");
@@ -193,7 +194,7 @@ exports.getOneParam = function(req, res) {
 
                             }
                         }
-                        res.send(filt);
+                       // res.send(filt);
                         res.sendStatus(200);
 
                         /*****************/
@@ -202,8 +203,8 @@ exports.getOneParam = function(req, res) {
                         res.sendStatus(404);
                     }
                     else {
-                        res.sendStatus(200);
-                        res.send(arr);
+                      res.sendStatus(200);
+                     //   res.send(arr);
                     }
                 }
 
@@ -255,7 +256,9 @@ exports.getTwoSpecific = function(req, res) {
 
                     console.log(aux);
 
-                    res.send(aux);
+                   // res.send(aux);
+                
+                    res.sendStatus(200);
                 }
 
             });
