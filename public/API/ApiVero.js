@@ -202,7 +202,7 @@ exports.getRecurso = function(request, response) { //Búsqueda en un recurso fro
 
                                  }
                              }
-                             response.send(res);
+                            // response.send(res);
                              response.sendStatus(200);
 
                          }
