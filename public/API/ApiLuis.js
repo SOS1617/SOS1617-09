@@ -79,7 +79,7 @@ exports.getNewStats = function(req, res) {
 exports.getGeneral = function(req, res) {
 
  var limit = parseInt(req.query.limit);
-    var offset = parseInt(req.query.offset);
+ var offset = parseInt(req.query.offset);
 
 
     console.log("INFO: New GET request to /ticsathome-stats");
