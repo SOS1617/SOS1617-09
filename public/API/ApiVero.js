@@ -388,7 +388,7 @@ exports.putRecursoDosParametros = function(request, response) {
                          }
                          else {
                              console.log("WARNING: There are not any data with country " + countryPar);
-                             response.sendStatus(404); // not found
+                             response.sendStatus(400); // not found
                          }
                      }
                  });
