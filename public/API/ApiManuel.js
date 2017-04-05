@@ -13,7 +13,7 @@ con una apikey inválida se debe devolver el código 403.
 
 /************************CONECTAR CON LA BASE DE DATOS**************/
 
-mongoClient.connect(mongoURL, { native_parser: true}, (error, database) => {
+mongoClient.connect(mongoURL, {native_parser: true}, (error, database) => {
 
     if (error) {
         console.log("No podemos usar la base de datos" + error);
@@ -159,7 +159,8 @@ module.exports.getObtainStats = (req, res) => {
                         }
                     }
                 });
-            }else if (offset) {
+            }
+            else if (offset) {
 
                 db.find({}).skip(offset).toArray(function(err, data) {
                     if (err) {
@@ -186,7 +187,8 @@ module.exports.getObtainStats = (req, res) => {
                         }
                     }
                 });
-            } else {
+            }
+            else {
 
                 db.find({}).toArray(function(err, data) {
                     if (err) {
@@ -235,10 +237,10 @@ module.exports.getDataName = function(req, res) {
     }
     else {
 
-        var Param = req.params.name;
+        var country = req.params.name;
         var aux = [];
 
-        if (!Param) {
+        if (!country) {
             console.log("BAD Request,try again with new data");
             res.sendStatus(400); // bad request
 
@@ -247,6 +249,28 @@ module.exports.getDataName = function(req, res) {
             res.sendStatus(404); //Base de datos está vacía
         }
         else {
+            
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+    
+     if (limit && offset) {
+
+                db.find({country : country}).skip(offset).limit(limit).toArray(function(err, data) {
+                    if (err) {
+                        console.error('ERROR from database');
+                        res.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (data.length === 0) {
+                            res.sendStatus(404);
+                        }
+                        console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
+                            res.send(data);
+                        
+                    }
+                });
+            }else{
+            
             db.find({}).toArray(function(error, conjunto) {
 
                 if (conjunto.length === 0) {
@@ -255,7 +279,7 @@ module.exports.getDataName = function(req, res) {
                 }
                 else {
 
-                    aux = encuentraName(conjunto, aux, Param);
+                    aux = encuentraName(conjunto, aux, country);
 
                     if (aux.length === 0) {
                         res.sendStatus(404);
@@ -268,7 +292,7 @@ module.exports.getDataName = function(req, res) {
             });
 
         }
-
+}
     }
 };
 
