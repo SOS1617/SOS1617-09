@@ -118,7 +118,7 @@ exports.getLoadInitial = function(request, response) {
     
 };
 
-exports.getCollection = function(request, response) { //paginación limit offset-> ?limit=x&offser=y
+exports.getCollection = function(request, response) { //paginación limit offset-> ?limit=x&offset=y
     var key = request.query.apikey;
     if(!key){
         response.sendStatus(401);
@@ -509,16 +509,13 @@ exports.deleteRecursoDosParametros = function(request, response) {
                     console.error('WARNING: Error removing data from DB');
                     response.sendStatus(500); // internal server error
                 }
-                else {
-                    console.log("INFO: stat removed: " + a.n);
-                    if (a.n === 1) {
-                        console.log("INFO: The stat with country " + country + " has been succesfully deleted");
-                        response.sendStatus(204); // no content
-                    }
-                    else {
-                        console.log("WARNING: There are not anything to delete");
-                        response.sendStatus(404); // not found
-                    }
+                else if(stats1.length===0){
+                    console.log("Something is wrong");
+                    response.sendStatus(404);
+                }else{
+                    console.log("INFO: The stat with country " + country + " has been succesfully deleted");
+                    response.sendStatus(204); // no content
+                    
                 }
             });
         }

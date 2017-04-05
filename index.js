@@ -96,7 +96,7 @@ app.get(vero + "/:country/:year",metodosVero.getRecursoDosParametros);
 
 app.post(vero,metodosVero.postCollection);
 app.post(vero +"/:country",metodosVero.postRecurso);
-app.post(vero +"/:country/:year",metodosVero.postRecurso);
+
 
 app.put(vero,metodosVero.putCollection);
 app.put(vero +"/:country" ,metodosVero.putRecurso);
