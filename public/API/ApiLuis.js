@@ -135,14 +135,7 @@ exports.getGeneral = function(req, res) {
 
 exports.getOneParam = function(req, res) {
 
-    var from = parseInt(req.query.from);
-    var to = parseInt(req.query.to);
-
-
-
-    var paramCountry = req.params.country;
-    var arr = [];
-    var filt = [];
+   
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -151,6 +144,14 @@ exports.getOneParam = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
+         var from = parseInt(req.query.from);
+    var to = parseInt(req.query.to);
+
+
+
+    var paramCountry = req.params.country;
+    var arr = [];
+    var filt = [];
         if (!paramCountry) {
             console.log("Specific request does not exists,try again");
             res.sendStatus(400); // bad request
@@ -218,10 +219,7 @@ exports.getOneParam = function(req, res) {
 
 exports.getTwoSpecific = function(req, res) {
 
-    var paramCountry = req.params.country;
-    var paramYear = req.params.year;
-    console.log(paramYear);
-    var arr = [];
+   
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -230,6 +228,9 @@ exports.getTwoSpecific = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
+         var paramCountry = req.params.country;
+    var paramYear = req.params.year;
+    var arr = [];
         if (!paramYear || !paramCountry) {
             console.log("Specific request does not exists,try again");
             res.sendStatus(400); // bad request
@@ -274,7 +275,7 @@ exports.getTwoSpecific = function(req, res) {
 
 exports.postGeneral = function(req, res) {
 
-    var newGeneral = req.body;
+   
 
     var paramKey = req.query.apikey;
     if (!paramKey) {
@@ -284,7 +285,7 @@ exports.postGeneral = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
-
+ var newGeneral = req.body;
         if (!newGeneral) {
             console.log("WARNING: New POST request to /ticsathome-stats/ without content, sending 400...");
             res.sendStatus(400); //BAD REQUEST
@@ -383,8 +384,7 @@ exports.errorInPut = function(req, res) {
 //PUT a un recurso en concreto
 
 exports.putSpecific = function(req, res) {
-    var updatedSpecific = req.body;
-    var paramCountry = req.params.country;
+ 
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -393,6 +393,8 @@ exports.putSpecific = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
+           var updatedSpecific = req.body;
+    var paramCountry = req.params.country;
         if (!updatedSpecific) {
             console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
             res.sendStatus(400); // bad request
@@ -431,9 +433,7 @@ exports.putSpecific = function(req, res) {
 
 
 exports.putTwoSpecific = function(req, res) {
-    var updatedSpecific = req.body;
-    var paramCountry = req.params.country;
-    var paramYear = parseInt(req.params.year);
+  
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -442,6 +442,9 @@ exports.putTwoSpecific = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
+          var updatedSpecific = req.body;
+    var paramCountry = req.params.country;
+    var paramYear = parseInt(req.params.year);
         if (!updatedSpecific) {
             console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
             res.sendStatus(400); // bad request
@@ -528,7 +531,7 @@ exports.deleteStats = function(req, res) {
 
 exports.deleteOne = function(req, res) {
 
-    var paramCountry = req.params.country;
+  
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -537,6 +540,7 @@ exports.deleteOne = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
+          var paramCountry = req.params.country;
 
         if (!paramCountry) {
             res.sendStatus(400);
@@ -568,8 +572,7 @@ exports.deleteOne = function(req, res) {
 
 exports.deleteTwo = function(req, res) {
 
-    var paramCountry = req.params.country;
-    var paramYear = parseInt(req.params.year);
+   
     var paramKey = req.query.apikey;
     if (!paramKey) {
         res.sendStatus(401);
@@ -578,7 +581,8 @@ exports.deleteTwo = function(req, res) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
     else {
-
+ var paramCountry = req.params.country;
+    var paramYear = parseInt(req.params.year);
         if (!paramCountry || !paramYear) {
             res.sendStatus(400);
 
