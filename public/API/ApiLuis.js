@@ -193,7 +193,7 @@ exports.getOneParam = function(req, res) {
 
                             }
                         }
-                        res.send(filt);
+                        //res.send(filt);
                         res.sendStatus(200);
 
                         /*****************/
@@ -203,7 +203,7 @@ exports.getOneParam = function(req, res) {
                     }
                     else {
                         res.sendStatus(200);
-                        res.send(arr);
+                       // res.send(arr);
                     }
                 }
 
