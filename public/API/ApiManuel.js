@@ -5,7 +5,7 @@ var mongoURL = "mongodb://manu:admin@ds137730.mlab.com:37730/sos1617";
 var db;
 
 var apikey = "manuel";
- 
+
 /*Si se intenta acceder a la API con…
 sin apikey se debe devolver el código 401.
 con una apikey inválida se debe devolver el código 403.
@@ -549,12 +549,14 @@ module.exports.deleteCollection = (req, res) => {
         db.remove({}, {
             multi: true
         }, function(err, borr) {
+            var numeros = JSON.parse(borr);
             if (err) {
+                
                 console.error('Error no funciona el Delete de toda la coleccion');
                 res.sendStatus(500); // internal server error
             }
             else {
-                if (borr > 0) {
+                if (numeros.n> 0) {
                     console.log("Todo borrado ");
                     res.sendStatus(204); // no content
                 }
@@ -595,15 +597,18 @@ module.exports.deleteData = (req, res) => {
                 db.remove({
                     country: country
                 }, function(error, conjunto) {
-
+                    var numeros = JSON.parse(conjunto);
                     if (error) {
                         console.log("Algo pasa con la base de datos que está vacía");
                         res.sendStatus(404);
                     }
-                    else {
+                    else if(numeros.n >0){
 
                         console.log("El dato se ha borrado satisfactoriamente");
-                        res.sendStatus(200);
+                        res.sendStatus(204);
+                    }else {
+                        
+                        res.sendStatus(404);
                     }
 
                 });
@@ -613,15 +618,18 @@ module.exports.deleteData = (req, res) => {
                 db.remove({
                     year: year
                 }, function(error, conjunto) {
-
+                     var numeros = JSON.parse(conjunto);
                     if (error) {
                         console.log("Algo pasa con la base de datos que está vacía");
                         res.sendStatus(404);
                     }
-                    else {
+                    else if(numeros.n >0){
 
                         console.log("El dato se ha borrado satisfactoriamente");
-                        res.sendStatus(200);
+                        res.sendStatus(204);
+                    }else {
+                        
+                        res.sendStatus(404);
                     }
 
                 });
@@ -702,10 +710,9 @@ var encuentraName = function(conjunto, conjaux, parametro) {
     }
 
     return conjaux;
-}; 
+};
 
- 
-  
+
 var tieneKey = function(llave) {
 
     var sol = false;
