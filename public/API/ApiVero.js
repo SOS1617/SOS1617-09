@@ -291,7 +291,7 @@ exports.postCollection = function(request, response) {
                      }
                      else {
                          var internetandphonesBeforeInsertion = stats1.filter((i) => {
-                             return (i.country.localeCompare(country, "en", {
+                             return (i.country.localeCompare(country.country, "en", {
                                  "sensitiviry": "base"
                              }) === 0);
                          });
@@ -486,6 +486,7 @@ exports.deleteRecurso = function(request, response) {
         
      
 };
+
 exports.deleteRecursoDosParametros = function(request, response) {
     var key = request.query.apikey;
     if (!key) {
@@ -503,10 +504,7 @@ exports.deleteRecursoDosParametros = function(request, response) {
         }
         else {
             console.log("INFO: New DELETE" + country);
-            db1.remove({
-                country: country,
-                year: year
-            }, {}, function(error, stats1) {
+            db1.remove({country: country, year: year}, {}, function(error, stats1) {
                 var a = JSON.parse(stats1);
                 if (error) {
                     console.error('WARNING: Error removing data from DB');
