@@ -667,15 +667,17 @@ module.exports.deleteTwoData = (req, res) => {
                 country: country,
                 year: year
             }, function(error, conjunto) {
-
+var numeros = JSON.parse(conjunto);
                 if (error) {
                     console.log("Algo pasa con la base de datos que está vacía");
                     res.sendStatus(404);
                 }
-                else {
+                else if(numeros.n > 0) {
 
                     console.log("El dato se ha borrado satisfactoriamente");
-                    res.sendStatus(200);
+                    res.sendStatus(204);
+                }else {
+                    res.sendStatus(404);
                 }
 
             });
