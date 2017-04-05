@@ -154,6 +154,7 @@ exports.getCollection = function(request, response) { //paginación limit offset
 
 };
 
+
 exports.getRecurso = function(request, response) { //Búsqueda en un recurso from to -> ?from=x&to=y
      var key = request.query.apikey;
      if (!key) {
