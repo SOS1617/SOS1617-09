@@ -89,8 +89,7 @@ exports.getNewStats = function(req, res) {
 exports.getGeneral = function(req, res) {
 
 
- var limit = parseInt(req.query.limit);
-    var offset = parseInt(req.query.offset);
+ 
 
     var paramKey = req.query.apikey;
     if (!paramKey) {
@@ -99,7 +98,8 @@ exports.getGeneral = function(req, res) {
     else if (!checkKey(paramKey)) {
         res.sendStatus(403); //Hay key pero no es correcta
     }
-    else {
+    else {var limit = parseInt(req.query.limit);
+    var offset = parseInt(req.query.offset);
 
         console.log("INFO: New GET request to /ticsathome-stats");
         if (!db) {
