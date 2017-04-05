@@ -306,17 +306,23 @@ exports.postGeneral = function(req, res) {
                     res.sendStatus(404);
                 }
                 else {
-                    db.find({}, function(err, stats) {
+                    db.find({}).toArray(function(err, stats) {
                         if (err) {
                             console.error('WARNING: Error getting data from DB');
                             res.sendStatus(500); // internal server error
                         }
                         else {
+                            
+                            
                             var statsBeforeInsertion = stats.filter((contact) => { 
+                                console.log(contact.country);
+                                 console.log(newGeneral.country);
                                 return (contact.country.localeCompare(newGeneral.country, "en", {
                                     'sensitivity': 'base'
                                 }) === 0);
+                                
                             });
+
                             if (statsBeforeInsertion.length > 0) {
                                 console.log("WARNING: The contact " + JSON.stringify(newGeneral, 2, null) + " already extis, sending 409...");
                                 res.sendStatus(409); // conflict

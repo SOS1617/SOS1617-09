@@ -1,5 +1,5 @@
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/loadInitialData'
-curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
+curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats?apikey=ticsathomeLuis'
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany/2016'
 curl -v -XGET -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/england'
 
@@ -15,5 +15,5 @@ curl -v -XPUT -H "Content-type: application/json" -d '{"country":"belgium", "yea
 
 
 curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats'
-curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/jamaica'
+curl -v -XDELETE -H "Content-type: application/json" 'https://sos161709lpgc-sos161709lpgc.c9users.io/api/v1/ticsathome-stats/germany?apikey=ticsathomeLuis'
 
