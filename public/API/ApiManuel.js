@@ -704,7 +704,8 @@ var encuentraName = function(conjunto, conjaux, parametro) {
     return conjaux;
 }; 
 
-
+ 
+  
 var tieneKey = function(llave) {
 
     var sol = false;
