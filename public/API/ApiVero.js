@@ -437,10 +437,21 @@ exports.deleteCollection = function(request, response) {
                  }
              }
          });
-     };
+     }
+};
+
+
      
-     exports.deleteRecurso = function(request, response) {
-             var key = request.query.apikey;
+exports.deleteRecurso = function(request, response) {
+         var key = request.query.apikey;
+         if (!key) {
+             response.sendStatus(401);
+         }
+         else if (!check(key)) {
+             response.sendStatus(403);
+         }
+         else {
+
              var country = request.params.country;
              if (!country) {
                  console.log("WARNING: New DELETE");
@@ -468,10 +479,11 @@ exports.deleteCollection = function(request, response) {
                      }
                  });
              }
-     }
+         }
+        
+     
 };
 exports.deleteRecursoDosParametros = function(request, response) {
-    var key = request.query.apikey;
     var key = request.query.apikey;
     if (!key) {
         response.sendStatus(401);
