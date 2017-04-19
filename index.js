@@ -33,9 +33,10 @@ app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.ht
 
 /**************************API MANUEL*********************************/
 
+
 var routeManuel = "/api/v1/hiv-stats";
 
-var metodosManuel = require("./public/API/ApiManuel.js");
+var metodosManuel = require("./public/API/ApiManuel/ApiManuel.js");
 
 app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
@@ -53,6 +54,7 @@ app.put(routeManuel + "/:name/:year", metodosManuel.putTwoData);
 app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
+
 
 
 

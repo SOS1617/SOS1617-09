@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="HivStatsApp">
+
+<head>
+
+    <title>My app</title>
+
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/API/ApiManuel/app.js"></script>
+    <script type="text/javascript" src="/API/ApiManuel/hiv-ctrl.js"></script>
+
+
+</head>
+
+<body>
+
+    
+        <div ng-controller="hivCtrl">
+            <div class="container"></div>
+            
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Year</th>
+                            <th>Incidence</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" ng-model="newData.country" /></td>
+                            <td><input class="form-control" ng-model="newData.year" /></td>
+                            <td><input class="form-control" ng-model="newData.incidence" /></td>
+                            <td><input class="form-control" ng-model="newData.total" /></td>
+                            <td><input class="form-control" ng-model="newData.percentage" /></td>
+
+                            <td><button class="btn btn-primary" ng-click="addData()">Add new data </button></td>
+                        </tr>
+                        <div >
+                        <tr ng-repeat="singleData in conjunto track by $index">
+                           
+                            <td>{{singleData.country}}</td>
+                            <td>{{singleData.year}}</td>
+                            <td>{{singleData["incidence"]}}</td>
+                            <td>{{singleData["total"]}}</td> 
+                            <td>{{singleData["percentage"]}}</td>
+                            <td><button class="btn btn-secondary" ng-click="putData(singleData)">Put</button></td>
+                            <td>  <button class="btn btn-danger" ng-click="deleteData(singleData)">delete</button></td>
+                        </tr>
+                        </div>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button ng-click="loadInitialData()">Initial DATA</button>
+                                <button class = "btn btn-danger" ng-click="deleteAllData()">DELETE ALL</button></td>
+                            <button class = "btn btn-primary" ng-click="getAll()">GET</button></td>
+
+                           </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+</body>
+
+</html>
