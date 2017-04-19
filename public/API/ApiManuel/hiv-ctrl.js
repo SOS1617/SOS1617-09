@@ -14,7 +14,7 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
 
     function refresh() {
 
-        $scope.getAll = function() {
+       /* $scope.getAll = function() {*/
             $http
                 .get("/api/v2/hiv-stats" + "?" + "apikey=" + "manuel")
                 .then(function(response) {
@@ -25,7 +25,7 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
                 });
 
 
-        };
+       /* };*/
 
     }
 
