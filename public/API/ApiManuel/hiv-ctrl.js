@@ -19,7 +19,6 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
                 .get("/api/v2/hiv-stats" + "?" + "apikey=" + "manuel")
                 .then(function(response) {
                     console.log("Get all correct");
-
                     $scope.conjunto = response.data;
 
                 });
