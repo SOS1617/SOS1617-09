@@ -649,42 +649,52 @@ module.exports.deleteTwoData = (req, res) => {
 
         res.sendStatus(403); //Está mal puesta la apikey
     }
-    else {
-
-        var country = req.params.country;
-        var year = parseInt(req.params.year);
-
-        if (!country) {
-            res.sendStatus(404);
+    else { 
+            var paramCountry = req.params.country;
+            var paramYear = parseInt(req.params.year);
+        if (!paramCountry || !paramYear) {
+            res.sendStatus(400);
 
         }
         else {
-            db.remove({
-                country: country,
-                year: year
-            }, function(error, conjunto) {
-                var numeros = JSON.parse(conjunto);
-                if (error) {
-                    console.log("Algo pasa con la base de datos que está vacía");
-                    res.sendStatus(404);
-                }
-                else if (numeros.n > 0) {
+            db.find({}).toArray(function(error, stats) {
 
-                    console.log("El dato se ha borrado satisfactoriamente");
-                    res.sendStatus(204);
+                if (stats.length === 0) {
+                    console.log("Something is wrong");
+                    res.sendStatus(404);
                 }
                 else {
-                    res.sendStatus(404);
-                }
 
+                    var aux = stats.filter(c => c.year == paramYear && c.country === paramCountry);
+                    db.remove({
+                        country: paramCountry,
+                        year: parseInt(paramYear)
+                    }, {}, function(error, Sremove) {
+                        console.log(aux);
+
+                        if (error) {
+                            console.log("Something wrong on DataBase");
+                            res.sendStatus(500);
+                        }
+                        else {
+
+
+                            console.log("INFO: The country with name " + paramCountry + " has been succesfully deleted, sending 204...");
+                            res.sendStatus(204); // no content
+
+                        }
+
+                    });
+
+                }
             });
+
+
 
 
         }
     }
 };
-
-
 
 
 /*************************FUNCIONES AUXILIARES*******************************/
