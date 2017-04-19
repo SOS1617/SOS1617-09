@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="InternetManagerApp">
+        <head>
+            <titlle>
+                Internet and Phonelines</titlle>
+                
+            <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+            <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+        
+            <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+            <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+            
+            <script type="text/javascript" src="/ApiVero/internet-manager-app.js"></script>
+            <script type="text/javascript" src="/ApiVero/list-cntrl-internet.js"></script>
+            
+        </head>
+         <body >
+            <div ng-controller = "ListController">
+              <h2>Internet and Phones</h2> 
+              <table class="table">
+                  <thead>
+                  <tr>
+                      <th>Country</th>
+                      <th>Year</th>
+                      <th>Usage internet</th>
+                      <th>Usage phoneline</th>
+                      <th>Actions</th>
+                      <th>       </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><input class ="form-control" ng-model="newStat.country"/></td>
+                          <td><input class ="form-control" ng-model="newStat.year"/></td>
+                          <td><input class ="form-control" ng-model="newStat.usageInternet"/></td>
+                          <td><input class ="form-control" ng-model="newStat.usagephoneline"/></td>
+                            <td><button class="btn btn-primary"ng-click= "add(newStat)">Add</button></td>
+                            <td><button class="btn btn-danger"ng-click= "deleteAll()">Delete All</button></td>
+
+                      </tr>
+                      <tr ng-repeat = "stat in internetandphones">
+                          <td>{{stat.country}}</td>
+                          <td>{{stat.year}}</td>
+                          <td>{{stat.usageinternet}}</td>
+                           <td>{{stat.usagephoneline}}</td>
+                         <td><button class="btn btn-danger"ng-click= "delete(stat.country)">Delete</button></td>
+                         <td><button class = "btn btn-secondary" ng-click="put(newStat)">Put</button></td>
+
+                      </tr>
+                      
+                  </tbody>
+                  
+              </table>
+              
+              <tr>
+                  <td><button class="btn btn-primary" ng-click= "create()">Create Initial Data</button></td>
+                  <td><button class="btn btn-info" ng-click= "refresh()">Refresh Data</button></td>
+                  </tr>
+            </div>
+            
+        </body>
+</html>
