@@ -26,7 +26,7 @@
         <div ng-controller="hivCtrl">
             <div class="container"></div>
             
-                <table class="highlight">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Country</th>
@@ -38,6 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <div>
                         <tr>
                             <td><input class="form-control" ng-model="newData.country" /></td>
                             <td><input class="form-control" ng-model="newData.year" /></td>
@@ -46,7 +47,10 @@
                             <td><input class="form-control" ng-model="newData.percentage" /></td>
 
                             <td><button class="btn btn-primary" ng-click="addData()">Add new data </button></td>
+
                         </tr>
+                        </div>
+                    
                         <div >
                         <tr ng-repeat="singleData in conjunto track by $index">
                            
@@ -55,8 +59,10 @@
                             <td>{{singleData["incidence"]}}</td>
                             <td>{{singleData["total"]}}</td> 
                             <td>{{singleData["percentage"]}}</td>
-                            <td><button class="btn btn-secondary" ng-click="putData(singleData)">Put</button></td>
-                            <td>  <button class="btn btn-danger" ng-click="deleteData(singleData)">delete</button></td>
+                          
+                            <td>  <button class="btn btn-danger" ng-click="deleteData(singleData)">Delete Data</button></td>
+                            <td><button class="btn btn-secondary" ng-click="putData(newData)">Put Data</button></td>
+
                         </tr>
                         </div>
                         <tr>
@@ -65,9 +71,9 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><button ng-click="loadInitialData()">Initial DATA</button>
-                                <button class = "btn btn-danger" ng-click="deleteAllData()">DELETE ALL</button></td>
-                            <button class = "btn btn-primary" ng-click="getAll()">GET</button></td>
+                            <td class="active"><button class = "btn btn-success" ng-click="loadInitialData()">InitialDATA</button></td>
+                            <td><button class = "btn btn-danger" ng-click="deleteAllData()">DELETE ALL</button></td>
+                            <td><button class = "btn btn-info" ng-click="getAll()">GET</button></td>
 
                            </tr>
                     </tbody>

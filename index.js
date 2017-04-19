@@ -36,7 +36,7 @@ app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.ht
 
 var routeManuel = "/api/v1/hiv-stats";
 
-var metodosManuel = require("./public/API/ApiManuel/ApiManuel.js");
+var metodosManuel = require("./public/API/ApiManuel/v1/ApiManuel.js");
 
 app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
@@ -54,6 +54,28 @@ app.put(routeManuel + "/:name/:year", metodosManuel.putTwoData);
 app.delete(routeManuel,metodosManuel.deleteCollection);
 app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
+
+var routeManuel2 = "/api/v2/hiv-stats";
+
+var metodosManuel2 = require("./public/API/ApiManuel/v2/ApiManu.js");
+
+app.get(routeManuel2 + "/loadInitialData",metodosManuel2.getCreateStats);
+app.get(routeManuel2,metodosManuel2.getObtainStats);
+app.get(routeManuel2 + "/:name",metodosManuel2.getDataName);
+app.get(routeManuel2 + "/:name/:year",metodosManuel2.getDataNameYear);
+
+app.post(routeManuel2,metodosManuel2.postNewData);
+app.post(routeManuel2 + "/:name",metodosManuel2.badpost);
+app.post(routeManuel2 + "/:name/:year",metodosManuel2.badpost);
+
+app.put(routeManuel2 , metodosManuel2.badPut);
+app.put(routeManuel2 + "/:name", metodosManuel2.badPut);
+app.put(routeManuel2 + "/:name/:year", metodosManuel2.putTwoData);
+
+app.delete(routeManuel2,metodosManuel2.deleteCollection);
+app.delete(routeManuel2 + "/:country" , metodosManuel2.deleteData);
+app.delete(routeManuel2 + "/:country/:year" , metodosManuel2.deleteTwoData);
+
 
 
 
