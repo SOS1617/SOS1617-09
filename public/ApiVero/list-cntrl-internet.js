@@ -1,6 +1,6 @@
 angular
     .module("InternetManagerApp")
-    .controller("ListController",["$scope","$http",function($scope,$http){
+    .controller("ListController",["$scope","$http",function($scope, $http){
         console.log("Cotroller initialized");
         function refresh(){
         
@@ -20,20 +20,21 @@ angular
         refresh();
         
     };
-        $scope.create =function(){
+    $scope.create =function(){
         $http
-            .get("/api/v1/internetandphones-stats?apikey=internetstats")
+            .get("/api/v1/internetandphones-stats/loadInitialData?apikey=internetstats")
             .then(function(response) {
                     console.log("Created Initial data");
                     refresh();
             });
         };
         $scope.add = function(newStat) {
+            console.log(newStat)
         $http
             .post("/api/v1/internetandphones-stats?apikey=internetstats", {
                 country: newStat.country,
                 year: newStat.year,
-                usageinternet: newStat.usageinternet,
+                usageinternet: newStat.usageInternet,
                 usagephoneline: newStat.usagephoneline,
             })
             .then(function(response){
@@ -44,9 +45,9 @@ angular
             
         $scope.delete =function(country){
             $http
-                .delete("/api/v1/internetandphones-stats "+"/"+ country +"?apikey=internetstats")
+                .delete("/api/v1/internetandphones-stats" + "/" + country.country + "?apikey=internetstats")
                 .then(function(response){
-                    console.log("Deleted"+ country);
+                    console.log("Deleted"+ country.country);
                     refresh();
                 });
                 
@@ -64,7 +65,7 @@ angular
                 .put("/api/v1/internetandphones-stats"+ "/" + newStat.country +"?apikey=internetstats", {
                     country: newStat.country,
                     year: newStat.year,
-                    usageinternet: newStat.usageinternet,
+                    usageinternet: newStat.usageInternet,
                     usagephoneline: newStat.usagephoneline
                 })
                 .then(function(response){

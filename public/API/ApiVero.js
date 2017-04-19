@@ -281,6 +281,7 @@ exports.postCollection = function(request, response) {
              console.log("INFO: New PORT with correct body");
              if (!newInternetandphones.country || !newInternetandphones.year || !newInternetandphones.usageinternet || !newInternetandphones.usagephoneline) {
                  console.log("WARMING: New POST incorrect");
+                   console.log(newInternetandphones);
                  response.sendStatus(422); //incorrecto
              }
              else {

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="InternetManagerApp">
         <head>
-            <titlle>
-                Internet and Phonelines</titlle>
+            <titlle>Internet and Phonelines</titlle>
                 
             <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
             <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
@@ -15,7 +14,7 @@
             <script type="text/javascript" src="/ApiVero/list-cntrl-internet.js"></script>
             
         </head>
-         <body >
+         <body>
             <div ng-controller = "ListController">
               <h2>Internet and Phones</h2> 
               <table class="table">
@@ -26,7 +25,7 @@
                       <th>Usage internet</th>
                       <th>Usage phoneline</th>
                       <th>Actions</th>
-                      <th>       </th>
+                     
                   </tr>
                   </thead>
                   <tbody>
@@ -44,7 +43,7 @@
                           <td>{{stat.year}}</td>
                           <td>{{stat.usageinternet}}</td>
                            <td>{{stat.usagephoneline}}</td>
-                         <td><button class="btn btn-danger"ng-click= "delete(stat.country)">Delete</button></td>
+                         <td><button class="btn btn-danger"ng-click= "delete(stat)">Delete</button></td>
                          <td><button class = "btn btn-secondary" ng-click="put(newStat)">Put</button></td>
 
                       </tr>
@@ -56,7 +55,7 @@
               <tr>
                   <td><button class="btn btn-primary" ng-click= "create()">Create Initial Data</button></td>
                   <td><button class="btn btn-info" ng-click= "refresh()">Refresh Data</button></td>
-                  </tr>
+                </tr>
             </div>
             
         </body>
