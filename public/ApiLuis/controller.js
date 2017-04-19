@@ -8,21 +8,18 @@ angular
 
             $http
                 .get("/api/v1/ticsathome-stats?apikey=ticsathomeLuis")
-                .then(function(response) {
-                    if (response.status==404) {
-                         $scope.ticsathome = "404";
-                         return "404";
-                       
-                    }else{
+                .then(function successCallback(response) {
+                  console.log("Entra2");
                     $scope.ticsathome = response.data;
-                    }
+                    
+                },function errorCallback(response){
+                    console.log("Entra1");
+                    $scope.ticsathome= [];
+                   
                 });
         }
         
-       $scope.refresh= function() {
-
-          refresh();
-        };
+       $scope.refresh= refresh();
 
  $scope.create = function() {
 
@@ -38,12 +35,7 @@ angular
         $scope.add = function(newTic) {
 
             $http
-                .post("/api/v1/ticsathome-stats?apikey=ticsathomeLuis", {
-                    country: newTic.country,
-                    year: newTic.year,
-                    smartphone: newTic.smartphone,
-                    tablet: newTic.tablet
-                })
+                .post("/api/v1/ticsathome-stats?apikey=ticsathomeLuis",$scope.newTic)
                 .then(function(response) {
                     console.log("Created");
                     refresh();
@@ -62,9 +54,16 @@ angular
 
             $http
                 .delete("/api/v1/ticsathome-stats?apikey=ticsathomeLuis")
-                .then(function(response) {
+                .then(function successCallback(response) {
                     console.log("Deleted");
+                },function errorCallback(response){
+                   console.log("Entra4");
+                refresh();
+                
                 });
+                console.log("Entra3");
+                refresh();
+                
         };
 
 
@@ -80,7 +79,7 @@ angular
                 })
                 .then(function(response) {
                     console.log("refresh");
-                    refresh();
+                     refresh();
                 });
         };
 

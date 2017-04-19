@@ -106,7 +106,7 @@ exports.getGeneral = function(req, res) {
             console.log("DataBase empty, sorry");
             
             res.sendStatus(404);
-            return "404";
+           
         }
 
         else {
@@ -525,7 +525,9 @@ exports.deleteStats = function(req, res) {
 
                 if (borr.length === 0) {
                     console.log("Nothing to lose");
+                
                     res.sendStatus(404); // not found
+                    return;
                 }
             }
         });
