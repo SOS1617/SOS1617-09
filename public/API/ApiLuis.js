@@ -1,6 +1,6 @@
 var mongoClient = require("mongodb").MongoClient;
 
-var mongoURL = "mongodb://lpontegc:test@ds137340.mlab.com:37340/sos-lpontegc"
+var mongoURL = "mongodb://lpontegc:test@ds137340.mlab.com:37340/sos-lpontegc";
 
 var exports = module.exports = {};
 
@@ -104,7 +104,9 @@ exports.getGeneral = function(req, res) {
         console.log("INFO: New GET request to /ticsathome-stats");
         if (!db) {
             console.log("DataBase empty, sorry");
+            
             res.sendStatus(404);
+            return "404";
         }
 
         else {
