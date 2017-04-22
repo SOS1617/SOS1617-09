@@ -6,14 +6,16 @@ angular
         
         $http
             .get("/api/v1/internetandphones-stats?apikey=internetstats")
-            .then(function(response){
-                if(response.status===404){
-                    $scope.internetandphones = "404";
-                    return "404";
-                }else{
-                    $scope.internetandphones=response.data;
+            .then(function successCallback(response){
+                $scope.internetandphones=response.data;
+              
+                },function errorCallback(response){
+                    console.log("entra");
+                    $scope.internetandphones=[];
                     
-                }
+                    
+                    
+                
             });
     }
     $scope.refresh=function(){
@@ -45,14 +47,15 @@ angular
             
         $scope.delete =function(country){
             $http
-                .delete("/api/v1/internetandphones-stats" + "/" + country.country + "?apikey=internetstats")
+                .delete("/api/v1/internetandphones-stats" + "/" + country + "?apikey=internetstats")
                 .then(function(response){
-                    console.log("Deleted"+ country.country);
+                    console.log("Deleted"+ country);
                     refresh();
                 });
                 
         };
         $scope.deleteAll =function(){
+            
             $http
                 .delete("/api/v1/internetandphones-stats?apikey=internetstats")
                 .then(function (response){
