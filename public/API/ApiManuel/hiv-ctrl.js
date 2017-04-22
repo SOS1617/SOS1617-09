@@ -8,6 +8,7 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
             .get("/api/v2/hiv-stats/loadInitialData" + "?" + "apikey=" + "manuel")
             .then(function(response) {
                 console.log("Initial data succesful");
+                refresh();
             });
     };
 
@@ -19,7 +20,6 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
                 .get("/api/v2/hiv-stats" + "?" + "apikey=" + "manuel")
                 .then(function(response) {
                     console.log("Get all correct");
-
                     $scope.conjunto = response.data;
 
                 });
@@ -28,16 +28,29 @@ controller("hivCtrl", ["$scope", "$http", function($scope, $http) {
        /* };*/
 
     }
+    
+    $scope.refresh = function(){
+        
+        refresh();
+    }
 
-    $scope.addData = function() {
+                        /**** POST ***/
+                        
+    $scope.addData = function(newStats) {
         $http
-            .post("/api/v2/hiv-stats" + "?" + "apikey=" + "manuel", $scope.newData)
+            .post("/api/v2/hiv-stats" + "?" + "apikey=" + "manuel",  {
+                country: newStats.country,
+                    year: newStats.year,
+                    incidence: newStats.incidence,
+                    total: newStats.total,
+                    percentage : newStats.percentage
+            } )
             .then(function(response) {
                 console.log("Data created!");
                 refresh();
             });
     };
-
+            /****PUT***/
 
 $scope.putData = function (data) {
       
@@ -50,6 +63,7 @@ $scope.putData = function (data) {
             })
             .then(function(response){
                 console.log("put do it succesful");
+                refresh();
             }); 
                
             
@@ -57,7 +71,7 @@ $scope.putData = function (data) {
 
     $scope.deleteData = function(data) {
         $http
-            .delete("/api/v2/hiv-stats/" + data.country + "/" + data.year + "?" + "apikey=" + "manuel")
+            .delete("/api/v2/hiv-stats/" + data.country + "?" + "apikey=manuel")
             .then(function(response) {
                 console.log("deleted " + data.country + " correctly");
                 refresh();

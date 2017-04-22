@@ -19,9 +19,11 @@ angular
                 });
         }
         
+
        $scope.refresh= refresh();
 
- $scope.create = function() {
+
+        $scope.create = function() {
 
             $http
                 .get("/api/v1/ticsathome-stats/loadInitialData?apikey=ticsathomeLuis")
