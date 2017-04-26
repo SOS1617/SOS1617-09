@@ -204,8 +204,8 @@ exports.getOneParam = function(req, res) {
                         res.sendStatus(404);
                     }
                     else {
-                        res.sendStatus(200);
-                       // res.send(arr);
+                        //res.sendStatus(200);
+                        res.send(arr);
                     }
                 }
 
@@ -525,8 +525,11 @@ exports.deleteStats = function(req, res) {
 
                 if (borr.length === 0) {
                     console.log("Nothing to lose");
-                
+                var z = [];
+                     res.send(z);
                     res.sendStatus(404); // not found
+                    
+                   
                     return;
                 }
             }
@@ -646,4 +649,13 @@ function checkKey(paramKey) {
     else {
         return false;
     }
+}
+
+function getKey(){
+    
+    return apikey;
+}
+function setKey(key){
+    apikey = key;
+    
 }

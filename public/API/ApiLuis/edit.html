@@ -1,0 +1,24 @@
+<h2>Edit List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>Year</th>
+            <th>Smartphone</th>
+            <th>Tablet</th>
+            <th>Actions</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{updateTic[0].country}}</td>
+            <td><input class="form-control" ng-model="updateTic[0].year" /></td>
+            <td><input class="form-control" ng-model="updateTic[0].smartphone" /></td>
+            <td><input class="form-control" ng-model="updateTic[0].tablet" /></td>
+            <td><button class="btn btn-primary" ng-click="put(updateTic[0])">Update</button></td>
+
+        </tr>
+    </tbody>
+
+</table>

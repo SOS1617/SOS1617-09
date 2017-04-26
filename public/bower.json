@@ -1,0 +1,22 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/SOS1617/SOS1617-09",
+  "authors": [
+    "sos161709lpgc <lpontegc@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.4",
+    "angular": "^1.6.4",
+    "bootstrap": "^3.3.7"
+  }
+}
