@@ -57,6 +57,36 @@ exports.getNewStats = function(req, res) {
                         "year": 2016,
                         "smartphone": 22,
                         "tablet": 17
+                    }, {
+                        "country": "italy",
+                        "year": 2016,
+                        "smartphone": 39,
+                        "tablet": 28
+                    }, {
+                        "country": "portugal",
+                        "year": 2016,
+                        "smartphone": 27,
+                        "tablet": 15
+                    }, {
+                        "country": "united kingdom",
+                        "year": 2016,
+                        "smartphone": 30,
+                        "tablet": 20
+                    }, {
+                        "country": "hungry",
+                        "year": 2016,
+                        "smartphone": 26,
+                        "tablet": 16
+                    }, {
+                        "country": "poland",
+                        "year": 2016,
+                        "smartphone": 37,
+                        "tablet": 19
+                    }, {
+                        "country": "slovakia",
+                        "year": 2016,
+                        "smartphone": 31,
+                        "tablet": 22
                     }]);
 
                     console.log("OK");
