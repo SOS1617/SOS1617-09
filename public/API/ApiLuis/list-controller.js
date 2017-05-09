@@ -6,7 +6,7 @@ angular
     $scope.url = "/api/v2/ticsathome-stats";
 
       
-        
+       
 
        $scope.refresh= refresh();
 
@@ -39,6 +39,7 @@ angular
                        document.getElementById("createInitialData").disabled = true;
                       
                     }
+                   
                 },function errorCallback(response){
                     console.log("Error al cargar los datos");
                     $scope.ticsathome= [];
@@ -128,31 +129,7 @@ angular
 
 
 
-        $scope.put = function(newTic) {
-
-            $http
-                .put($scope.url + "/" + newTic.country + "?apikey="+$scope.apikey, {
-                    country: newTic.country,
-                    year: newTic.year,
-                    smartphone: newTic.smartphone,
-                    tablet: newTic.tablet
-                })
-                .then(function(response) {
-                    console.log("Data refresh");
-                     alert("Editado correctamente");
-                     refresh();
-                }, function(response) {
-                switch (response.status) {
-                    case 400:
-                        alert("Please fill all the fields");
-                        break;
-                    default:
-                        alert("Error try again");
-                        break;
-}
-
-                });
-        };
+       
 
 
   
@@ -217,8 +194,23 @@ $scope.busqueda = function(dato) {
 
        $scope.offset = 0;
        
-        $scope.nextPage = function(pageNo) {
+       
+       
+       
+       $scope.newPage = function(pageNo) {
             var viewby = $scope.viewby;
+            $scope.currentPage = pageNo;
+            $scope.offset = pageNo*viewby-parseInt( $scope.viewby);
+             $scope.limit = $scope.viewby;
+             $http
+                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
+                .then(function(response){
+                    $scope.ticsathome = response.data;
+                });
+            
+        };
+       
+        $scope.nextPage = function(pageNo) {
             $scope.currentPage = pageNo;
             $scope.offset = parseInt( $scope.offset) +parseInt( $scope.viewby);
             console.log($scope.offset);
@@ -230,6 +222,7 @@ $scope.busqueda = function(dato) {
                 });
             
         };
+        
          $scope.previousPage = function(pageNo) {
             var viewby = $scope.viewby;
             $scope.currentPage = pageNo;
@@ -242,16 +235,37 @@ $scope.busqueda = function(dato) {
                 });
             
         };
-
+ 
         $scope.setItemsPerPage = function(num) {
             $scope.itemsPerPage = num;
-            $scope.currentPage = 1; //reset to first paghe
+            $scope.currentPage = 1;
             $scope.offset = 0;
+            var pages =[];
+             $http
+                .get($scope.url+"?apikey="+ $scope.apikey)
+                .then(function(response){
+                    for(var i =1;i<=response.data.length / $scope.viewby;i++){
+                        pages.push(i);
+                        
+                    }
+                    if(pages.length*$scope.viewby<response.data.length){
+                        pages.push(pages.length+1);
+                    }
+                    $scope.pages = pages;
+                        document.getElementById("pagination").style.display = "block";
+                         document.getElementById("pagination").disabled = false;
+                });
+            
+           
+                    
+            
+            
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+num +"&offset="+$scope.offset)
                 .then(function(response){
                     $scope.ticsathome = response.data;
                 });
+                
         };
 
 

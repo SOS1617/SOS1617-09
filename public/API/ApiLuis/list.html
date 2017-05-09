@@ -81,11 +81,29 @@
             <option>30</option>
             </select> records at a time.
         <pre>The selected page no: {{currentPage}}</pre>
-
-        <button class="btn btn-info" ng-click="previousPage(currentPage-1)" ng-disabled = "currentPage==1">Prev</button>
         
-        <a id="Page{{page}}" ng-repeat="page in pages" ng-click="setPage(page)">
-            <button class="btn btn-info" ng-click="nextPage(currentPage+1)" >{{page}}</button></a>
-        <button class="btn btn-info" ng-click="nextPage(currentPage+1)" ng-disabled ="currentPage == pages.length">Next</button>
+<div   id= "pagination"  style="display:none;" disabled = true>
+        
+        <table>
+        <td><button class="btn btn-info" ng-click="previousPage(currentPage-1)" ng-disabled = "currentPage==1">Prev</button></td>
+        <td ng-repeat="page in pages" >
+          <a><button class="btn btn-info" ng-click="newPage(page)">{{page}}</button></a>
+        </td>
+        <td><button class="btn btn-info" ng-click="nextPage(currentPage+1)" ng-disabled ="currentPage == pages.length">Next</button></td>
+            </table>
+            
+        
+        
+        </div>
+        
+        
+        
+                    
+                    
+        
+        
+        
+        
+        
     </body>
 </div>

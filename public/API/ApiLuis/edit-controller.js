@@ -31,7 +31,15 @@ angular
                     tablet: update.tablet
                 })
                 .then(function(response) {
-                    console.log("Tic Updated");
+                    console.log("Tic Updated 2");
+                    switch (response.status) {
+                    case 400:
+                        alert("Please fill all the fields");
+                        break;
+                    default:
+                        alert("OK");
+                        break;
+}
                     $location.path("/");
                     // refresh();
                 });
