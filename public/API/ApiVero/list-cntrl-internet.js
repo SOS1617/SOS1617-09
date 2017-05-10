@@ -2,7 +2,7 @@ angular
     .module("InternetManagerApp")
     .controller("ListController",["$scope","$http","$location",function($scope, $http,$location){
         console.log("Cotroller initialized");
-        $scope.url= "/api/v2/ticsathome-stats";
+        $scope.url= "/api/v2/internetandphones-stats";
         $scope.apikey="?apikey=";
         $scope.limit= 3;
         $scope.offset=0;
