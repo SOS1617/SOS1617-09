@@ -2,67 +2,33 @@
 
 
 <!DOCTYPE html>
-<html>
+<html ng-app ="manager-app">
+    
     <head>
         <title>SOS1617-09</title>
-        <h1>SOS1617-09</h1>
-    </head>
-    
-    <body> 
-        <ul>
-            <li><h3>Team</h3></li>
-           
-            <li><h3>Project description:</h3> Our sources of information are oriented to analyze the relationship between the use of the Internet and telephone lines in Europe, the cases of AIDS in the EU and the average on ICT terminals in European households.</li>
-            <li><h3>Repository:</h3> <a href="https://github.com/SOS1617/SOS1617-09">SOS1617/SOS1617-09</a></li>
-                
-              <br/>
-<h3>Manuel Jesus (Data: hiv-stats) </h3>
-<ul>    
-<li>Information : I will analyze data on the number of people with AIDS by countries in the EU.</li>
+        
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+        
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
 
-<li><a href=https://github.com/mjtr>GitHub personal</a></li>
-<li><a href=https://github.com/SOS1617/SOS1617-09>GitHub organization</a></li>
-<li><a href=https://docs.google.com/spreadsheets/d/1opdUiNY-NOb73ySXXR2DnLenG7Q5i4RQZJp5pyhwxxk/edit#gid=0>Group Google drive template </a></li>
-<li><a href=https://sos1617-09.herokuapp.com/api/v1/hiv-stats/loadInitialData?apikey=manuel>LoadInitiaLdata API Manuel</a></li>
-<li><a href=https://sos1617-09.herokuapp.com/api/v1/hiv-stats?apikey=manuel>API Manuel</a></li>
- <li><a href=https://sos1617-09.herokuapp.com/api/v1/tests> <h4>Group tests </h4></a></li>
-  <li><a href=https://sos1617-09.herokuapp.com/API/ApiManuel/> <h4>Hiv Front End </h4></a></li>
+<script type="text/javascript" src="/sos-09-app.js"></script>
 
+<script type="text/javascript" src="/API/ApiLuis/tic-manager-app.js"></script>
+<script type="text/javascript" src="/API/ApiLuis/list-controller.js"></script>
+<script type="text/javascript" src="/API/ApiLuis/edit-controller.js"></script>
+<script type="text/javascript" src="/API/ApiManuel/hiv-ctrl.js"></script>
+<script type="text/javascript" src="/ApiVero/list-cntrl-internet.js"></script>
 
-</ul>
-<h5>-----------------------------------------</h5>
-<h3>Luis (Data: ticsathome-stats) </h3>
-<ul>
-<li>Information : I will study data on the average use of tic terminals in Europe.</li>
-
-<li><a href=https://github.com/lpontegc>GitHub personal</a></li>
-<li><a href=https://github.com/SOS1617/SOS1617-09>GitHub organization</a></li>
-<li><a href=https://docs.google.com/spreadsheets/d/1opdUiNY-NOb73ySXXR2DnLenG7Q5i4RQZJp5pyhwxxk/edit#gid=0>Group Google drive template </a></li>
-<li><a href=/api/v2/ticsathome-stats/loadInitialData>Inicializar datos API Luis</a></li>
-<li><a href=/api/v2/ticsathome-stats>API Luis</a></li>
-  <li><a href=/api/v2/tests> <h4>Group tests<e</h4></a></li>
-  <li><a href=/API/ApiLuis/front-end-ticsathome.html> <h4>Front-end Tics at home</h4></a></li>
-</ul>
-<h5>-----------------------------------------</h5>
-<h3>Verónica (Data: internetandphones-stats) </h3>
-<ul>
-    <li>Information : I will be in charge of obtaining data on Internet usage and telephone lines in Europe.</li>
-
-<li><a href=https://github.com/kkdekiki>GitHub personal</a></li>
-<li><a href=https://github.com/SOS1617/SOS1617-09>GitHub organization</a></li>
-<li><a href=https://docs.google.com/spreadsheets/d/1opdUiNY-NOb73ySXXR2DnLenG7Q5i4RQZJp5pyhwxxk/edit#gid=0>Group Google drive template </a></li>
-<li><a href=https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats/loadInitialData>LoadInitiaLdata API Verónica</a></li>
-<li><a href=https://sos1617-09.herokuapp.com/api/v1/internetandphones-stats>API Verónica</a></li>
- <li><a href=https://sos1617-09.herokuapp.com/api/v1/tests> <h4>Group tests </h4></a></li>
- <li><a href=https://sos1617-09.herokuapp.com/ApiVero/internetStats.html> <h4>Internet and phonelines </h4></a></li>
-
-</ul>
-<h5>-----------------------------------------</h5>
-<br/>
-
-             
-    </body>
+        </head>
+        
+        <body >
+            <div ng-view>
+              
+            </div>
+            
+        </body>
 </html>
-
-
-
