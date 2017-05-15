@@ -1,5 +1,5 @@
 angular
-    .module("InternetManagerApp")
+    .module("sos09-app")
     .controller("ListControllerv", ["$scope", "$http", function($scope, $http) {
         console.log("Cotroller initialized");
         $scope.url = "/api/v2/internetandphones-stats";

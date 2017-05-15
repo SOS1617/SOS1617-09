@@ -1,5 +1,5 @@
 angular
-    .module("InternetManagerApp")
+    .module("sos09-app")
     .controller("EditControllerv", ["$scope", "$http", "$routeParams","$location",function($scope, $http,$routeParams,$location) {
         console.log("EditCotroller initialized");
         
