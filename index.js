@@ -83,10 +83,10 @@ app.delete(routeManuel2 + "/:country/:year" , metodosManuel2.deleteTwoData);
 /***API LUIS*****/
 
 var urlDir = "/api/v1/ticsathome-stats";
-var funciones = require("./public/ticsathome/v1/ApiLuis.js");
+var funciones = require("./public/ticsathome-manager/v1/ApiLuis.js");
 
 var urlDirv2 = "/api/v2/ticsathome-stats";
-var funcionesv2 = require("./public/ticsathome/v2/ApiLuis.js");
+var funcionesv2 = require("./public/ticsathome-manager/v2/ApiLuis.js");
 
 
 app.get(urlDir + "/loadInitialData",funciones.getNewStats);
