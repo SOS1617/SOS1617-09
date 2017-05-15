@@ -1,0 +1,23 @@
+ <h2>Edit Internet and Phones</h2> 
+              <table class="table">
+                  <thead>
+                  <tr>
+                      <th>Country</th>
+                      <th>Year</th>
+                      <th>Usage internet</th>
+                      <th>Usage phoneline</th>
+                      <th>Actions</th>
+                     
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>{{updateStat.country}}</td>
+                          <td><input class ="form-control" ng-model="updateStat.year"/></td>
+                          <td><input class ="form-control" ng-model="updateStat.usageInternet"/></td>
+                          <td><input class ="form-control" ng-model="updateStat.usagephoneline"/></td>
+                          <td><button class="btn btn-primary"ng-click= "update(newStat)">Update</button></td>
+
+                      </tr>
+                </tbody>
+            </table

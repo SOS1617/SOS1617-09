@@ -1,6 +1,6 @@
 angular
     .module("InternetManagerApp")
-    .controller("ListController", ["$scope", "$http", function($scope, $http) {
+    .controller("ListControllerv", ["$scope", "$http", function($scope, $http) {
         console.log("Cotroller initialized");
         $scope.url = "/api/v2/internetandphones-stats";
 
@@ -27,8 +27,8 @@ angular
                     .get($scope.url+"?apikey=" + $scope.apikey)
                     .then(function successCallback(response) {
                         console.log($scope.apikey);
-                        $scope.internetstats = response.data;
-                        if ($scope.internetstats.isEmpty) {
+                        $scope.internetandphones = response.data;
+                        if ($scope.internetandphones.isEmpty) {
                             document.getElementById("createInitialData").disabled = false;
                         }
                         else {
@@ -38,17 +38,17 @@ angular
 
                     }, function errorCallback(response) {
                         console.log("Error al cargar los datos");
-                        $scope.internetstats= [];
+                        $scope.internetandphones= [];
 
                     });
             }
             else {
-                $scope.internetstats= [];
+                $scope.internetandphoness= [];
             }
         }
 
         
-        function check(key) {
+        function checkApiKey(key) {
             if ($scope.apikey == null) {
                 alert("No ha introducido apikey, intente de nuevo");
             }
@@ -127,7 +127,7 @@ angular
             $http
                 .get($scope.url + dato + "?apikey=" + $scope.apikey)
                .then(function successCallback(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                     console.log("Busqueda con exito");
 
                 }, function errorCallback(response) {
@@ -144,9 +144,9 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
 
-                    if ($scope.internetstats.isEmpty) {
+                    if ($scope.internetandphones.isEmpty) {
                         document.getElementById("createInitialData").disabled = false;
                     }
                     else {
@@ -166,14 +166,14 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                 });
 
         };
         //Paginación
         $scope.viewby = 0;
         $scope.totalItems = function() {
-            return $scope.internetstats.length;
+            return $scope.internetandphones.length;
         };
         $scope.currentPage = 1;
         $scope.itemsPerPage = function() {
@@ -194,7 +194,7 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                 });
 
         };
@@ -207,7 +207,7 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                 });
 
         };
@@ -220,7 +220,7 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                 });
 
         };
@@ -252,7 +252,7 @@ angular
             $http
                 .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + num + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    $scope.internetstats = response.data;
+                    $scope.internetandphones = response.data;
                 });
 
         };
