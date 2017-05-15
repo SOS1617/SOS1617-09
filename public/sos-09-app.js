@@ -1,4 +1,5 @@
-angular.module("manager-app",["ngRoute"]).config(function($routeProvider){
+/*global angular*/
+angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     
     
     
@@ -6,9 +7,12 @@ angular.module("manager-app",["ngRoute"]).config(function($routeProvider){
     .when("/",{
         templateUrl : "home.html",
     })
-    .when("/API/ApiLuis",{
-        templateUrl : "list.html",
+    .when("/ticsathome",{
+        templateUrl : "/ticsathome-manager/list.html",
         controller : "ListController"
+    }).when("/ticsathome/edit/:country",{
+        templateUrl : "/ticsathome-manager/edit.html",
+        controller : "EditController"
     }).when("API/ApiManuel",{
         templateUrl : "index.html",
         controller : "hiv-ctrl.js"

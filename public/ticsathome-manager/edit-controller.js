@@ -1,5 +1,6 @@
+/*global angular*/
 angular
-    .module("TicsManagerApp")
+    .module("sos09-app")
     .controller("EditController", ["$scope", "$http", "$routeParams","$location", function($scope, $http, $routeParams,$location) {
         console.log("Edit Controller INIT OK");
         

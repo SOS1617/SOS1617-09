@@ -1,13 +1,15 @@
+/*global angular*/
 angular
-    .module("TicsManagerApp")
+    .module("sos09-app")
     .controller("ListController", ["$scope", "$http", function($scope, $http) {
         console.log("List Controller INIT OK");
 
     $scope.url = "/api/v2/ticsathome-stats";
+    $scope.apikey = "ticsathomeLuis";
 
       
        
-
+       // refresh();
        $scope.refresh= refresh();
 
 //Crea datos iniciales
@@ -155,7 +157,7 @@ $scope.busqueda = function(dato) {
            checkApiKey($scope.apikey);
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey)
-                .then(function(response){
+                .then(function successCallback(response){
                     $scope.ticsathome = response.data;
                    
                      if($scope.ticsathome.isEmpty){
@@ -167,7 +169,11 @@ $scope.busqueda = function(dato) {
                     console.log( "Showing data "  );
                     
 
-            });
+            },function errorCallback(response){
+                    
+                    $scope.ticsathome = [];
+                   
+                });
             
                 
       };
