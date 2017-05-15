@@ -1,67 +1,80 @@
 angular
     .module("InternetManagerApp")
-    .controller("ListController",["$scope","$http","$location",function($scope, $http,$location){
+    .controller("ListController", ["$scope", "$http", function($scope, $http) {
         console.log("Cotroller initialized");
-        $scope.url= "/api/v2/internetandphones-stats";
-        $scope.apikey="?apikey=";
-        $scope.limit= 3;
-        $scope.offset=0;
-        
-        refresh();
-        
-        function refresh(){
-            if($scope.datas==[]){
-                console.log("[])");
-            }
-            if($scope.offset==0){
-                $http
-                .get($scope.url+$scope.apikey+"internetstats"+"&limit="+$scope.limit+"&offset="+$scope.offset+"&from=2010&to=2017")
-                .then(function(response) {
-                    $scope.datas=response.data;
-                
-                 });
-            }
-        }
-        
-        $scope.create=function(){
-            $http
-                .get($scope.url+"/loadInitialData"+$scope.apikey+$scope.key)
-                .then(function(response){
-                    refresh();
-                });
-        };
-        
-        $scope.getData = function(){
-           
-           check($scope.key);
-            $http
-                .get($scope.url+$scope.apikey+ $scope.key)
-                .then(function(response){
-                    $scope.ticsathome = response.data;
-                   
-                     if($scope.ticsathome.isEmpty){
-                         document.getElementById("createInitialData").disabled = false;
-                    }else{
-                       document.getElementById("createInitialData").disabled = true;
-                    }
-                    
-                    console.log( "Showing data "  );
-                    
+        $scope.url = "/api/v2/internetandphones-stats";
 
-            });
-            
-                
-      };
- 
+        $scope.refresh = refresh();
 
-        $scope.add = function(newStat) {
-           $http
-                .post($scope.url+$scope.apikey+$scope.key,$scope.newStat)
+
+        $scope.create = function() {
+
+            $http
+                .get($scope.url + "/loadInitialData?apikey=" + $scope.apikey)
                 .then(function(response) {
                     console.log("Created");
-                     alert("Añadido correctamente");
+
                     refresh();
-                },function(response) {
+                });
+
+
+        };
+
+
+        function refresh() {
+            if ($scope.apikey == "internetstats") {
+                $http
+                    .get($scope.url+"?apikey=" + $scope.apikey)
+                    .then(function successCallback(response) {
+                        console.log($scope.apikey);
+                        $scope.internetstats = response.data;
+                        if ($scope.internetstats.isEmpty) {
+                            document.getElementById("createInitialData").disabled = false;
+                        }
+                        else {
+                            document.getElementById("createInitialData").disabled = true;
+
+                        }
+
+                    }, function errorCallback(response) {
+                        console.log("Error al cargar los datos");
+                        $scope.internetstats= [];
+
+                    });
+            }
+            else {
+                $scope.internetstats= [];
+            }
+        }
+
+        
+        function check(key) {
+            if ($scope.apikey == null) {
+                alert("No ha introducido apikey, intente de nuevo");
+            }
+            else {
+
+                $http
+                    .get($scope.url+"?apikey=" + key)
+                    .then(function successCallback(response) {
+                        alert("Apikey correcta");
+                     }, function errorCallback(response) {
+                        alert("Apikey erronea, intentelo otra vez");
+
+                    });
+            }
+        }
+
+        
+        $scope.add = function(newStat) {
+
+            $http
+                .post($scope.url + "?apikey=" + $scope.apikey, $scope.newStat)
+                .then(function(response) {
+                    console.log("Created");
+                    alert("Añadido correctamente");
+                    refresh();
+                }, function(response) {
                     switch (response.status) {
                         case 409:
                             alert("Error, you are trying to add a existing country");
@@ -73,105 +86,178 @@ angular
                             alert("Error try again");
                             break;
                     }
-                    });
+                });
         };
-        $scope.delete =function(country){
+        $scope.delete = function(country) {
+
             $http
-                .delete($scope.url + country + $scope.apikey+$scope.key)
-                .then(function(response){
-                    console.log("Deleted"+ country);
+                .delete($scope.url + "/" + country + "?apikey=" + $scope.apikey)
+                .then(function(response) {
+                    console.log("Deleted" + country);
                     alert("Eliminado correctamente");
                     refresh();
                 });
-                
         };
-        $scope.deleteAll =function(){
-            
-             $http
-                .delete($scope.url+$scope.apikey+$scope.key)
+        $scope.deleteAll = function() {
+
+            $http
+                .delete($scope.url + "?apikey=" + $scope.apikey)
                 .then(function successCallback(response) {
                     console.log("Deleted");
                     document.getElementById("createInitialData").disabled = false;
-                     alert("Eliminados todos los datos");
-                },function errorCallback(response){
-                   console.log("Error al borrar datos");
-                   
-                refresh();
-                
-                });
-                refresh();
-                
-        };
-        $scope.put =function(newStat){
-            $http
-                .put($scope.url+ newStat.country +$scope.key, {
-                    country: newStat.country,
-                    year: newStat.year,
-                    usageinternet: newStat.usageInternet,
-                    usagephoneline: newStat.usagephoneline
-                })
-                .then(function(response){
-                    console.log("refresh");
-                    alert("Actualizado correctamente");
+                    alert("Eliminados todos los datos");
+                }, function errorCallback(response) {
+                    console.log("Error al borrar datos");
+
                     refresh();
+
                 });
+            refresh();
+
         };
-        $scope.check = function(){
-            if($scope.key1 === "internetstats"){
-            $scope.key = $scope.key1;
-            }
-            if ($scope.key1 != "internetstats"){
-                if ($scope.key1 == ""){
-                    alert("Empty password");
-                }else{
-                 alert("Incorrect password"); 
-                }
-             $scope.key = $scope.key1;
-            }
+
+
+
+
+
+
+
+        $scope.busqueda = function(dato) {
+
+            $http
+                .get($scope.url + dato + "?apikey=" + $scope.apikey)
+               .then(function successCallback(response) {
+                    $scope.internetstats = response.data;
+                    console.log("Busqueda con exito");
+
+                }, function errorCallback(response) {
+
+                    console.log("Search Fail");
+                    refresh();
+
+                });
         };
         
-        $scope.siguiente = function() {
-            $scope.offset = $scope.offset + 1;
+        $scope.getData = function() {
 
-            $scope.paginacion();
+            check($scope.apikey);
+            $http
+                .get($scope.url + "?apikey=" + $scope.apikey)
+                .then(function(response) {
+                    $scope.internetstats = response.data;
+
+                    if ($scope.internetstats.isEmpty) {
+                        document.getElementById("createInitialData").disabled = false;
+                    }
+                    else {
+                        document.getElementById("createInitialData").disabled = true;
+                    }
+
+                    console.log("Showing data ");
+
+
+                });
+
+
         };
-        $scope.anterior = function() {
-            if($scope.offset>0){
-            $scope.offset = $scope.offset - 1;
-            }
-            $scope.paginacion();
-        };
-
-
+  
         $scope.paginacion = function() {
-            $scope.country = {};
 
             $http
-                .get($scope.url + $scope.apikey+ $scope.key + "&from=10&to=10000&limit=" + $scope.limit + "&offset=" + $scope.offset)
+                .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-                    console.log("offset" + $scope.offset);
-                    console.log("limit" + $scope.limit);
-                    $scope.country = response.data;
-                    console.log("GET 200 ok");
-                    refresh();
-                
-
+                    $scope.internetstats = response.data;
                 });
+
+        };
+        //Paginación
+        $scope.viewby = 0;
+        $scope.totalItems = function() {
+            return $scope.internetstats.length;
+        };
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = function() {
+            return $scope.limit;
+        };
+        $scope.maxSize = 5; //Number of pages buttons to show
+
+        $scope.offset = 0;
+
+
+
+
+        $scope.newPage = function(pageNo) {
+            var viewby = $scope.viewby;
+            $scope.currentPage = pageNo;
+            $scope.offset = pageNo * viewby - parseInt($scope.viewby);
+            $scope.limit = $scope.viewby;
+            $http
+                .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+                .then(function(response) {
+                    $scope.internetstats = response.data;
+                });
+
         };
 
-        $scope.busqueda = function() {
+        $scope.nextPage = function(pageNo) {
+            $scope.currentPage = pageNo;
+            $scope.offset = parseInt($scope.offset) + parseInt($scope.viewby);
+            console.log($scope.offset);
+            $scope.limit = $scope.viewby;
+            $http
+                .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+                .then(function(response) {
+                    $scope.internetstats = response.data;
+                });
+
+        };
+
+        $scope.previousPage = function(pageNo) {
+            var viewby = $scope.viewby;
+            $scope.currentPage = pageNo;
+            $scope.offset -= viewby;
 
             $http
-                .get($scope.url + $scope.apikey + $scope.key + "&from=" + $scope.from + "&to=" + $scope.to)
+                .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
                 .then(function(response) {
-
-                    $scope.country = response.data;
-                    console.log("SEARCH 200 ok");
-
+                    $scope.internetstats = response.data;
                 });
+
         };
-        
+
+        $scope.setItemsPerPage = function(num) {
+            $scope.itemsPerPage = num;
+            $scope.currentPage = 1;
+            $scope.offset = 0;
+            var pages = [];
+            $http
+                .get($scope.url + "?apikey=" + $scope.apikey)
+                .then(function(response) {
+                    for (var i = 1; i <= response.data.length / $scope.viewby; i++) {
+                        pages.push(i);
+
+                    }
+                    if (pages.length * $scope.viewby < response.data.length) {
+                        pages.push(pages.length + 1);
+                    }
+                    $scope.pages = pages;
+                    document.getElementById("pagination").style.display = "block";
+                    document.getElementById("pagination").disabled = false;
+                });
+
+
+
+
+
+            $http
+                .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + num + "&offset=" + $scope.offset)
+                .then(function(response) {
+                    $scope.internetstats = response.data;
+                });
+
+        };
+
+
         refresh();
-        
+
     }]);
-    
