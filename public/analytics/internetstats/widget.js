@@ -36,6 +36,8 @@ angular
                 var chart = new google.visualization.GeoChart(document.getElementById('Gchart'));
                 chart.draw(data, options);
             }
+            
+            
         
     });
 }]);
