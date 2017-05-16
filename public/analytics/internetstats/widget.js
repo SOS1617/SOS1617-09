@@ -2,42 +2,47 @@
 /*global google*/
 angular
     .module("sos09-app")
-    .controller("InternetStatsWidgets", ["$http", function($http) {
+    .controller("InternetStatsWidgets", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
         console.log("Controller initialized");
-        var url = "http://sos1617-09.herokuapp.com/api/v2/internetandphones-stats";
-        var apikey = "apikey=internetstats";
-        $http.get(url + "?" + apikey).then(function(response) {
-            
-            google.charts.load('current', {
-                'packages': ['geochart']
-            });
-            google.charts.setOnLoadCallback(drawMarkersMap);
+        $http
+            .get("/api/v2/internetandphones-stats" + "?apikey=internetstats")
+            .then(function(response) {
 
-            var internetandphones = [];
-            internetandphones.push(['Country', 'Usageinternet', 'Usagephoneline']);
-            response.data.forEach((x) => {
-                internetandphones.push([x.country, x.usageinternet, x.usagephoneline]);
-            });
 
-            function drawMarkersMap() {
-                var data = google.visualization.arrayToDataTable(internetandphones);
+                google.charts.load('current', {
+                    'packages': ['geochart'],
+                    'mapsApiKey': "AIzaSyCXG8oC2k-nM18JMXiW0asnu6UJ8wLYCVA"
 
-                var options = {
-                    datalessRegionColor:'#A9D0F5',
-                    backgroundColor: '#FAFAFAF',
-                    region:150,
+                });
+                google.charts.setOnLoadCallback(drawRegionsMap);
+
+                function drawRegionsMap() {
+                    var finalData = [
+                        ['Country', 'UsageInternet', 'UsagePhoneline']
+                    ];
+
+
+                    response.data.forEach(function(item) {
+                        finalData.push([item.country, Number(item.usageinternet), Number(item.usagephoneline)]);
+                    });
+
                    
-                    colorAxis: {
-                        colors: ['#A4A4A4', '#00BFFF']
-                    },
-                    resolution: 'countries'
-                };
+                    var data = google.visualization.arrayToDataTable(finalData);
+                    console.log(data)
 
-                var chart = new google.visualization.GeoChart(document.getElementById('Gchart'));
-                chart.draw(data, options);
-            }
-            
-            
-        
-    });
-}]);
+                    var options = {
+                        region: '150',
+                    displayMode: 'markers',
+                    colorAxis: {
+                        colors: ['#58ACFA', '#B40431']
+                    }
+                };
+                     
+
+                    var chart = new google.visualization.GeoChart(document.getElementById('InternetStatsWidgets'));
+
+                    chart.draw(data, options);
+                }
+            });
+
+    }]);
