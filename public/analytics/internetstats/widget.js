@@ -21,23 +21,23 @@ angular
                         ['Country', 'UsageInternet', 'UsagePhoneline']
                     ];
 
-
+                    console.log("Response"+response.data);
                     response.data.forEach(function(item) {
                         finalData.push([item.country, Number(item.usageinternet), Number(item.usagephoneline)]);
                     });
 
-                   
+
                     var data = google.visualization.arrayToDataTable(finalData);
-                    console.log(data)
+                    console.log(data);
 
                     var options = {
                         region: '150',
-                    displayMode: 'markers',
-                    colorAxis: {
-                        colors: ['#58ACFA', '#B40431']
-                    }
-                };
-                     
+                       
+                        colorAxis: {
+                            colors: ['#58ACFA', '#B40431']
+                        }
+                     };
+
 
                     var chart = new google.visualization.GeoChart(document.getElementById('InternetStatsWidgets'));
 
