@@ -33,6 +33,9 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/internetandphones/edit/:country",{
         templateUrl : "/internetstats-manager/editv.html",
         controller : "EditControllerv"
+    }).when("/analytics/internetstats/widget",{
+        templateUrl : "/analytics/internetstats/widget.html",
+        controller : "InternetStatsWidgets"
     });
      console.log("APP INIT");
      

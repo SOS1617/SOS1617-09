@@ -70,40 +70,40 @@ exports.getLoadInitial = function(request, response) {
                     "usageinternet": 88.7,
                     "usagephoneline": 47
                 }, {
-                    "country": "austria",
-                    "year": 2015,
-                    "usageinternet": 86,
+                    "country": "estonia",
+                    "year": 2010,
+                    "usageinternet": 74.1,
+                    "usagephoneline": 30
+                }, {
+                    "country": "finland",
+                    "year": 2010,
+                    "usageinternet": 86.9,
                     "usagephoneline": 23
                 }, {
-                    "country": "belgium",
-                    "year": 2015,
-                    "usageinternet": 77.9,
+                    "country": "france",
+                    "year": 2010,
+                    "usageinternet": 77.3,
                     "usagephoneline": 64
                 }, {
-                    "country": "denmark",
-                    "year": 2015,
+                    "country": "germany",
+                    "year": 2010,
                     "usageinternet": 82,
                     "usagephoneline": 64
                 }, {
                     "country": "greece",
-                    "year": 2017,
+                    "year": 2010,
                     "usageinternet": 44.4,
                     "usagephoneline": 23
                 }, {
-                    "country": "austria",
-                    "year": 2017,
+                    "country": "hungary",
+                    "year": 2010,
                     "usageinternet": 65,
                     "usagephoneline": 30
                 }, {
-                    "country": "belgium",
-                    "year": 2017,
+                    "country": "iceland",
+                    "year": 2010,
                     "usageinternet": 93.4,
                     "usagephoneline": 61
-                }, {
-                    "country": "denmark",
-                    "year": 2010,
-                    "usageinternet": 53.7,
-                    "usagephoneline": 37
                 }]);
                 console.log("OK");
                 response.sendStatus(201);
