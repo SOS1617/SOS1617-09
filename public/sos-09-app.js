@@ -27,13 +27,14 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("API/ApiManuel",{
         templateUrl : "index.html",
         controller : "hiv-ctrl.js"
-    }).when("API/ApiVero",{
-        templateUrl : "internetStats.html",
-        controller : "list-cntrl-internet.js"
+    }).when("/internetandphones",{
+        templateUrl : "/internetstats-manager/listv.html",
+        controller : "ListControllerv"
+    }).when("/internetandphones/edit/:country",{
+        templateUrl : "/internetstats-manager/editv.html",
+        controller : "EditControllerv"
     });
-    
      console.log("APP INIT");
      
-     
+    
 });
-   
