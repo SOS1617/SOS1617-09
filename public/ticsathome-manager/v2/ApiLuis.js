@@ -73,7 +73,7 @@ exports.getNewStats = function(req, res) {
                         "smartphone": 30,
                         "tablet": 20
                     }, {
-                        "country": "hungry",
+                        "country": "hungary",
                         "year": 2016,
                         "smartphone": 26,
                         "tablet": 16
