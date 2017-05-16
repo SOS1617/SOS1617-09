@@ -6,7 +6,7 @@ angular
         console.log("Controller initialized");
         var url = "http://sos1617-09.herokuapp.com/api/v2/internetandphones-stats";
         var apikey = "apikey=internetstats";
-        $http.get(url + "/?" + apikey).then(function(response) {
+        $http.get(url + "?" + apikey).then(function(response) {
             
             google.charts.load('current', {
                 'packages': ['geochart']
