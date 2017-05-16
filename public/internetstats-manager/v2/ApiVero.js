@@ -49,61 +49,62 @@ exports.getLoadInitial = function(request, response) {
         response.sendStatus(403);
     }else{
         db1.find({}).toArray(function(error, stats1) {
-             if (!error) {
-
-                if (stats1.length === 0 && db1) {
-
+            if (error) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }else {
+                if (stats1.length === 0) {
                     db1.insert([{
-                        "country": "germany",
-                        "year": 2010,
-                        "smartphone": 30,
-                        "tablet": 18
-                    }, {
-                        "country": "belgium",
-                        "year": 2010,
-                        "smartphone": 23,
-                        "tablet": 16
-                    }, {
-                        "country": "spain",
-                        "year": 2010,
-                        "smartphone": 40,
-                        "tablet": 24
-                    }, {
-                        "country": "france",
-                        "year": 2010,
-                        "smartphone": 22,
-                        "tablet": 17
-                    }, {
-                        "country": "italy",
-                        "year": 2010,
-                        "smartphone": 39,
-                        "tablet": 28
-                    }, {
-                        "country": "portugal",
-                        "year": 2016,
-                        "smartphone": 27,
-                        "tablet": 15
-                    }, {
-                        "country": "united kingdom",
-                        "year": 2010,
-                        "smartphone": 30,
-                        "tablet": 20
-                    }, {
-                        "country": "hungary",
-                        "year": 2010,
-                        "smartphone": 26,
-                        "tablet": 16
-                    }, {
-                        "country": "poland",
-                        "year": 2010,
-                        "smartphone": 37,
-                        "tablet": 19
-                    }, {
-                        "country": "slovakia",
-                        "year": 2010,
-                        "smartphone": 31,
-                        "tablet": 22
-                    }]);
+                    "country": "austria",
+                    "year": 2010,
+                    "usageinternet": 75.2,
+                    "usagephoneline": 40
+                }, {
+                    "country": "belgium",
+                    "year": 2010,
+                    "usageinternet": 75,
+                    "usagephoneline": 42
+                }, {
+                    "country": "denmark",
+                    "year": 2010,
+                    "usageinternet": 88.7,
+                    "usagephoneline": 47
+                }, {
+                    "country": "estonia",
+                    "year": 2010,
+                    "usageinternet": 74.1,
+                    "usagephoneline": 30
+                }, {
+                    "country": "finland",
+                    "year": 2010,
+                    "usageinternet": 86.9,
+                    "usagephoneline": 23
+                }, {
+                    "country": "france",
+                    "year": 2010,
+                    "usageinternet": 77.3,
+                    "usagephoneline": 64
+                }, {
+                    "country": "germany",
+                    "year": 2010,
+                    "usageinternet": 82,
+                    "usagephoneline": 64
+                }, {
+                    "country": "greece",
+                    "year": 2010,
+                    "usageinternet": 44.4,
+                    "usagephoneline": 23
+                }, {
+                    "country": "hungary",
+                    "year": 2010,
+                    "usageinternet": 65,
+                    "usagephoneline": 30
+                }, {
+                    "country": "iceland",
+                    "year": 2010,
+                    "usageinternet": 93.4,
+                    "usagephoneline": 61
+                }]);
                 console.log("OK");
                 response.sendStatus(201);
 

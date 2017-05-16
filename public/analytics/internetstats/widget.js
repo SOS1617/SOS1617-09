@@ -21,7 +21,7 @@ angular
                         ['Country', 'UsageInternet', 'UsagePhoneline']
                     ];
 
-                    console.log("Response"+response.data);
+                    console.log(response.data);
                     response.data.forEach(function(item) {
                         finalData.push([item.country, Number(item.usageinternet), Number(item.usagephoneline)]);
                     });
