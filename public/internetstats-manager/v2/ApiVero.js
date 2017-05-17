@@ -26,6 +26,8 @@ var check = function(f) {
     }
     return res;
 };
+
+
 /*****************API*************/
 
 exports.postRecurso = function(request, response) {

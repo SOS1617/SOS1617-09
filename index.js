@@ -4,7 +4,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
 
-
+var cors= require("cors");
 var app = express();
 var port = (process.env.PORT || 16778);
 
@@ -29,7 +29,7 @@ app.listen(port, ()=> {
 
 app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
-
+app.use(cors());
 
 /**************************API MANUEL*********************************/
 
