@@ -37,7 +37,10 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     .when("API/ApiManuel",{
         templateUrl : "index.html",
         controller : "hiv-ctrl.js"
-    }).when("/internetandphones",{
+    })
+    
+    //Verónicas
+    .when("/internetandphones",{
         templateUrl : "/internetstats-manager/listv.html",
         controller : "ListControllerv"
     }).when("/internetandphones/edit/:country",{
@@ -49,6 +52,9 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/proxy/internetstats",{
         templateUrl : "/analytics/internetstats/integration.html",
         controller : "ProxyCtroller"
+    }).when("/cors/internetstats",{
+        templateUrl : "/analytics/internetstats/integration2.html",
+        controller : "Cotroller"
     });
      console.log("APP INIT");
      
