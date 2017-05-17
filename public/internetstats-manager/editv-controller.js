@@ -10,7 +10,7 @@ angular
         function refresh() {
 
             $http
-                .get($scope.url + $routeParams.country + "/?apikey=internetstats")
+                .get($scope.url+ "/"+ $routeParams.country + "?apikey=internetstats")
                 .then(function successCallback(response) {
                     $scope.updateTic = response.data;
 
@@ -26,7 +26,7 @@ angular
          $scope.update = function(newStat) {
 
             $http
-                .put($scope.url +newStat.country + "?apikey=ticsathomeLuis",{
+                .put($scope.url+"/"+newStat.country + "?apikey=internetstats",{
                     country: newStat.country,
                     year: newStat.year,
                     usageInternet: newStat.usageInternet,
@@ -41,7 +41,7 @@ angular
                     default:
                         alert("OK");
                         break;
-}
+                    }
                     $location.path("/");
                
                 });
