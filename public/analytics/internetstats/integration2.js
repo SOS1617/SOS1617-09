@@ -80,8 +80,7 @@ angular
                     }, {
                         name: 'Math Stats',
                         data: dato2.map(function(d) {
-                            var res = d.math + d.reading + d.science;
-                            return res;
+                            return d.math;
                         })
                     }]
                 });
