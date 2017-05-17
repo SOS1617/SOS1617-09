@@ -11,7 +11,7 @@ angular
         var total = [];
 
         $http
-            .get("api/v2/internetandphones-stats=apikey=internetstats")
+            .get("api/v2/internetandphones-stats?apikey=internetstats")
             .then(function(res) {
                 dato2 = funciondatos2();
                 total.push(dato2);
