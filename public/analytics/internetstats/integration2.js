@@ -59,11 +59,11 @@ angular
                     },
                     plotOptions: {
                         column: {
-                            depth: 25
+                            depth: 14
                         }
                     },
                     xAxis: {
-                        categories: dato1.map(function(d) {
+                        categories: dato2.map(function(d) {
                             return d.country;
                         })
                     },
