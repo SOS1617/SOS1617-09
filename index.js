@@ -111,6 +111,28 @@ app.get(urlDir,funciones.getGeneral);
 app.get(urlDir+ "/:country",funciones.getOneParam);
 app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
 
+app.get("/proxy/ticsathome",(req,res)=>{
+ var http = require('http');
+ 
+ var options = {
+     host:'sos1617-10.herokuapp.com',
+     path: "/api/v2/beers-stats/?apikey=jesusguerre"
+ };
+ 
+ callback = function(response){
+   var str ="";
+   response.on('data',function(chunk){
+       str+=chunk;
+   });
+   
+   response.on('end',function(){
+       res.send(str);
+   });
+     
+ }
+ http.request(options,callback).end();
+});
+
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);
 app.put(urlDir+ "/:country/:year",funciones.putTwoSpecific);

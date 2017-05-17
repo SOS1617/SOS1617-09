@@ -9,6 +9,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/analytics",{
         templateUrl : "/analytics/analytics.html"
     })
+    //Luis
     .when("/ticsathome",{
         templateUrl : "/ticsathome-manager/list.html",
         controller : "ListController"
@@ -24,7 +25,16 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/analytics/ticsathome/chartist",{
         templateUrl : "/analytics/ticsathome/chartist.html",
         controller : "chartistController"
-    }).when("API/ApiManuel",{
+    }).when("/analytics/ticsathome/integration",{
+        templateUrl : "/analytics/ticsathome/wages&ticsathome.html",
+        controller : "WagesController"
+    }).when("/proxy/ticsathome",{
+        templateUrl : "/analytics/ticsathome/proxyTic.html",
+        controller : "proxyTicsController"
+    })
+    
+    //Manuel
+    .when("API/ApiManuel",{
         templateUrl : "index.html",
         controller : "hiv-ctrl.js"
     }).when("/internetandphones",{
