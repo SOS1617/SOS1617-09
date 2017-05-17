@@ -18,7 +18,7 @@ angular
                     var smartphones = [];
                     var tablets = [];
         
-        $http.get("https://sos1617-10.herokuapp.com/api/v2/beers-stats?apikey=jesusguerre").then(function(response) {
+        $http.get("/proxy/ticsathome").then(function(response) {
                 var beerResult = response.data;
                
                 for (var i = 0; i < beerResult.length; i++) {
@@ -32,7 +32,7 @@ angular
                 
                 
 
-                $http.get("/proxy/ticsathome").then(function(response) {
+                $http.get("/api/v2/ticsathome-stats/2016" +"?apikey=ticsathomeLuis").then(function(response) {
                     var TicsResults = response.data;
                     
                     
@@ -67,7 +67,7 @@ angular
                     
                   
                     //////////
-                /*   Highcharts.chart('container', {
+                   Highcharts.chart('container', {
     chart: {
         zoomType: 'xy'
     },
@@ -137,7 +137,7 @@ angular
             valueSuffix: ''
         }
     }]
-});*/
+});
 
  
                 });
