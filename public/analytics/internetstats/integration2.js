@@ -55,11 +55,11 @@ angular
                         text: 'Highcharts'
                     },
                     subtitle: {
-                        text: 'Comparason between the total of startups and the math PISA results'
+                        text: "Usage of PhoneLines and Readers (Pisa Results)"
                     },
                     plotOptions: {
                         column: {
-                            depth: 14
+                            depth: 25
                         }
                     },
                     xAxis: {
@@ -80,7 +80,7 @@ angular
                     }, {
                         name: 'Math Stats',
                         data: dato2.map(function(d) {
-                            return d.math;
+                            return Number(d.reading);
                         })
                     }]
                 });
