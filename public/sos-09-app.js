@@ -52,7 +52,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/proxy/internetstats",{
         templateUrl : "/analytics/internetstats/integration.html",
         controller : "ProxyCtroller"
-    }).when("/cors/internetstats",{
+    }).when("/pisaResult/internetstats",{
         templateUrl : "/analytics/internetstats/integration2.html",
         controller : "Cotroller"
     });
