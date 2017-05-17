@@ -6,11 +6,6 @@ var db;
 
 var apikey = "manuel";
 
-/*Si se intenta acceder a la API con…
-sin apikey se debe devolver el código 401.
-con una apikey inválida se debe devolver el código 403.
-*/
-
 /************************CONECTAR CON LA BASE DE DATOS**************/
 
 mongoClient.connect(mongoURL, {
@@ -43,13 +38,7 @@ module.exports.getCreateStats = (req, res) => {
         if (db) {
 
             db.find({}).toArray(function(error, conjunto) {
-                if (error) {
-                    console.error(' Error from DB');
-                    res.sendStatus(500); // internal server error
-                }
-                else {
-
-
+                if (!error) {
                     if (conjunto.length === 0) {
                         meteDatos(db);
                         console.log("OK");
@@ -59,6 +48,12 @@ module.exports.getCreateStats = (req, res) => {
                     else {
                         res.sendStatus(200);
                     }
+                }
+                else {
+
+                 console.error(' Error from DB');
+                    res.sendStatus(500); // internal server error
+                   
 
                 }
 
@@ -100,7 +95,7 @@ module.exports.getObtainStats = (req, res) => {
         }
 
         else {
-            /*var limit = parseInt(req.query.limit);
+            var limit = parseInt(req.query.limit);
             var offset = parseInt(req.query.offset);
             var from = req.query.from;
             var to = req.query.to;
@@ -190,7 +185,7 @@ module.exports.getObtainStats = (req, res) => {
                     }
                 });
             }
-            else {*/
+            else {
 
                 db.find({}).toArray(function(err, data) {
                     if (err) {
@@ -200,7 +195,8 @@ module.exports.getObtainStats = (req, res) => {
                     else {
                         if (data.length === 0) {
                             console.log("no hay nada en el conjunto,pero esta conetado con la BD");
-                            res.sendStatus(404);
+                            res.send(data);
+                           // res.sendStatus(404);
                         }else{
                         console.log("INFO: Sending contacts: " + JSON.stringify(data, 2, null));
                         
@@ -208,7 +204,7 @@ module.exports.getObtainStats = (req, res) => {
                         }
                     }
                 });
-            /*}*/
+            }
         }
     }
 };
@@ -540,8 +536,7 @@ module.exports.deleteCollection = (req, res) => {
         res.sendStatus(403); //Está mal puesta la apikey
     }
     else {
-
-
+            if(db || db.length !== 0){
         db.remove({}, {
             multi: true
         }, function(err, borr) {
@@ -562,7 +557,10 @@ module.exports.deleteCollection = (req, res) => {
                 }
             }
         });
-    }
+    }else{
+        console.log("No habia nada en la base de datos");
+        res.sendStatus(404);
+    }}
 };
 
 //DELETE a un recurso en concreto
@@ -649,52 +647,43 @@ module.exports.deleteTwoData = (req, res) => {
 
         res.sendStatus(403); //Está mal puesta la apikey
     }
-    else { 
-            var paramCountry = req.params.country;
-            var paramYear = parseInt(req.params.year);
-        if (!paramCountry || !paramYear) {
-            res.sendStatus(400);
+    else {
+
+        var country = req.params.country;
+        var year = parseInt(req.params.year);
+
+        if (!country) {
+            res.sendStatus(404);
 
         }
         else {
-            db.find({}).toArray(function(error, stats) {
-
-                if (stats.length === 0) {
-                    console.log("Something is wrong");
+            db.remove({
+                country: country,
+                year: year
+            }, function(error, conjunto) {
+                var numeros = JSON.parse(conjunto);
+                if (error) {
+                    console.log("Algo pasa con la base de datos que está vacía");
                     res.sendStatus(404);
                 }
-                else {
+                else if (numeros.n > 0) {
 
-                    var aux = stats.filter(c => c.year == paramYear && c.country === paramCountry);
-                    db.remove({
-                        country: paramCountry,
-                        year: parseInt(paramYear)
-                    }, {}, function(error, Sremove) {
-                        console.log(aux);
-
-                        if (error) {
-                            console.log("Something wrong on DataBase");
-                            res.sendStatus(500);
-                        }
-                        else {
-
-
-                            console.log("INFO: The country with name " + paramCountry + " has been succesfully deleted, sending 204...");
-                            res.sendStatus(204); // no content
-
-                        }
-
-                    });
-
+                    console.log("El dato se ha borrado satisfactoriamente");
+                    res.sendStatus(204);
                 }
+                else {
+                    console.log("no se ha borrado nada ");
+                    res.sendStatus(404);
+                }
+
             });
-
-
 
 
         }
     }
 };
+
+
 
 
 /*************************FUNCIONES AUXILIARES*******************************/

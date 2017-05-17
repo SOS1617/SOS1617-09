@@ -1,0 +1,25 @@
+<h2>Edit HIV Data</h2>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Year</th>
+                            <th>Incidence</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                             <td>{{updatedData.country}}</td>
+                             <td>{{updatedData.year}}</td>
+                            <td><input class="form-control" ng-model="updateData.incidence" /></td>
+                            <td><input class="form-control" ng-model="updateData.total" /></td>
+                            <td><input class="form-control" ng-model="updateData.percentage" /></td>
+                            <td><button class="btn btn-primary" ng-click="updateData()">Update data </button></td>
+
+                        </tr>
+                </tbody>
+            </table>

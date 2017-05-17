@@ -531,7 +531,7 @@ module.exports.putTwoData = (req, res) => {
 
 //DELETE a una colección de datos
 
-module.exports.deleteCollection = (req, res) => {
+/*module.exports.deleteCollection = (req, res) => {
 
     var key = req.query.apikey;
 
@@ -567,8 +567,42 @@ module.exports.deleteCollection = (req, res) => {
             }
         });
     }
-};
+};*/
 
+module.exports.deleteCollection = (req, response) =>  {
+    var key = req.query.apikey;
+
+    if (!key) {
+        response.sendStatus(401); //No ha puesto la apikey
+
+    }
+    else if (!tieneKey(key)) {
+
+        response.sendStatus(403); //Está mal puesta la apikey
+    }
+    else {
+        console.log("INFO: New DELETE request to /hiv-stats");
+        db.remove({}, {
+            multi: true
+        }, function(err, result) {
+            var numRemoved = JSON.parse(result);
+            if (err) {
+                console.error(" removing data from DB");
+                response.sendStatus(500); // internal server error
+            }
+            else {
+                if (numRemoved.n > 0) {
+                    console.log("INFO: All the hiv-stats (" + numRemoved.n + ") have been succesfully deleted, sending 204...");
+                    response.sendStatus(204); // no content
+                }
+                else {
+                    console.log("WARNING: There are no hiv-stats to delete");
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
+    }
+};
 //DELETE a un recurso en concreto
 
 module.exports.deleteData = (req, res) => {
