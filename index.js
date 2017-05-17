@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
-
+var request= require("request");
 var cors= require("cors");
 var app = express();
 var port = (process.env.PORT || 16778);
@@ -29,6 +29,10 @@ app.listen(port, ()=> {
 
 app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
+  app.get("/api/v2/internetandphones-stats/proxy", (req, res) => {
+        var url = 'https://sos1617-01.herokuapp.com/api/v2/youthunemploymentstats?apikey=sos161701';
+        req.pipe(request(url)).pipe(res);
+    });
 
 
 /**************************API MANUEL*********************************/

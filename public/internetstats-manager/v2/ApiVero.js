@@ -290,7 +290,8 @@ exports.getRecursoDosParametros = function(request, response) {
 
      }   
 };
-     
+
+
 exports.postCollection = function(request, response) {
      var key = request.query.apikey;
      if (!key) {
