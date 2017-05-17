@@ -16,7 +16,7 @@ angular
                 dato1 = funciondatos();
                 total.push(dato1);
                 $http
-                    .get("/proxy")
+                    .get("api/v2/internetandphones-stats/proxy")
                     .then(function(res) {
                         dato2 = funciondatos2();
                         total.push(dato2);
