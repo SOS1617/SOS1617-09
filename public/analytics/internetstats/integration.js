@@ -11,12 +11,12 @@ angular
         var total = [];
 
         $http
-            .get("/api/v2/youthunemploymentstats?apikey=sos161701")
+            .get("api/v2/internetandphones-stats=apikey=internetstats")
             .then(function(res) {
                 dato1 = funciondatos();
                 total.push(dato1);
                 $http
-                    .get("api/v2/internetandphones-stats/proxy")
+                    .get("/proxy/internetstats")
                     .then(function(res) {
                         dato2 = funciondatos2();
                         total.push(dato2);

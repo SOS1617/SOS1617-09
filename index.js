@@ -29,11 +29,24 @@ app.listen(port, ()=> {
 
 app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
-  app.get("/api/v2/internetandphones-stats/proxy", (req, res) => {
-        var url = 'https://sos1617-01.herokuapp.com/api/v2/youthunemploymentstats?apikey=sos161701';
-        req.pipe(request(url)).pipe(res);
-    });
-
+  app.get("/proxy/internetstats", (req, res) => {
+      var http= require("http");
+      
+      var option={
+          host:"sos1617-01.herokuapp.com",
+          path: "/api/v2/youthunemploymentstats?apikey=sos161701"
+      };
+      callback = function (response){
+          var str="";
+          response.on ("data",function(chuck){
+              str+=chuck;
+          });
+          response.on("end", function(){
+              res.send(str);
+          });
+    }
+    http.request(option,callback).end();
+});
 
 /**************************API MANUEL*********************************/
 

@@ -36,7 +36,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/analytics/internetstats/widget",{
         templateUrl : "/analytics/internetstats/widget.html",
         controller : "InternetStatsWidgets"
-    }).when("/analytics/internetstats/integration",{
+    }).when("/proxy/internetstats",{
         templateUrl : "/analytics/internetstats/integration.html",
         controller : "ProxyCtroller"
     });
