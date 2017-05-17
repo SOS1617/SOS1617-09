@@ -3,20 +3,21 @@
 /*global $*/
 angular
     .module("sos09-app")
-    .controller("ProxyCtroller", ["$http", "$scope", function($http, $scope) {
+    .controller("Cotroller", ["$http", "$scope", function($http, $scope) {
 
 
         var dato1 = [];
         var dato2 = [];
         var total = [];
 
+
         $http
             .get("api/v2/internetandphones-stats?apikey=internetstats")
             .then(function(res) {
-                dato2 = funciondatos2();
-                total.push(dato2);
-                
-                function funciondatos2() {
+                dato1 = funciondatos();
+                total.push(dato1);
+
+                function funciondatos() {
                     var ret = [];
 
                     res.data.forEach(function(d) {
@@ -38,23 +39,23 @@ angular
                 }
             });
 
-
         $http
-            .get("/proxy/internetstats")
+            .get("https://sos1617-03.herokuapp.com/api/v1/results/?apikey=apisupersecreta")
             .then(function(res) {
-                dato1 = funciondatos();
-                total.push(dato1);
+                dato2 = funciondatos2();
+                total.push(dato2);
 
-                Highcharts.chart('container01', {
+
+                Highcharts.chart('container03', {
                     chart: {
-                        type: 'column',
+                        type: 'areaspline',
 
                     },
                     title: {
                         text: 'Highcharts'
                     },
                     subtitle: {
-                        text: 'Comparason male umployments and usage of internet'
+                        text: "Usage of PhoneLines and Readers (Pisa Results)"
                     },
                     plotOptions: {
                         column: {
@@ -72,42 +73,42 @@ angular
                         }
                     },
                     series: [{
-                        name: 'Male Uneployment (%)',
+                        name: 'Usages PhoneLines',
                         data: dato1.map(function(d) {
-                            return Number(d.male_unemployment_ratio);
+                            return Number(d.usagephoneline);
                         })
                     }, {
-                        name: 'Usage Internet',
+                        name: 'Math Stats',
                         data: dato2.map(function(d) {
-                            return Number(d.usageinternet);
+                            return Number(d.reading);
                         })
                     }]
                 });
 
-
-                function funciondatos() {
+                function funciondatos2() {
                     var ret = [];
 
                     res.data.forEach(function(d) {
                         res.data.country = d.country;
                         res.data.year = d.year;
-                        res.data.male_unemployment_ratio = d.male_unemployment_ratio;
-                        res.data.female_unemployment_ratio = d.female_unemployment_ratio;
+                        res.data.science = d.science;
+                        res.data.reading = d.reading;
+                        res.data.math = d.math;
                         ret.push({
                             "country": res.data.country,
                             "year": res.data.year,
-                            "male_unemployment_ratio": res.data.male_unemployment_ratio,
-                            "female_unemployment_ratio": res.data.female_unemployment_ratio
+                            "science": res.data.science,
+                            "reading": res.data.reading,
+                            "math": res.data.math
                         });
 
                     });
 
                     return ret;
-
                 }
 
 
-                
+
             });
 
 
