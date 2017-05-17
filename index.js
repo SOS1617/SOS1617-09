@@ -4,11 +4,11 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var request= require("request");
-/*var cors= require("cors");*/
+var cors= require("cors");
 var app = express();
 var port = (process.env.PORT || 16778);
 
-//app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(helmet());
 
