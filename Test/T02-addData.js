@@ -9,9 +9,9 @@ function writeScreenShot(data, filename) {
 describe('Add stats', function() {
 	it('should add a new stats', function() {
 		browser.get('http://sos1617-09.herokuapp.com/#!/internetandphones');
-		element(by.model('apikeyField')).sendKeys('internetstats');
+		/*element(by.model('apikeyField')).sendKeys('internetstats');*/
 
-		element(by.buttonText('Access')).click().then(function() {
+		/*element(by.buttonText('Access')).click().then(function() {*/
 
 			element.all(by.repeater('stat in internetandphone')).then(function(initialData) {
 				browser.driver.sleep(2000);
@@ -34,4 +34,4 @@ describe('Add stats', function() {
 
 	});
 	
-});
+/*});*/
