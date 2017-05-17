@@ -11,7 +11,9 @@ angular
 
             $http
                 .get($scope.url+ "/"+ $routeParams.country + "?apikey=internetstats")
+                
                 .then(function successCallback(response) {
+                    console.log("dev"+response.data);
                     $scope.updateTic = response.data;
 
                 }, function errorCallback(response) {
