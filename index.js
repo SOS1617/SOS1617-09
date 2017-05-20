@@ -133,10 +133,10 @@ app.delete(urlDirv2+ "/:country/:year",funcionesv2.deleteTwo);
 /*****************************API VERO*********************************/
 
 var vero = "/api/v1/internetandphones-stats";
-var metodosVero = require("./public/API/ApiVero/v1/ApiVero.js");
+var metodosVero = require("./public/internetstats-manager/v1/ApiVero.js");
 
 var vero2 = "/api/v2/internetandphones-stats";
-var metodosVero2 = require("./public/API/ApiVero/v2/ApiVero.js");
+var metodosVero2 = require("./public/internetstats-manager/v2/ApiVero.js");
 
 app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);

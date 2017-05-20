@@ -1,0 +1,107 @@
+<div>
+
+    <body style="width:600px;margin-left:350px; border:solid">
+
+
+        <h1>Internet and Phones List</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <h4>ApiKey: internetstats</h4>
+                </tr>
+                <tr>
+
+                    <th>Introduce APIKEY<input class="form-control" ng-model="apikey" ng-change = "getData()"></th>
+                    <th class="text-center"><button class="btn btn-success" ng-click="getData()">DATA</button></th>
+
+                </tr>
+
+                <tr>
+                    <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
+                    <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
+                    <th class="text-center"><button class="btn btn-success" ng-click="paginacion()">DATA</button></th>
+                </tr>
+
+                <tr>
+                    <th>Introduce search<input class="form-control" ng-model="country"></th>
+                    <!--  <th>Introduce TO<input class="form-control" ng-model="to"></th>-->
+                    <th class="text-center"><button class="btn btn-success" ng-click="busqueda(country)">SEARCH</button></th>
+                </tr>
+
+            </thead>
+        </table>
+
+
+              <table class="table">
+                  <thead>
+                  <tr>
+                      <th>Country</th>
+                      <th>Year</th>
+                      <th>Usage internet</th>
+                      <th>Usage phoneline</th>
+                      <th>Actions</th>
+                     
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><input class ="form-control" ng-model="newStat.country"/></td>
+                          <td><input class ="form-control" ng-model="newStat.year"/></td>
+                          <td><input class ="form-control" ng-model="newStat.usageInternet"/></td>
+                          <td><input class ="form-control" ng-model="newStat.usagephoneline"/></td>
+                          <td><button class="btn btn-primary"ng-click= "add(newStat)">Add</button></td>
+                          <td><button class="btn btn-danger"ng-click= "deleteAll()">Delete All</button></td>
+
+                      </tr>
+                      <tr ng-repeat = "stat in internetandphones">
+                          <td><a href="#!/internetandphones/edit/{{stat.country}}">{{stat.country}}</a></td>
+                          <td>{{stat.year}}</td>
+                          <td>{{stat.usageinternet}}</td>
+                          <td>{{stat.usagephoneline}}</td>
+                          <td><button class="btn btn-danger"ng-click= "delete(stat.country)">Delete</button></td>
+                          <td><a href="#!/internetandphones/edit/{{stat.country}}"><button class="btn btn-secondary" >Editt</button></a></td>
+
+                      </tr>
+                      
+                  </tbody>
+                  
+              </table>
+              
+              <tr>
+                  <td><button class="btn btn-primary" ng-click= "create()">Create Initial Data</button></td>
+                  <td><button class="btn btn-info" ng-click= "refresh()">Refresh Data</button></td>
+                </tr>
+                
+             </tbody>
+
+        </table>
+
+       
+        </tr>
+        
+       View <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+            </select> records at a time.
+        <pre>The selected page no: {{currentPage}}</pre>
+        
+        <div   id= "pagination"  style="display:none;" disabled = true>
+        
+        <table>
+        <td><button class="btn btn-info" ng-click="previousPage(currentPage-1)" ng-disabled = "currentPage==1">Prev</button></td>
+        <td ng-repeat="page in pages" >
+          <a><button class="btn btn-info" ng-click="newPage(page)">{{page}}</button></a>
+        </td>
+        <td><button class="btn btn-info" ng-click="nextPage(currentPage+1)" ng-disabled ="currentPage == pages.length">Next</button></td>
+            </table>
+            
+        
+        
+        </div>
+        
+    </body>
+</div>
