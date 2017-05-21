@@ -3,12 +3,12 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
-
-
+var request= require("request");
+var cors= require("cors");
 var app = express();
 var port = (process.env.PORT || 16778);
 
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(helmet());
 
@@ -29,7 +29,24 @@ app.listen(port, ()=> {
 
 app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
-
+  app.get("/proxy/internetstats", (req, res) => {
+      var http= require("http");
+      
+      var option={
+          host:"sos1617-01.herokuapp.com",
+          path: "/api/v2/youthunemploymentstats?apikey=sos161701"
+      };
+      callback = function (response){
+          var str="";
+          response.on ("data",function(chuck){
+              str+=chuck;
+          });
+          response.on("end", function(){
+              res.send(str);
+          });
+    }
+    http.request(option,callback).end();
+});
 
 /**************************API MANUEL*********************************/
 
@@ -93,6 +110,28 @@ app.get(urlDir + "/loadInitialData",funciones.getNewStats);
 app.get(urlDir,funciones.getGeneral);
 app.get(urlDir+ "/:country",funciones.getOneParam);
 app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
+
+app.get("/proxy/ticsathome",(req,res)=>{
+ var http = require('http');
+ 
+ var options = {
+     host:'sos1617-10.herokuapp.com',
+     path: "/api/v2/beers-stats/?apikey=jesusguerre"
+ };
+ 
+ callback = function(response){
+   var str ="";
+   response.on('data',function(chunk){
+       str+=chunk;
+   });
+   
+   response.on('end',function(){
+       res.send(str);
+   });
+     
+ }
+ http.request(options,callback).end();
+});
 
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);

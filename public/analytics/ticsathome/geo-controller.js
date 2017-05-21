@@ -58,5 +58,4 @@ angular
         chart.draw(data, options);
       }
         });
-      
     }]);

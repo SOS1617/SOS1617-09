@@ -26,6 +26,8 @@ var check = function(f) {
     }
     return res;
 };
+
+
 /*****************API*************/
 
 exports.postRecurso = function(request, response) {
@@ -288,7 +290,8 @@ exports.getRecursoDosParametros = function(request, response) {
 
      }   
 };
-     
+
+
 exports.postCollection = function(request, response) {
      var key = request.query.apikey;
      if (!key) {
