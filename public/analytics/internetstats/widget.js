@@ -129,7 +129,7 @@ angular
                 response.data.forEach((x) => {
                     stats.push({
                         id: cont,
-                        content: x.usageinternet,
+                        content: String(x.usageinternet),
                         start: x.year+"-01-01",
                         end: x.year+"-12-31"
                     });
