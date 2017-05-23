@@ -127,6 +127,7 @@ angular
             $http
                 .get(url)
                .then(function successCallback(response) {
+                   console.log(url);
                     $scope.internetandphones = response.data;
                     console.log("Busqueda con exito");
 
