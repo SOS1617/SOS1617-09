@@ -67,6 +67,9 @@ angular
 
         
         $scope.add = function(newStat) {
+            
+            $scope.newStat.usageinternet=Number($scope.newStat.usageinternet);
+            $scope.newStat.usagephoneline=Number($scope.newStat.usagephoneline);
 
             $http
                 .post($scope.url + "?apikey=" + $scope.apikey, $scope.newStat)
