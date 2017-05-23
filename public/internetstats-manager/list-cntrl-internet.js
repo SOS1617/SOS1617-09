@@ -123,7 +123,7 @@ angular
 
 
         $scope.busqueda = function(dato) {
-            var url = $scope.url +"?country="+ dato+ "&" + "apikey=" + $scope.apikey;
+            var url = $scope.url +"/"+ dato+ "?" + "apikey=" + $scope.apikey;
             $http
                 .get(url)
                .then(function successCallback(response) {
