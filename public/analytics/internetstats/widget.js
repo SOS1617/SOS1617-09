@@ -114,14 +114,22 @@ angular
                         data: usagephoneline
                     }]
                 });
+                
 
-                var stats = [];
+                
 
+
+
+            });
+            
+            $http.get("/api/v2/internetandphones-stats/spain?apikey=internetstats").then(function (response) {
+                 var stats = [];
+               
                 var cont = 0;
                 response.data.forEach((x) => {
                     stats.push({
                         id: cont,
-                        content: x.country,
+                        content: x.usageinternet,
                         start: x.year+"-01-01",
                         end: x.year+"-12-31"
                     });
@@ -141,11 +149,10 @@ angular
                 // Create a Timeline
                 var timeline = new vis.Timeline(container, items, options);
 
-
-
+                
+                
             });
 
-
-
+           
 
     }]);
