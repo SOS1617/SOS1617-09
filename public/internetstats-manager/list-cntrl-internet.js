@@ -123,9 +123,9 @@ angular
 
 
         $scope.busqueda = function(dato) {
-
+            var url = $scope.url +"?country="+ dato+ "&" + "apikey=" + $scope.apikey;
             $http
-                .get($scope.url +"?country="+ dato+ "&" + "apikey=" + $scope.apikey)
+                .get(url)
                .then(function successCallback(response) {
                     $scope.internetandphones = response.data;
                     console.log("Busqueda con exito");
