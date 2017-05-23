@@ -29,7 +29,7 @@ angular
                 .put($scope.url+"/"+newStat.country + "?apikey=internetstats",{
                     country: newStat.country,
                     year: newStat.year,
-                    usageInternet: newStat.usageInternet,
+                    usageinternet: newStat.usageinternet,
                     usagephoneline: newStat.usagephoneline
                 })
                 .then(function(response) {
