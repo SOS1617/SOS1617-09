@@ -12,11 +12,11 @@
                   </thead>
                   <tbody>
                       <tr>
-                          <td>{{updateStat[0].country}}</td>
-                          <td><input class ="form-control" ng-model="updateStat[0].year"/></td>
-                          <td><input class ="form-control" ng-model="updateStat[0].usageinternet"/></td>
-                          <td><input class ="form-control" ng-model="updateStat[0].usagephoneline"/></td>
-                          <td><button class="btn btn-primary"ng-click= "update(newStat[0])">Update</button></td>
+                          <td>{{updateStat.country}}</td>
+                          <td><input class ="form-control" ng-model="updateStat.year"/></td>
+                          <td><input class ="form-control" ng-model="updateStat.usageinternet"/></td>
+                          <td><input class ="form-control" ng-model="updateStat.usagephoneline"/></td>
+                          <td><button class="btn btn-primary"ng-click= "update(updateStat)">Update</button></td>
 
                       </tr>
                 </tbody>

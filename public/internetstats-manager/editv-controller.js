@@ -12,11 +12,11 @@ angular
             $http
                 .get($scope.url+ "/"+ $routeParams.country + "?apikey=internetstats")
                 .then(function successCallback(response) {
-                    $scope.updateStat[0] = response.data;
+                    $scope.updateStat = response.data[0];
 
                 }, function errorCallback(response) {
                     console.log("Entra1");
-                    $scope.updateStat[0] = [];
+                    $scope.updateStat = [];
 
                 });
                 
