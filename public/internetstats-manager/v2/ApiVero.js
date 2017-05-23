@@ -131,7 +131,46 @@ exports.getLoadInitial = function(request, response) {
                     "year": 2010,
                     "usageinternet": 90,
                     "usagephoneline": 50
-        
+                }, {
+                    "country": "norway",
+                    "year": 2012,
+                    "usageinternet": 91.4,
+                    "usagephoneline": 30
+                }, {
+                    "country": "portugal",
+                    "year": 2012,
+                    "usageinternet": 54.3,
+                    "usagephoneline": 43
+                }, {
+                    "country": "spain",
+                    "year": 2012,
+                    "usageinternet": 66.8,
+                    "usagephoneline": 45
+                }, {
+                    "country": "sweden",
+                    "year": 2012,
+                    "usageinternet": 95,
+                    "usagephoneline": 53
+                }, {
+                    "country": "norway",
+                    "year": 2012,
+                    "usageinternet": 94.4,
+                    "usagephoneline": 35
+                }, {
+                    "country": "portugal",
+                    "year": 2015,
+                    "usageinternet": 55.3,
+                    "usagephoneline": 43
+                }, {
+                    "country": "spain",
+                    "year": 2015,
+                    "usageinternet": 68.8,
+                    "usagephoneline": 45
+                }, {
+                    "country": "sweden",
+                    "year": 2015,
+                    "usageinternet": 99,
+                    "usagephoneline": 70
                 
                 }]);
                 console.log("OK");

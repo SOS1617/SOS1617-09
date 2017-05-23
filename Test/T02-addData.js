@@ -18,7 +18,7 @@ describe('Add stats', function() {
 
 				element(by.model('newStat.country')).sendKeys('austria');
 				element(by.model('newStat.year')).sendKeys(2010);
-				element(by.model('newStat.usageInternet')).sendKeys(75.2);
+				element(by.model('newStat.usageinternet')).sendKeys(75.2);
 				element(by.model('newStat.usagephoneline')).sendKeys(40);
 
 				element(by.buttonText('Add')).click().then(function() {

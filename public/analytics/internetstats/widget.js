@@ -122,8 +122,8 @@ angular
                     stats.push({
                         id: cont,
                         content: x.usageInternet,
-                        start: x.country,
-                        end: x.country
+                        start: x.year,
+                        end: x.year
                     });
                     cont++;
                 });
