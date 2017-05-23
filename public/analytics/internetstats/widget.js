@@ -121,9 +121,9 @@ angular
                 response.data.forEach((x) => {
                     stats.push({
                         id: cont,
-                        content: x.usageInternet,
-                        start: x.year,
-                        end: x.year
+                        content: x.country,
+                        start: x.year+"-01-01",
+                        end: x.year+"-12-31"
                     });
                     cont++;
                 });
