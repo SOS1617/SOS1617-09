@@ -135,7 +135,7 @@ angular
                     });
                     cont++;
                 });
-
+                console.log(stats);
                 var container = document.getElementById('visualization');
 
                 // Create a DataSet (allows two way data-binding)
