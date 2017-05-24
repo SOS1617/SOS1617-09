@@ -29,6 +29,8 @@ app.listen(port, ()=> {
 
 app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.html")));
 
+/*
+/*PROXY*/
   app.get("/proxy/internetstats", (req, res) => {
       var http= require("http");
       
@@ -53,7 +55,7 @@ app.use("/api/v1/tests",express.static(path.join(__dirname,"./public/API/Test.ht
 
 var routeManuel = "/api/v1/hiv-stats";
 
-var metodosManuel = require("./public/API/ApiManuel/v1/ApiManuel.js");
+var metodosManuel = require("./public/hiv-manager/v1/ApiManuel.js");
 
 app.get(routeManuel + "/loadInitialData",metodosManuel.getCreateStats);
 app.get(routeManuel,metodosManuel.getObtainStats);
@@ -74,12 +76,37 @@ app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
 
 var routeManuel2 = "/api/v2/hiv-stats";
 
-var metodosManuel2 = require("./public/API/ApiManuel/v2/ApiManu.js");
+var metodosManuel2 = require("./public/hiv-manager/v2/ApiManu.js");
 
 app.get(routeManuel2 + "/loadInitialData",metodosManuel2.getCreateStats);
 app.get(routeManuel2,metodosManuel2.getObtainStats);
 app.get(routeManuel2 + "/:name",metodosManuel2.getDataName);
 app.get(routeManuel2 + "/:name/:year",metodosManuel2.getDataNameYear);
+
+/**PROXY**/
+app.get("/proxy/hiv-stats",(req,res)=>{
+ var http = require('http');
+ 
+ var options = {
+     host:'sos1617-07.herokuapp.com',
+     path: "/api/v2/salaries/?apikey=sos07"
+ };
+ 
+ callback = function(response){
+   var str ="";
+   response.on('data',function(chunk){
+       str+=chunk;
+   });
+   
+   response.on('end',function(){
+       res.send(str);
+   });
+     
+ }
+ http.request(options,callback).end();
+});
+
+
 
 app.post(routeManuel2,metodosManuel2.postNewData);
 app.post(routeManuel2 + "/:name",metodosManuel2.badpost);

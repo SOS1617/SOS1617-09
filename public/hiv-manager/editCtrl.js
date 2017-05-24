@@ -1,3 +1,4 @@
+/*Global bootbox*/
 angular
 .module("sos09-app")
 .controller("editCtrl",["$scope","$http","$routeParams","$location",function($scope,$http,$routeParams,$location){
