@@ -67,6 +67,9 @@ angular
 
         
         $scope.add = function(newStat) {
+            
+            $scope.newStat.usageinternet=Number($scope.newStat.usageinternet);
+            $scope.newStat.usagephoneline=Number($scope.newStat.usagephoneline);
 
             $http
                 .post($scope.url + "?apikey=" + $scope.apikey, $scope.newStat)
@@ -123,10 +126,11 @@ angular
 
 
         $scope.busqueda = function(dato) {
-
+            var url = $scope.url +"/"+ dato+ "?" + "apikey=" + $scope.apikey;
             $http
-                .get($scope.url + dato + "?apikey=" + $scope.apikey)
+                .get(url)
                .then(function successCallback(response) {
+                   console.log(url);
                     $scope.internetandphones = response.data;
                     console.log("Busqueda con exito");
 

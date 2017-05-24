@@ -48,7 +48,7 @@
                       <tr>
                           <td><input class ="form-control" ng-model="newStat.country"/></td>
                           <td><input class ="form-control" ng-model="newStat.year"/></td>
-                          <td><input class ="form-control" ng-model="newStat.usageInternet"/></td>
+                          <td><input class ="form-control" ng-model="newStat.usageinternet"/></td>
                           <td><input class ="form-control" ng-model="newStat.usagephoneline"/></td>
                           <td><button class="btn btn-primary"ng-click= "add(newStat)">Add</button></td>
                           <td><button class="btn btn-danger"ng-click= "deleteAll()">Delete All</button></td>
@@ -69,7 +69,7 @@
               </table>
               
               <tr>
-                  <td><button class="btn btn-primary" ng-click= "create()">Create Initial Data</button></td>
+                  <td><button id="createInitialData" class="btn btn-primary" ng-click= "create()">Create Initial Data</button></td>
                   <td><button class="btn btn-info" ng-click= "refresh()">Refresh Data</button></td>
                 </tr>
                 
