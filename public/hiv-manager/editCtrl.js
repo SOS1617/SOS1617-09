@@ -3,7 +3,7 @@ angular
 .module("sos09-app")
 .controller("editCtrl",["$scope","$http","$routeParams","$location",function($scope,$http,$routeParams,$location){
     console.log("Edit controller initialized");
-    var url = "https://sos1617-10.herokuapp.com/api/v2";
+    var url = "https://sos1617-09.herokuapp.com/api/v2";
     var apikey = "apikey=manuel";
     
     function refresh(){
@@ -20,13 +20,9 @@ angular
     }
     
     $scope.updatedData = function(newData){
-        $scope.newData.incidence = Number($scope.newData.incidence);
-        $scope.newData.total = Number($scope.newStat.total);
-        $scope.newData.percentage = Number($scope.newStat.percentage);
-
-
+      
             $http
-                .put($scope.url + "/" + newData.country + "/" + Number(newData.year) + "?apikey=manuel", {
+                .put($scope.url + "/" + newData.name + "/" + Number(newData.year) + "?apikey=manuel", {
                     country: newData.country,
                     year: newData.year,
                     incidence: newData.incidence,
