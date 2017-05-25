@@ -18,9 +18,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         templateUrl : "/ticsathome-manager/edit.html",
         controller : "EditController"
 
-    }).when("API/ApiVero",{
-        templateUrl : "internetStats.html",
-        controller : "list-cntrl-internet.js"
+  
     }).when("/analytics/ticsathome/geo",{
         templateUrl : "/analytics/ticsathome/geo.html",
         controller : "GeoController"
@@ -40,7 +38,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
    
         
     
-    //Verónicas
+    //Verónica
     .when("/internetandphones",{
         templateUrl : "/internetstats-manager/listv.html",
         controller : "ListControllerv"
