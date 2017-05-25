@@ -122,7 +122,8 @@ angular
 
             });
             
-            $http.get("/api/v2/internetandphones-stats/spain?apikey=internetstats").then(function (response) {
+            $http.get("/api/v2/internetandphones-stats/spain?apikey=internetstats")
+            .then(function (response) {
                  var stats = [];
                
                 var cont = 0;
