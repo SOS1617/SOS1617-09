@@ -34,6 +34,8 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/proxy/ticsathome",{
         templateUrl : "/analytics/ticsathome/proxyTic.html",
         controller : "proxyTicsController"
+    }).when("/analytics-ticsathome",{
+        templateUrl : "/analytics/ticsathome/Graphs.html",
     })
    
         
@@ -55,6 +57,8 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/pisaResult/internetstats",{
         templateUrl : "/analytics/internetstats/integration2.html",
         controller : "Cotroller"
+    }).when("/analytics-internetstats",{
+        templateUrl : "/analytics/internetstats/Graphs.html",
     })
     
     
