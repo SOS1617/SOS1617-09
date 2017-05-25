@@ -21,12 +21,12 @@ angular
                     var ret = [];
 
                     res.data.forEach(function(d) {
-                        res.data.country = d.country;
+                        
                         res.data.year = d.year;
                         res.data.usageinternet = d.usageinternet;
                         res.data.usagephoneline = d.usagephoneline;
                         ret.push({
-                            "country": res.data.country,
+                            
                             "year": res.data.year,
                             "usageinternet": res.data.usageinternet,
                             "usagephoneline": res.data.usagephoneline
@@ -84,8 +84,8 @@ angular
                     ];
 
                     console.log(res.data);
-                    res.data.forEach(function(item) {
-                        finalData.push([item.country, Number(item.usageinternet), Number(item.usagephoneline)]);
+                    res.data.forEach(function(total) {
+                        finalData.push([total.map(country), Number(total.map(usageinternet)), Number(total.map(tablet))]);
                     });
 
 
@@ -107,18 +107,17 @@ angular
                 }
             
                 
-                function funciondatos2() {
                     var ret = [];
 
                     res.data.forEach( function(d) {
-                        res.data.country = d.country;
+                  
                         res.data.year = d.year;
                         res.data.incidence = d.incidence;
                         res.data.total = d.total;
                         res.data.percentage = d.percentage;
 
                         ret.push({
-                            "country": res.data.country,
+                       
                             "year": res.data.year,
                             "incidence": res.data.incidence,
                             "total": res.data.total,
