@@ -56,12 +56,14 @@
                 </tr>
                
             <tr ng-repeat = "data in listData">
-            <td><a href="#!/listData/edit/{{data.country}}/{{data.year}}">{{data.country}}</td>
+            <td><a href="#!/hiv-stats/edit/{{data.country}}/{{data.year}}">{{data.country}}</td>
             <td>{{data.year}}</td>
             <td>{{data.incidence}}</td>
             <td>{{data.total}}</td>
             <td>{{data.percentage}}</td>
             <td><button class="btn btn-danger" ng-click="deleteData(data.country, data.year)">Delete</button></td>
+            <td><a href="#!/hiv-stats/edit/{{data.country}}/{{data.year}}"><button class="btn btn-secondary" >Edit</button></a></td>
+
         </tr>
 
 
@@ -74,7 +76,15 @@
         </tr>
         </tr>
         
+
+              
        View <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+            </select> records at a time.
            
         <pre>The selected page no: {{currentPage}}</pre>
         

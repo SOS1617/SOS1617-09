@@ -3,41 +3,53 @@ angular
 .module("sos09-app")
 .controller("editCtrl",["$scope","$http","$routeParams","$location",function($scope,$http,$routeParams,$location){
     console.log("Edit controller initialized");
-    var url = "http://sos1617-10.herokuapp.com/api/v2";
+    var url = "https://sos1617-10.herokuapp.com/api/v2";
     var apikey = "apikey=manuel";
     
     function refresh(){
         $http
-            .get(url + "/hiv-stats/" + $routeParams.country + "/" + Number($routeParams.year) + "?" + apikey)
-            .then(function(response){
-                $scope.updatedData = response.data[0];
-                console.log(response.data[0])
-                delete $scope.updatedData["_id"];
-                console.log(response.data)
-            }, function(err){
-                console.log(err.data);
-            });
+            .get(url + "/hiv-stats/" + $routeParams.name + "/" + Number($routeParams.year) + "?" + apikey)
+            .then(function successCallback(response) {
+                    $scope.updateData = response.data[0];
+
+                }, function errorCallback(response) {
+                    console.log("Entra1");
+                    $scope.updateData = [];
+
+                });
     }
     
-    $scope.updateData = function(){
-        $http
-            .put(url +"/hiv-stats/"+ $routeParams.country + "/" + Number($routeParams.year) + "?" + apikey, $scope.updatedMotorcycling)
-            .then(function(response){
-                console.log("Hiv  Updated");
-                bootbox.alert("Hiv Updated");
-                $location.path("/hivs/");
-            }, function(response) {
+    $scope.updatedData = function(newData){
+        $scope.newData.incidence = Number($scope.newData.incidence);
+        $scope.newData.total = Number($scope.newStat.total);
+        $scope.newData.percentage = Number($scope.newStat.percentage);
+
+
+            $http
+                .put($scope.url + "/" + newData.country + "/" + Number(newData.year) + "?apikey=manuel", {
+                    country: newData.country,
+                    year: newData.year,
+                    incidence: newData.incidence,
+                    total: newData.total,
+                    percentage: newData.percentage
+                })
+                .then(function(response) {
+                    console.log("Stat Updated 2");
                     switch (response.status) {
                         case 400:
-                            bootbox.alert("Bad Request. Please enter all fields correctly.");
+                            alert("Please fill all the fields");
                             break;
                         default:
-                            bootbox.alert("Please make sure that you have entered all the fields");
+                            alert("OK");
                             break;
                     }
-            });
-    };
-    
-    refresh();
+                    $location.path("/");
+
+                });
+        };
+
+
+
+        refresh();
     
 }]);

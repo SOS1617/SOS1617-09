@@ -13,12 +13,12 @@
                     </thead>
                     <tbody>
                         <tr>
-                             <td>{{updatedData.country}}</td>
-                             <td>{{updatedData.year}}</td>
+                             <td>{{updateData.country}}</td>
+                             <td>{{updateData.year}}</td>
                             <td><input class="form-control" ng-model="updateData.incidence" /></td>
                             <td><input class="form-control" ng-model="updateData.total" /></td>
                             <td><input class="form-control" ng-model="updateData.percentage" /></td>
-                            <td><button class="btn btn-primary" ng-click="updateData()">Update data </button></td>
+                            <td><button class="btn btn-primary" ng-click="updatedData(updateData)">Update data </button></td>
 
                         </tr>
                 </tbody>
