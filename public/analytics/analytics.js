@@ -101,7 +101,7 @@ angular
                     };
 
 
-                    var chart = new google.visualization.GeoChart(document.getElementById('InternetStatsWidgets'));
+                    var chart = new google.visualization.GeoChart(document.getElementById('GrupalWidget'));
 
                     chart.draw(data, options);
                 }
