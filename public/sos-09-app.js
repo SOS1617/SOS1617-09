@@ -9,6 +9,9 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/analytics",{
         templateUrl : "/analytics/analytics.html",
         controller : "GrupalWidget"
+    }).when("/integrations",{
+        templateUrl : "/integrations/integrations.html",
+        
     })
     
     //Luis
@@ -54,13 +57,13 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "InternetStatsWidgets"
 
     }).when("/proxy/internetstats",{
-        templateUrl : "/analytics/internetstats/integration.html",
+        templateUrl : "/integrations/internetstats/integration.html",
         controller : "ProxyCtroller"
     }).when("/pisaResult/internetstats",{
-        templateUrl : "/analytics/internetstats/integration2.html",
+        templateUrl : "/integrations/internetstats/integration2.html",
         controller : "Cotroller"
     }).when("/analytics-internetstats",{
-        templateUrl : "/analytics/internetstats/Graphs.html",
+        templateUrl : "/analytics/internetstats/widget.html",
     })
     
     
