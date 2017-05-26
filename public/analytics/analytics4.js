@@ -89,7 +89,7 @@ angular
                         }
                     },
                     xAxis: {
-                        categories: datosVero.map(function(d) {
+                        categories: datosLuis.map(function(d) {
                             return d.country;
                         })
                     },
@@ -139,7 +139,8 @@ angular
                     });
 
                     return ret;
-                 }
+ 
+                }
 
 
                 
