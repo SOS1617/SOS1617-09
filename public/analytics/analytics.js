@@ -115,16 +115,10 @@ angular
 
                     res.data.forEach( function(d) {
                   
-                        res.data.year = d.year;
-                        res.data.incidence = d.incidence;
-                        res.data.total = d.total;
                         res.data.percentage = d.percentage;
 
                         ret.push({
                        
-                            "year": res.data.year,
-                            "incidence": res.data.incidence,
-                            "total": res.data.total,
                             "percentage" : res.data.percentage
                         });
 
