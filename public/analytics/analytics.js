@@ -3,12 +3,15 @@
 
 angular
     .module("sos09-app")
-    .controller("GrupalWidget", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
-       
+    //.controller("GrupalWidget", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
+    .controller("GrupalWidget", ["$scope", "$http", function($scope, $http, $routeParams) {
+
        var datosVero = [];
        var datosManu= [];
        var datosLuis=[];
        var total = [];
+       
+       
        
        
        $http
