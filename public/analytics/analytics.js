@@ -85,7 +85,8 @@ angular
 
                     console.log(res.data);
                     res.data.forEach(function(total) {
-                        finalData.push([total.map(country), Number(total.map(usageinternet)), Number(total.map(tablet))]);
+                        finalData.push([total.map(total,total.country), Number(total.map(total,total.usageinternet)),
+                        Number(total.map(total,total.tablet)), Number(total.map(total,total.percentage))]);
                     });
 
 
@@ -105,7 +106,7 @@ angular
 
                     chart.draw(data, options);
                 }
-            
+                 function funciondatos2() {
                 
                     var ret = [];
 
@@ -127,11 +128,10 @@ angular
                     });
 
                     return ret;
-
-                }
+                 }
             });
-                   
-                  
 
-}]);
-                
+           
+
+    }]);
+
