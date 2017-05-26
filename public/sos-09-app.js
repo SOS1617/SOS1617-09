@@ -52,14 +52,10 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/internetandphones/edit/:country",{
         templateUrl : "/internetstats-manager/editv.html",
         controller : "EditControllerv"
-    }).when("/analytics/internetstats/widget",{
-        templateUrl : "/analytics/internetstats/widget.html",
-        controller : "InternetStatsWidgets"
-
-    }).when("/proxy/internetstats",{
+    }).when("/integrations-internetstats/G01",{
         templateUrl : "/integrations/internetstats/integration.html",
         controller : "ProxyCtroller"
-    }).when("/pisaResult/internetstats",{
+    }).when("/integrations-internetstats/G03",{
         templateUrl : "/integrations/internetstats/integration2.html",
         controller : "Cotroller"
     }).when("/analytics-internetstats",{
