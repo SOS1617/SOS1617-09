@@ -89,10 +89,8 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "CtrlExt"
     
         
-        //GRUPAL 
-    })//.when("/analytics", {
-          //  templateUrl: "analytics/analytics.html",
-         //   controller: "GrupalCtrl"
+        
+    })
 
     
     

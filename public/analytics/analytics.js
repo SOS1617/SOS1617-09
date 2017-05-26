@@ -1,35 +1,32 @@
 /*global angular*/
-/*global google*/
-
+/*global Highcharts*/
+/*global $*/
 angular
     .module("sos09-app")
-    //.controller("GrupalWidget", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
-    .controller("GrupalWidget", ["$scope", "$http", function($scope, $http, $routeParams) {
+    .controller("GrupalWidget", ["$http", "$scope", function($http, $scope) {
 
+        
        var datosVero = [];
        var datosManu= [];
        var datosLuis=[];
        var total = [];
-       
-       
-       
-       
-       $http
+
+        $http
             .get("api/v2/internetandphones-stats?apikey=internetstats")
             .then(function(res) {
-                datosVero = funciondatos();
+                datosVero = funciondatosv();
                 total.push(datosVero);
                 
-                function funciondatos() {
+                function funciondatosv() {
                     var ret = [];
 
                     res.data.forEach(function(d) {
-                        
+                        res.data.country = d.country;
                         res.data.year = d.year;
                         res.data.usageinternet = d.usageinternet;
                         res.data.usagephoneline = d.usagephoneline;
                         ret.push({
-                            
+                            "country": res.data.country,
                             "year": res.data.year,
                             "usageinternet": res.data.usageinternet,
                             "usagephoneline": res.data.usagephoneline
@@ -41,25 +38,24 @@ angular
 
                 }
             });
-            
-            $http.get("/api/v2/ticsathome-stats/2016" +"?apikey=ticsathomeLuis")
-            .then(function(response) {
-                datosLuis = funciondatos1();
+              $http.get("/api/v2/ticsathome-stats/2016" +"?apikey=ticsathomeLuis")
+            .then(function(res) {
+                datosLuis = funciondatosl();
                 total.push(datosLuis);
                 
-                function funciondatos1() {
+                function funciondatosl() {
                     var ret = [];
 
-                    ret.data.forEach(function(d) {
-                        ret.data.country = d.country;
-                        ret.data.year = d.year;
-                        ret.data.smartphone = d.smartphone;
-                        ret.data.tablet = d.tablet;
+                    res.data.forEach(function(d) {
+                        res.data.country = d.country;
+                        res.data.year = d.year;
+                        res.data.smartphone = d.smartphone;
+                        res.data.tablet = d.tablet;
                         ret.push({
-                            "country": ret.data.country,
-                            "year": ret.data.year,
-                            "smartphone": ret.data.smartphone,
-                            "tablet": ret.data.tablet
+                            "country": res.data.country,
+                            "year": res.data.year,
+                            "smartphone": res.data.smartphone,
+                            "tablet": res.data.tablet
                         });
 
                     });
@@ -68,67 +64,89 @@ angular
 
                 }
             });
-            $http
+
+
+        $http
             .get("api/v2/hiv-stats?apikey=manuel")
             .then(function(res) {
-                datosManu = funciondatos2();
+                datosManu = funciondatosm();
                 total.push(datosManu);
-                
-                google.charts.load('current', {
-                    'packages': ['geochart'],
-                    'mapsApiKey': "AIzaSyCXG8oC2k-nM18JMXiW0asnu6UJ8wLYCVA"
 
-                });
-                google.charts.setOnLoadCallback(drawRegionsMap);
+                Highcharts.chart('GrupalWidget', {
+                    chart: {
+                        type: 'column',
 
-                function drawRegionsMap() {
-                    var finalData = [
-                        ['Country', 'UsageInternet', 'Tablet', 'PercentageHIV']
-                    ];
-
-                    console.log(res.data);
-                    total.data.map.forEach(function(t) {
-                        finalData.push([t.country, Number(t.usageinternet),
-                        Number(t.tablet), Number(t.percentage)]);
-                    });
-
-
-                    var data = google.visualization.arrayToDataTable(finalData);
-                    console.log(data);
-
-                    var options = {
-                        region: '150',
-
-                        colorAxis: {
-                            colors: ['#58ACFA', '#B40431']
+                    },
+                    title: {
+                        text: 'Highcharts'
+                    },
+                    subtitle: {
+                        text: 'Comparason usage of tablet, usage of internet and HIV percentage'
+                    },
+                    plotOptions: {
+                        column: {
+                            depth: 25
                         }
-                    };
+                    },
+                    xAxis: {
+                        categories: datosVero.map(function(d) {
+                            return d.country;
+                        })
+                    },
+                    yAxis: {
+                        title: {
+                            text: null
+                        }
+                    },
+                    series: [{
+                        name: 'Usage Tablet',
+                        data: datosLuis.map(function(d) {
+                            return Number(d.tablet);
+                        })
+                    }, {
+                        name: 'Usage Internet',
+                        data: datosVero.map(function(d) {
+                            return Number(d.usageinternet);
+                        })
+                    }, {
+                        name: 'PercentageHIV',
+                        data: datosManu.map(function(d) {
+                            return Number(d.percentage);
+                        })
+                    }]
+                });
 
 
-                    var chart = new google.visualization.GeoChart(document.getElementById('GrupalWidget'));
-
-                    chart.draw(data, options);
-                }
-                 function funciondatos2() {
+                  function funciondatosm() {
                 
                     var ret = [];
 
                     res.data.forEach( function(d) {
-                  
+                        res.data.country = d.country;
+                        res.data.year = d.year;
+                        res.data.incidence = d.incidence;
+                        res.data.total = d.total;
                         res.data.percentage = d.percentage;
 
                         ret.push({
-                       
+                            "country": res.data.country,
+                            "year": res.data.year,
+                            "incidence": res.data.incidence,
+                            "total": res.data.total,
                             "percentage" : res.data.percentage
                         });
 
                     });
 
                     return ret;
-                 }
+ 
+                }
+
+
+                
             });
 
-           
+
+
 
     }]);
-
