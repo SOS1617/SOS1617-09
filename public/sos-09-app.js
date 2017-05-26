@@ -6,10 +6,11 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     $routeProvider
     .when("/",{
         templateUrl : "home.html",
-    }).when("/analytics",{
+    })/*.when("/analytics",{
         templateUrl : "/analytics/analytics.html",
         controller : "GrupalWidget"
-    })
+    })*/
+    
     //Luis
     .when("/ticsathome",{
         templateUrl : "/ticsathome-manager/list.html",
@@ -88,8 +89,15 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "CtrlExt"
     
         
-        
-    });
+        //GRUPAL 
+    }).when("/analytics", {
+            templateUrl: "analytics/analytics.html",
+            controller: "GrupalCtrl"
+})
+    
+    
+    
+    ;
      console.log("APP INIT");
      
     
