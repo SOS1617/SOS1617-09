@@ -26,7 +26,7 @@ angular
                         res.data.usageinternet = d.usageinternet;
                         res.data.usagephoneline = d.usagephoneline;
                         ret.push({
-                            
+                            "country": res.data.country,
                             "year": res.data.year,
                             "usageinternet": res.data.usageinternet,
                             "usagephoneline": res.data.usagephoneline
@@ -89,7 +89,7 @@ angular
                         }
                     },
                     xAxis: {
-                        categories: datosLuis.map(function(d) {
+                        categories: datosVero.map(function(d) {
                             return d.country;
                         })
                     },
