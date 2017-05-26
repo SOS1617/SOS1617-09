@@ -55,7 +55,7 @@ angular
                             "country": res.data.country,
                             "year": res.data.year,
                             "smartphone": res.data.smartphone,
-                            "tablet": res.data.table
+                            "tablet": res.data.tablet
                         });
 
                     });
@@ -89,7 +89,7 @@ angular
                         }
                     },
                     xAxis: {
-                        categories: datosLuis.map(function(d) {
+                        categories: datosVero.map(function(d) {
                             return d.country;
                         })
                     },
