@@ -21,9 +21,13 @@ angular
                     var ret = [];
 
                     res.data.forEach(function(d) {
+                        res.data.country = d.country;
+                        res.data.year = d.year;
                         res.data.usageinternet = d.usageinternet;
                         res.data.usagephoneline = d.usagephoneline;
                         ret.push({
+                            
+                            "year": res.data.year,
                             "usageinternet": res.data.usageinternet,
                             "usagephoneline": res.data.usagephoneline
                         });
@@ -35,19 +39,23 @@ angular
                 }
             });
               $http.get("/api/v2/ticsathome-stats/2016" +"?apikey=ticsathomeLuis")
-            .then(function(response) {
+            .then(function(res) {
                 datosLuis = funciondatosl();
                 total.push(datosLuis);
                 
                 function funciondatosl() {
                     var ret = [];
 
-                    ret.data.forEach(function(d) {
-                        ret.data.country = d.country;
-                        ret.data.tablet = d.tablet;
+                    res.data.forEach(function(d) {
+                        res.data.country = d.country;
+                        res.data.year = d.year;
+                        res.data.smartphone = d.smartphone;
+                        res.data.tablet = d.tablet;
                         ret.push({
-                            "country": ret.data.country,
-                            "tablet": ret.data.tablet
+                            "country": res.data.country,
+                            "year": res.data.year,
+                            "smartphone": res.data.smartphone,
+                            "tablet": res.data.table
                         });
 
                     });
@@ -114,11 +122,17 @@ angular
                     var ret = [];
 
                     res.data.forEach( function(d) {
-                  
+                        res.data.country = d.country;
+                        res.data.year = d.year;
+                        res.data.incidence = d.incidence;
+                        res.data.total = d.total;
                         res.data.percentage = d.percentage;
 
                         ret.push({
-                       
+                            "country": res.data.country,
+                            "year": res.data.year,
+                            "incidence": res.data.incidence,
+                            "total": res.data.total,
                             "percentage" : res.data.percentage
                         });
 
