@@ -64,6 +64,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "Cotroller"
     }).when("/analytics-internetstats",{
         templateUrl : "/analytics/internetstats/widget.html",
+        controller : "InternetStatsWidgets"
     })
     
     
