@@ -83,13 +83,13 @@ angular
 
                 function drawRegionsMap() {
                     var finalData = [
-                        ['Country', 'UsageInternet', 'UsagePhoneline']
+                        ['Country', 'UsageInternet', 'Tablet', 'PercentageHIV']
                     ];
 
                     console.log(res.data);
-                    res.data.forEach(function(total) {
-                        finalData.push([total.map(total,total.country), Number(total.map(total,total.usageinternet)),
-                        Number(total.map(total,total.tablet)), Number(total.map(total,total.percentage))]);
+                    total.data.map.forEach(function(t) {
+                        finalData.push([t.country, Number(t.usageinternet),
+                        Number(t.tablet), Number(t.percentage)]);
                     });
 
 
