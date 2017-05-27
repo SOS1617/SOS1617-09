@@ -2,7 +2,6 @@
 /*global google*/
 /*global Highcharts*/
 
-
 angular
     .module("sos09-app")
     .controller("InternetStatsWidgets", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {

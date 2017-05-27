@@ -1,12 +1,12 @@
 /*global angular*/
 /*global Highcharts*/
 /*global EJSC*/
+/*global google*/
 
-    angular
-  .module("sos09-app")
-  .controller("EJSChartsController", ["$scope", "$http", function($scope, $http) {
+angular
+    .module("sos09-app")
+    .controller("EJSChartsController", ["$scope", "$http", function($scope, $http) {
 
-        // http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-stacked-percent/
 
         $scope.apikey = "manuel";
         $scope.country = [];
@@ -16,13 +16,12 @@
         $scope.percentage = [];
         $scope.data = {};
         var data = {};
-       $scope.url = "/api/v2/hiv-stats";
+        $scope.url = "/api/v2/hiv-stats";
 
-       
 
 
         $http
-      .get($scope.url + "?apikey=manuel").then(function(response) {
+            .get($scope.url + "?apikey=manuel").then(function(response) {
 
                 data = response.data;
                 $scope.data = data;
@@ -43,47 +42,77 @@
 
 
                 //Highcharts
-                Highcharts.chart('container', {
+
+                Highcharts.chart('hivHigchart', {
                     chart: {
-                        type: 'column'
+                        zoomType: 'xy'
                     },
                     title: {
-                        text: 'Stacked column chart'
+                        text: 'HIV incedences and HIV total compare'
                     },
-                    xAxis: { //Estas serían los países (SÓLO ES OBLIGATORIO QUE SE MUESTREN TODAS EN UN ÚNICO WIDGET)
-                        categories: $scope.country
+                    subtitle: {
+                        text: 'Source: http://elpais.com/elpais/2014/11/27/ciencia/1417049192_049421.html'
                     },
-                    yAxis: {
-                        min: 0,
+                    xAxis: [{
+                        categories: $scope.country,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} ',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
                         title: {
-                            text: "HIV STATS"
+                            text: 'Total',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
                         }
-                    },
+                    }, { // Secondary yAxis
+                        title: {
+                            text: 'Incidences',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} ',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        opposite: true
+                    }],
                     tooltip: {
-                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                        shared: false
+                        shared: true
                     },
-                    plotOptions: {
-                        column: {
-                            stacking: 'percent',
-
-                        }
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
-
-
-
-                    //Estas serían para cada uno de los países los valores que toma cada name, que son los tres datos extras
                     series: [{
-                        name: 'incidence',
-                        data: $scope.incidence
+                        name: 'Year 2016 Incidences',
+                        type: 'column',
+                        yAxis: 1,
+                        data: $scope.incidence,
+
+
                     }, {
-                        name: 'hiv-total',
-                        data: $scope.total
-                    }, {
-                        name: 'percentage',
-                        data: $scope.percentage
-                    } ]
+                        name: 'HIV Total',
+                        type: 'spline',
+                        data: $scope.total,
+
+                    }]
                 });
+
+
 
 
                 //Geocharts
@@ -107,64 +136,59 @@
                         .arrayToDataTable(myData);
 
                     var options = {
-                        region: 'EU',
+                        region: 150,
                         //CONSULTAR: https://developers.google.com/chart/interactive/docs/gallery/geochart
-                        displayMode: 'markers',
+                        //displayMode: 'markers',
                         colorAxis: {
                             colors: ['blue', 'purple']
                         }
                     };
 
                     var chart = new google.visualization.GeoChart(
-                        document.getElementById('map'));
+                        document.getElementById('googleMap'));
 
                     chart.draw(data, options);
                 }
 
-                //EJSchart (puede ser un donut/pastel con colores, uno por cada partido político. Suponiendo que x sea la suma de escaños totales, cada porción 
-                //representará la parte de x que ha ganado cada uno de los cuatro partidos, y así se tendrían todos los recursos con todos los datos en uso.)
-                //debería poner aquí algo de EJSchart o ya con que esté en la carpeta aquella vale?
+                //EJSCharts
 
                 var chart = new EJSC.Chart("individualChart", {
-                    show_legend: false,
-                    title: 'DoughnutSeries'
+                    show_legend: true,
+                    title: 'HIV Incidences',
+                    axis_bottom: { caption: "Incidences" , crosshair: { show: true } } ,
+                    axis_left: { caption: "Country" , crosshair: { show: false } } ,
+                    
                 });
 
-                //var sum = [1, 2, 3].reduce(add, 0);
-                function add(a, b) {
-                    return a + b;
-                }
-                var series1 = chart.addSeries(new EJSC.DoughnutSeries(
-                    new EJSC.ArrayDataHandler([
-                        [$scope.incidence.reduce(add, 0), "incidence"], //incidence
-                        [$scope.total.reduce(add, 0), "total"], //total
-                        [$scope.percentage.reduce(add, 0), "percentage"], //percentage
-                    ]), {
-                        opacity: 30, //default: 50
-                        doughnutOffset: .2, //default: .5
-                        position: "topRight", //default: "center"
-                        height: "50%", //default: "100%"
-                        width: "50%" //default: "100%"
-                    }
-                ));
-                var series2 = chart.addSeries(new EJSC.DoughnutSeries(
-                    new EJSC.ArrayDataHandler([
-                        [$scope.incidence.reduce(add, 0), "incidence"], //incidence
-                        [$scope.total.reduce(add, 0), "total"], //total
-                        [$scope.percentage.reduce(add, 0), "percentage"], //percentage
-                    ]), {
-                        opacity: 80, //default: 50
-                        doughnutOffset: .7, //default: .5
-                        position: "bottomLeft", //default: "center"
-                        height: "70%", //default: "100%"
-                        width: "70%", //default: "100%"
-                        onAfterDataAvailable: function(chart, series) {
-                            chart.selectPoint(series.__points[0], true);
-                        }
+                var mySeries = new EJSC.BarSeries(
 
+                    new EJSC.ArrayDataHandler([
+
+                        [$scope.incidence[0], $scope.country[0]],
+                        [$scope.incidence[1], $scope.country[1]],
+                        [$scope.incidence[2], $scope.country[2]],
+                        [$scope.incidence[3], $scope.country[3]],
+                        [$scope.incidence[4], $scope.country[4]],
+                        [$scope.incidence[5], $scope.country[5]]
+                    ]), {
+                        orientation: "horizontal",
+                        intervalOffset: 0.5,
+                        useColorArray: true,
+                        title: "HIV Data"
                     }
-                ));
-                //Si intento cambiarle el color como a la versión PIE no se muestra el grafo
+                );
+
+                mySeries.x_axis_formatter = new EJSC.NumberFormatter({
+                    forced_decimals: 2
+                });
+
+                mySeries.y_axis_formatter = new EJSC.NumberFormatter({
+                    forced_decimals: 2 ,
+                    title: "incidences"
+                });
+
+                chart.addSeries(mySeries);
+
 
             });
-}]);
+    }]);

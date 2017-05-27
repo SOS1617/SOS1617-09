@@ -736,18 +736,6 @@ var meteDatos = function(base) {
         "total": 5867,
         "percentage": 16.8
     }, {
-        "country": "portugal",
-        "year": 2013,
-        "incidence": 1093,
-        "total": 47390,
-        "percentage": 10.4
-    }, {
-        "country": "portugal",
-        "year": 2014,
-        "incidence": 1433,
-        "total": 49050,
-        "percentage": 11.2
-    }, {
         "country": "belgium",
         "year": 2016,
         "incidence": 14354,
@@ -759,18 +747,18 @@ var meteDatos = function(base) {
         "incidence": 11233,
         "total": 76854,
         "percentage": 17.2
+    },{
+        "country": "croatia",
+        "year": 2012,
+        "incidence": 11233,
+        "total": 76854,
+        "percentage": 17.2
     }, {
         "country": "portugal",
         "year": 2016,
         "incidence": 14123,
         "total": 98023,
         "percentage": 17.2
-    }, {
-        "country": "belgium",
-        "year": 2013,
-        "incidence": 1115,
-        "total": 266850,
-        "percentage": 10.0
     }]);
 
 };

@@ -75,7 +75,12 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "editCtrl"
  
  
-    }) .when("/analytics/hiv-stats/ejscharts",{
+    }) .when("/hiv-stats/pruebaGeo",{
+        templateUrl : "/analytics/hiv-stats/googleGeo.html",
+        controller : "HivGeoController"
+ 
+ 
+    }).when("/analytics/hiv-stats/ejscharts",{
         templateUrl : "/analytics/hiv-stats/ejs.html",
         controller : "EJSChartsController"
    
