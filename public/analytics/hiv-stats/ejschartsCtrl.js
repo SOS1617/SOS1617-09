@@ -25,7 +25,6 @@ angular
 
                 data = response.data;
                 $scope.data = data;
-                //data.sort(sort_by('province', true, parseInt));
 
                 for (var i = 0; i < data.length; i++) {
                     $scope.country.push($scope.data[i].country);
@@ -156,7 +155,7 @@ angular
                     show_legend: true,
                     title: 'HIV Incidences',
                     axis_bottom: { caption: "Incidences" , crosshair: { show: true } } ,
-                    axis_left: { caption: "Country" , crosshair: { show: false } } ,
+                    axis_left: { caption: "Country" , crosshair: { show: false } } 
                     
                 });
 

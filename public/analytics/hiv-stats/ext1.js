@@ -1,122 +1,158 @@
 /*global angular*/
 /*global Highcharts*/
 /*global $*/
+/*global EJSC*/
 angular
     .module("sos09-app")
     .controller("CtrlExt", ["$http", "$scope", function($http, $scope) {
 
+        //Variables de mi API
+        $scope.apikey = "manuel";
+        $scope.country = [];
+        $scope.year = [];
+        $scope.incidence = [];
+        $scope.total = [];
+        $scope.percentage = [];
+        $scope.data = {};
+        var data = {};
 
-        var dato1 = [];
-        var dato2 = [];
-        var total = [];
+        //Variables de la API a integrar
+        $scope.country2 = [];
+        $scope.year2 = [];
+        $scope.total2 = [];
+        $scope.increase = [];
+        $scope.investment = [];
+        $scope.data2 = {};
+        var data2 = {};
+
 
 
         $http
             .get("https://sos1617-09.herokuapp.com/api/v2/hiv-stats?apikey=manuel")
-            .then(function(res) {
-                dato1 = funciondatos();
-                total.push(dato1);
+            .then(function(response) {
 
-                function funciondatos() {
-                    var ret = [];
+                data = response.data;
+                $scope.data = data;
 
-                    res.data.forEach(function(d) {
-                        res.data.country = d.country;
-                        res.data.year = d.year;
-                        res.data.incidence = d.incidence;
-                        res.data.total = d.total;
-                        res.data.percentage = d.percentage;
+                for (var i = 0; i < response.data.length; i++) {
 
-                        ret.push({
-                            "country": res.data.country,
-                            "year": res.data.year,
-                            "incidence": res.data.incidence,
-                            "total": res.data.total,
-                            "percentage" : res.data.percentage
-                        });
+                    $scope.country.push($scope.data[i].country);
+                    $scope.year.push(Number($scope.data[i].year));
+                    $scope.incidence.push(Number($scope.data[i].incidence));
+                    $scope.total.push(Number($scope.data[i].total));
+                    $scope.percentage.push(Number($scope.data[i].percentage));
 
-                    });
-
-                    return ret;
+                    console.log($scope.data[i].country);
 
                 }
+
+
             });
 
         $http
             .get("https://sos1617-01.herokuapp.com/api/v2/startups-stats?apikey=sos161701")
             .then(function(res) {
-                dato2 = funciondatos2();
-                total.push(dato2);
+                data2 = res.data;
+                $scope.data2 = data2;
 
+                for (var i = 0; i < res.data.length; i++) {
 
-                Highcharts.chart('container03', {
+                    $scope.country2.push($scope.data2[i].country);
+                    $scope.year2.push(Number($scope.data2[i].year));
+                    $scope.total2.push(Number($scope.data2[i].total));
+                    $scope.increase.push(Number($scope.data2[i].increase));
+                    $scope.investment.push(Number($scope.data2[i].investment));
+
+                    console.log($scope.data2[i].country);
+
+                }
+
+                /**INTEGRACIÓN EN HIGHCHARTS**/
+                Highcharts.chart('hiv&startups', {
                     chart: {
-                        type: 'areaspline',
-
+                        type: 'line'
                     },
                     title: {
-                        text: 'Highcharts'
+                        text: 'HIV and Startups compare'
                     },
                     subtitle: {
-                        text: "Hiv incidences and Readers (Pisa Results)"
-                    },
-                    plotOptions: {
-                        column: {
-                            depth: 25
-                        }
+                        text: ''
                     },
                     xAxis: {
-                        categories: dato2.map(function(d) {
-                            return d.total;
-                        })
+                        title: {
+                            text: 'Year'
+
+                        },
+                        categories: $scope.year
                     },
                     yAxis: {
                         title: {
-                            text: null
+                            text: 'Incidences and investment'
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: false
                         }
                     },
                     series: [{
-                        name: 'Hiv total',
-                        data: dato1.map(function(d) {
-                            return Number(d.incidence);
-                        })
+                        name: 'HIV Incidendes',
+                        data: $scope.incidence
                     }, {
                         name: 'Startups investment',
-                        data: dato2.map(function(d) {
-                            return Number(d.investment);
-                        })
+                        data: $scope.investment
                     }]
                 });
 
-                function funciondatos2() {
-                    var ret = [];
 
-                    res.data.forEach(function(d) {
-            
-                        res.data.country = d.country;
-                        res.data.year = d.year;
-                        res.data.total = d.total;
-                        res.data.increase = d.increase;
-                        res.data.investment = d.investment;
-                        ret.push({
-                            
-                            "country": res.data.country,
-                            "year": res.data.year,
-                            "total": res.data.total,
-                            "increase": res.data.increase,
-                            "investment": res.data.investment
-                        });
-
-                    });
-
-                    return ret;
-                }
 
 
 
             });
 
 
+        /***Integración en EJSChartS***/
 
+        var chart = new EJSC.Chart("hivTotal&startupsTotal", {
+            show_legend: false
+
+        });
+   
+
+        var union =chart.addSeries( new EJSC.StackedBarSeries({
+            intervalOffset: 1
+        }));
+
+        union.addSeries(new EJSC.BarSeries(
+            new EJSC.ArrayDataHandler([
+
+                [$scope.total[0], $scope.country[0]],
+                [$scope.total[1], $scope.country[1]],
+                [$scope.total[2], $scope.country[2]],
+                [$scope.total[3], $scope.country[3]],
+                [$scope.total[4], $scope.country[4]],
+                [$scope.total[5], $scope.country[5]]
+
+
+            ])
+        ));
+
+
+        union.addSeries(new EJSC.BarSeries(
+            new EJSC.ArrayDataHandler([
+
+                [$scope.total2[0], $scope.country2[0]],
+                [$scope.total2[1], $scope.country2[1]],
+                [$scope.total2[2], $scope.country2[2]],
+                [$scope.total2[3], $scope.country2[3]],
+                [$scope.total2[4], $scope.country2[4]],
+                [$scope.total2[5], $scope.country2[5]]
+            ])
+        ));
+
+        chart.addSeries(union);
 
     }]);
