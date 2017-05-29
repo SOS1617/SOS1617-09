@@ -1,0 +1,358 @@
+---
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Tics at Home
+  description: |-
+    A sample API that uses information about smartphones and tablets as an example to demonstrate features in the sla4oai specification <style>
+      .plansButton{
+          display: table;
+          margin-top: 15px;
+          padding: 10px;
+          background-color: #547f00;
+          border-radius: 3px;
+          color: #fff !important;
+          text-decoration: none;
+      }
+      .plansButton:hover{
+          box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+      }
+    </style> <a class="plansButton" href="../plans">Get your API key</a>
+  contact:
+    name: ISA Research Group
+    email: isagroup.us@gmail.com
+    url: http://governify.io
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+host: sos1617-09.herokuapp.com
+paths:
+  "/api/v2/ticsathome-stats":
+
+    get:
+      description: Returns all information from the system that the user has access to
+      operationId: getGeneral
+      produces:
+      - application/json
+      parameters:
+      - {name: apikey, in: query, description: Apikey to access, required: true, type: string}
+      responses:
+        '200':
+          description: Stat response
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/ticsathome"
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '404':
+          description: Database Empty
+          schema:
+            "$ref": "#/definitions/errorModel"
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+    post:
+      description: Creates new data in the Database.  Duplicates are not allowed
+      operationId: postGeneral
+      produces:
+      - application/json
+      parameters:
+      - name: ticsathome
+        in: body
+        description: Stat to add to the database
+        required: true
+        schema:
+          "$ref": "#/definitions/ticsathome"
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '201':
+          description: Created
+          schema:
+            "$ref": "#/definitions/ticsathome"
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '409':
+          description: Conflict
+          schema:
+            "$ref": "#/definitions/ticsathome"
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+            
+    delete:
+      description: deletes all stats
+      operationId: deleteStats
+      parameters:
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '204':
+          description: Stats deleted
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+    
+            
+  "/api/v2/ticsathome-stats/{country}":
+    get:
+      description: Returns a user based on a single ID, if the user does not have
+        access to the contact
+      operationId: findcontactById
+      produces:
+      - application/json
+      parameters:
+      - name: country
+        in: path
+        description: Country of contact to fetch
+        required: true
+        type: string
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '200':
+          description: contact response
+          schema:
+            "$ref": "#/definitions/ticsathome"
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '404':
+          description: Not Found
+          schema:
+            "$ref": "#/definitions/errorModel"
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+            
+    put:
+      description: put a single stat based on the country supplied
+      operationId: putSpecific
+      parameters:
+      - name: country
+        in: path
+        description: Country of stat to put
+        required: true
+        type: string
+      - name: ticsathome
+        in: body
+        description: All data to put (country same as path)
+        required: true
+        schema:
+          "$ref": "#/definitions/ticsathome"
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Stat uploaded
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '400':
+          description: Not Found
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+    delete:
+      description: deletes a stat by country
+      operationId: deleteOne
+      parameters:
+      - name: country
+        in: path
+        description: Apikey to access
+        required: true
+        type: string
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '204':
+          description: Stat deleted Well
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+            
+            
+  "/api/v2/ticsathome-stats/{country}/{year}":
+    get:
+      description: Returns a stat based on a single country and year
+      operationId: getTwoSpecific
+      produces:
+      - application/json
+      parameters:
+      - name: country
+        in: path
+        description: Country of stat to fetch
+        required: true
+        type: string
+      - name: year
+        in: path
+        description: Year of stat to fetch
+        required: true
+        type: integer
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '200':
+          description: stat response
+          schema:
+            "$ref": "#/definitions/ticsathome"
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '404':
+          description: Not Found
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+    put:
+      description: put a single stat based on the country and year supplied
+      operationId: putTwoSpecific
+      parameters:
+      - name: country
+        in: path
+        description: Country of stat to put
+        required: true
+        type: string
+      - name: year
+        in: path
+        description: Year of stat to put
+        required: true
+        type: integer
+      - name: ticsathome
+        in: body
+        description: All data to put (country same as path)
+        required: true
+        schema:
+          "$ref": "#/definitions/ticsathome"
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Stat uploaded
+        '204':
+          description: Stat uploaded, non content returned
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '404':
+          description: Not Found
+        
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+            
+    delete:
+      description: deletes a stat by country and year
+      operationId: deleteTwo
+      parameters:
+      - name: country
+        in: path
+        description: Country to delete
+        required: true
+        type: string
+      - name: year
+        in: path
+        description: Year of stat to delete
+        required: true
+        type: string
+      - name: apikey
+        in: query
+        description: Apikey to access
+        required: true
+        type: string
+      responses:
+        '204':
+          description: Stats deleted,nothing returned
+        '403':
+          description: Wrong apikey
+          schema:
+            "$ref": "#/definitions/errorModel"
+        '404':
+          description: Not Found
+        default:
+          description: unexpected error
+          schema:
+            "$ref": "#/definitions/errorModel"
+            
+    
+    
+definitions:
+  ticsathome:
+    type: object
+    required:
+    - country
+    - year
+    - smartphone
+    - tablet
+    properties:
+      country:
+        type: string
+      year:
+        type: integer
+      smartphone:
+        type: integer
+      tablet:
+        type: integer
+  errorModel:
+    type: object
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

@@ -128,7 +128,7 @@ app.delete(routeManuel2 + "/:country/:year" , metodosManuel2.deleteTwoData);
 
 
 
-/***********PROXY*********/
+/***********PROXY****BEERS*****/
 
 app.get("/proxy/ticsathome",(req,res)=>{
  var http = require('http');
@@ -151,6 +151,34 @@ app.get("/proxy/ticsathome",(req,res)=>{
  }
  http.request(options,callback).end();
 });
+
+//981d55f8387abfed
+//api/981d55f8387abfed/geolookup/conditions/forecast/q/Australia/Sydney.json
+
+/***********PROXY****WEATHER*****/
+
+app.get("/proxy/weather",(req,res)=>{
+ var http = require('http');
+ 
+ var options = {
+     host:'api.wunderground.com',
+     path: "api/981d55f8387abfed/geolookup/conditions/forecast/q/Australia/Sydney.json"
+ };
+ 
+ callback = function(response){
+   var str ="";
+   response.on('data',function(chunk){
+       str+=chunk;
+   });
+   
+   response.on('end',function(){
+       res.send(str);
+   });
+     
+ }
+ http.request(options,callback).end();
+});
+
 
 /************************V1******************/
 

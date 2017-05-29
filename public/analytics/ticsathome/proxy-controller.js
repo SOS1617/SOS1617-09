@@ -7,11 +7,9 @@ angular
         console.log("Highcharts controller init OK");
                 var birthyears = [];
                 var beerCountries=[];
-                //var ResultCountries=" {'Europe': {\n";
                 var resultCountries = [];
                 var resultBirth = [];
                 var resultSmart=[];
-                var resultBeerName=[];
                 var nameBeer=[];
 
                  var names = [];
@@ -142,5 +140,19 @@ angular
  
                 });
             });
+            
+              $http.get("/proxy/weather").then(function(response) {
+                var weatherResult = response.data;
+               
+                for (var i = 0; i < beerResult.length; i++) {
+                    birthyears.push(beerResult[i].birthyear);
+                    beerCountries.push(beerResult[i].country);
+                    nameBeer.push(beerResult[i].name);
+                    
+                    
+                    
+                }
+                
+              });
 
     }]);
