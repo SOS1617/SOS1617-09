@@ -263,6 +263,9 @@ var metodosVero = require("./public/internetstats-manager/v1/ApiVero.js");
 var vero2 = "/api/v2/internetandphones-stats";
 var metodosVero2 = require("./public/internetstats-manager/v2/ApiVero.js");
 
+var vero3 = "/api/v3/internetandphones-stats";
+var metodosVero3 = require("./public/internetstats-manager/v3/ApiVero.js");
+
 app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);
 app.get(vero + "/:country",metodosVero.getRecurso);
@@ -295,6 +298,24 @@ app.put(vero2 +"/:country/:year" ,metodosVero2.putRecursoDosParametros);
 app.delete(vero2,metodosVero2.deleteCollection);
 app.delete(vero2+"/:country",metodosVero2.deleteRecurso);
 app.delete(vero2+"/:country/:year",metodosVero2.deleteRecursoDosParametros);
+
+      /********************v3****************/
+      
+app.get(vero3 + "/loadInitialData",metodosVero3.getLoadInitial);
+app.get(vero3,metodosVero3.getCollection);
+app.get(vero3 + "/:country",metodosVero3.getRecurso);
+app.get(vero3 + "/:country/:year",metodosVero3.getRecursoDosParametros);
+
+app.post(vero3,metodosVero3.postCollection);
+app.post(vero3 +"/:country",metodosVero3.postRecurso);
+
+app.put(vero3,metodosVero3.putCollection);
+app.put(vero3 +"/:country" ,metodosVero3.putRecurso);
+app.put(vero3 +"/:country/:year" ,metodosVero3.putRecursoDosParametros);
+
+app.delete(vero3,metodosVero3.deleteCollection);
+app.delete(vero3+"/:country",metodosVero3.deleteRecurso);
+app.delete(vero3+"/:country/:year",metodosVero3.deleteRecursoDosParametros);
 
 
 
