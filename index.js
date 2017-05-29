@@ -124,19 +124,11 @@ app.delete(routeManuel2 + "/:country/:year" , metodosManuel2.deleteTwoData);
 
 
 
-/***API LUIS*****/
-
-var urlDir = "/api/v1/ticsathome-stats";
-var funciones = require("./public/ticsathome-manager/v1/ApiLuis.js");
-
-var urlDirv2 = "/api/v2/ticsathome-stats";
-var funcionesv2 = require("./public/ticsathome-manager/v2/ApiLuis.js");
+/************************************************************API LUIS**********************************************/
 
 
-app.get(urlDir + "/loadInitialData",funciones.getNewStats);
-app.get(urlDir,funciones.getGeneral);
-app.get(urlDir+ "/:country",funciones.getOneParam);
-app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
+
+/***********PROXY*********/
 
 app.get("/proxy/ticsathome",(req,res)=>{
  var http = require('http');
@@ -160,6 +152,18 @@ app.get("/proxy/ticsathome",(req,res)=>{
  http.request(options,callback).end();
 });
 
+/************************V1******************/
+
+var urlDir = "/api/v1/ticsathome-stats";
+var funciones = require("./public/ticsathome-manager/v1/ApiLuis.js");
+
+app.get(urlDir + "/loadInitialData",funciones.getNewStats);
+app.get(urlDir,funciones.getGeneral);
+app.get(urlDir+ "/:country",funciones.getOneParam);
+app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
+
+
+
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);
 app.put(urlDir+ "/:country/:year",funciones.putTwoSpecific);
@@ -173,7 +177,10 @@ app.delete(urlDir+ "/:country",funciones.deleteOne);
 app.delete(urlDir+ "/:country/:year",funciones.deleteTwo);
 
 
-/********V2***********/
+/**************************V2****************************/
+
+var urlDirv2 = "/api/v2/ticsathome-stats";
+var funcionesv2 = require("./public/ticsathome-manager/v2/ApiLuis.js");
 
 
 app.get(urlDirv2 + "/loadInitialData",funcionesv2.getNewStats);
@@ -192,6 +199,30 @@ app.post(urlDirv2+ "/:country/:year",funcionesv2.errorInPost);
 app.delete(urlDirv2,funcionesv2.deleteStats);
 app.delete(urlDirv2+ "/:country",funcionesv2.deleteOne);
 app.delete(urlDirv2+ "/:country/:year",funcionesv2.deleteTwo);
+
+
+/***********************V3**************************/
+
+var urlDirv3 = "/api/v3/ticsathome-stats";
+var funcionesv3 = require("./public/ticsathome-manager/v3/ApiLuis.js");
+
+
+app.get(urlDirv3 + "/loadInitialData",funcionesv3.getNewStats);
+app.get(urlDirv3,funcionesv3.getGeneral);
+app.get(urlDirv3+ "/:country",funcionesv3.getOneParam);
+app.get(urlDirv3+ "/:country/:year",funcionesv3.getTwoSpecific);
+
+app.put(urlDirv3,funcionesv3.errorInPut);
+app.put(urlDirv3+ "/:country",funcionesv3.putSpecific);
+app.put(urlDirv3+ "/:country/:year",funcionesv3.putTwoSpecific);
+
+app.post(urlDirv3,funcionesv3.postGeneral);
+app.post(urlDirv3+ "/:country",funcionesv3.errorInPost);
+app.post(urlDirv3+ "/:country/:year",funcionesv3.errorInPost);
+
+app.delete(urlDirv3,funcionesv3.deleteStats);
+app.delete(urlDirv3+ "/:country",funcionesv3.deleteOne);
+app.delete(urlDirv3+ "/:country/:year",funcionesv3.deleteTwo);
 
 
 
