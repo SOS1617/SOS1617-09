@@ -10,7 +10,10 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         templateUrl : "/analytics/analytics.html",
         controller : "GrupalWidget"
     }).when("/integrations",{
-        templateUrl : "/integrations/integrations.html",
+        templateUrl : "/integrations/integrations.html"
+        
+    }).when("/governance",{
+        templateUrl : "/governance.html"
         
     })
     
