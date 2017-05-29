@@ -284,10 +284,13 @@ exports.getTwoSpecific = function(req, res) {
                         }
                     }
                     var aux = arr.filter(c => c.year == paramYear);
+                    if(aux.length==0){
+                        res.sendStatus(404);
+                    }else{res.send(aux);}
 
                     console.log(aux);
 
-                    res.send(aux);
+                    
                 }
 
             });
