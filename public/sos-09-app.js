@@ -44,6 +44,9 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "proxyTicsController"
     }).when("/analytics-ticsathome",{
         templateUrl : "/analytics/ticsathome/Graphs.html",
+    }).when("/analytics-ticsathome/weather",{
+        templateUrl : "/analytics/ticsathome/weather.html",
+         controller : "WeatherController"
     })
    
         
