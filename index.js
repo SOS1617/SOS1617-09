@@ -124,19 +124,11 @@ app.delete(routeManuel2 + "/:country/:year" , metodosManuel2.deleteTwoData);
 
 
 
-/***API LUIS*****/
-
-var urlDir = "/api/v1/ticsathome-stats";
-var funciones = require("./public/ticsathome-manager/v1/ApiLuis.js");
-
-var urlDirv2 = "/api/v2/ticsathome-stats";
-var funcionesv2 = require("./public/ticsathome-manager/v2/ApiLuis.js");
+/************************************************************API LUIS**********************************************/
 
 
-app.get(urlDir + "/loadInitialData",funciones.getNewStats);
-app.get(urlDir,funciones.getGeneral);
-app.get(urlDir+ "/:country",funciones.getOneParam);
-app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
+
+/***********PROXY****BEERS*****/
 
 app.get("/proxy/ticsathome",(req,res)=>{
  var http = require('http');
@@ -160,6 +152,46 @@ app.get("/proxy/ticsathome",(req,res)=>{
  http.request(options,callback).end();
 });
 
+//981d55f8387abfed
+//api/981d55f8387abfed/geolookup/conditions/forecast/q/Australia/Sydney.json
+
+/***********PROXY****WEATHER*****/
+
+app.get("/proxy/weather",(req,res)=>{
+ var http = require('http');
+ 
+ var options = {
+     host:'api.wunderground.com',
+     path: "api/981d55f8387abfed/geolookup/conditions/forecast/q/Australia/Sydney.json"
+ };
+ 
+ callback = function(response){
+   var str ="";
+   response.on('data',function(chunk){
+       str+=chunk;
+   });
+   
+   response.on('end',function(){
+       res.send(str);
+   });
+     
+ }
+ http.request(options,callback).end();
+});
+
+
+/************************V1******************/
+
+var urlDir = "/api/v1/ticsathome-stats";
+var funciones = require("./public/ticsathome-manager/v1/ApiLuis.js");
+
+app.get(urlDir + "/loadInitialData",funciones.getNewStats);
+app.get(urlDir,funciones.getGeneral);
+app.get(urlDir+ "/:country",funciones.getOneParam);
+app.get(urlDir+ "/:country/:year",funciones.getTwoSpecific);
+
+
+
 app.put(urlDir,funciones.errorInPut);
 app.put(urlDir+ "/:country",funciones.putSpecific);
 app.put(urlDir+ "/:country/:year",funciones.putTwoSpecific);
@@ -173,7 +205,10 @@ app.delete(urlDir+ "/:country",funciones.deleteOne);
 app.delete(urlDir+ "/:country/:year",funciones.deleteTwo);
 
 
-/********V2***********/
+/**************************V2****************************/
+
+var urlDirv2 = "/api/v2/ticsathome-stats";
+var funcionesv2 = require("./public/ticsathome-manager/v2/ApiLuis.js");
 
 
 app.get(urlDirv2 + "/loadInitialData",funcionesv2.getNewStats);
@@ -194,6 +229,30 @@ app.delete(urlDirv2+ "/:country",funcionesv2.deleteOne);
 app.delete(urlDirv2+ "/:country/:year",funcionesv2.deleteTwo);
 
 
+/***********************V3**************************/
+
+var urlDirv3 = "/api/v3/ticsathome-stats";
+var funcionesv3 = require("./public/ticsathome-manager/v3/ApiLuis.js");
+
+
+app.get(urlDirv3 + "/loadInitialData",funcionesv3.getNewStats);
+app.get(urlDirv3,funcionesv3.getGeneral);
+app.get(urlDirv3+ "/:country",funcionesv3.getOneParam);
+app.get(urlDirv3+ "/:country/:year",funcionesv3.getTwoSpecific);
+
+app.put(urlDirv3,funcionesv3.errorInPut);
+app.put(urlDirv3+ "/:country",funcionesv3.putSpecific);
+app.put(urlDirv3+ "/:country/:year",funcionesv3.putTwoSpecific);
+
+app.post(urlDirv3,funcionesv3.postGeneral);
+app.post(urlDirv3+ "/:country",funcionesv3.errorInPost);
+app.post(urlDirv3+ "/:country/:year",funcionesv3.errorInPost);
+
+app.delete(urlDirv3,funcionesv3.deleteStats);
+app.delete(urlDirv3+ "/:country",funcionesv3.deleteOne);
+app.delete(urlDirv3+ "/:country/:year",funcionesv3.deleteTwo);
+
+
 
 
 /*****************************API VERO*********************************/
@@ -203,6 +262,9 @@ var metodosVero = require("./public/internetstats-manager/v1/ApiVero.js");
 
 var vero2 = "/api/v2/internetandphones-stats";
 var metodosVero2 = require("./public/internetstats-manager/v2/ApiVero.js");
+
+var vero3 = "/api/v3/internetandphones-stats";
+var metodosVero3 = require("./public/internetstats-manager/v3/ApiVero.js");
 
 app.get(vero + "/loadInitialData",metodosVero.getLoadInitial);
 app.get(vero,metodosVero.getCollection);
@@ -236,6 +298,24 @@ app.put(vero2 +"/:country/:year" ,metodosVero2.putRecursoDosParametros);
 app.delete(vero2,metodosVero2.deleteCollection);
 app.delete(vero2+"/:country",metodosVero2.deleteRecurso);
 app.delete(vero2+"/:country/:year",metodosVero2.deleteRecursoDosParametros);
+
+      /********************v3****************/
+      
+app.get(vero3 + "/loadInitialData",metodosVero3.getLoadInitial);
+app.get(vero3,metodosVero3.getCollection);
+app.get(vero3 + "/:country",metodosVero3.getRecurso);
+app.get(vero3 + "/:country/:year",metodosVero3.getRecursoDosParametros);
+
+app.post(vero3,metodosVero3.postCollection);
+app.post(vero3 +"/:country",metodosVero3.postRecurso);
+
+app.put(vero3,metodosVero3.putCollection);
+app.put(vero3 +"/:country" ,metodosVero3.putRecurso);
+app.put(vero3 +"/:country/:year" ,metodosVero3.putRecursoDosParametros);
+
+app.delete(vero3,metodosVero3.deleteCollection);
+app.delete(vero3+"/:country",metodosVero3.deleteRecurso);
+app.delete(vero3+"/:country/:year",metodosVero3.deleteRecursoDosParametros);
 
 
 
