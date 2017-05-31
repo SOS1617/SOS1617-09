@@ -27,9 +27,9 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "EditController"
 
   
-    }).when("/analytics/ticsathome/geo",{
-        templateUrl : "/analytics/ticsathome/geo.html",
-        controller : "GeoController"
+    }).when("/analytics/ticsathome/mine",{
+        templateUrl : "/analytics/ticsathome/mine.html", //Barras 
+        controller : "MineController"
     }).when("/analytics/ticsathome/chart",{
         templateUrl : "/analytics/ticsathome/chart.html",
         controller : "ChartController"
@@ -44,9 +44,12 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         controller : "proxyTicsController"
     }).when("/analytics-ticsathome",{
         templateUrl : "/analytics/ticsathome/Graphs.html",
-    }).when("/analytics-ticsathome/weather",{
-        templateUrl : "/analytics/ticsathome/weather.html",
-         controller : "WeatherController"
+    }).when("/integrations-ticsathome/population",{
+        templateUrl : "/analytics/ticsathome/population.html",
+         controller : "PopulationController"
+    }).when("/integrations-ticsathome/p",{
+        templateUrl : "/analytics/ticsathome/p.html",
+         controller : "PController"
     })
    
         
