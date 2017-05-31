@@ -746,7 +746,7 @@ var meteDatos = function(base) {
         "year": 2012,
         "incidence": 11233,
         "total": 76854,
-        "percentage": 17.2
+        "percentage": 6.2
     },{
         "country": "croatia",
         "year": 2012,

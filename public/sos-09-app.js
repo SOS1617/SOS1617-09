@@ -104,6 +104,18 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     
         
         
+    }).when("/mashup",{
+        templateUrl : "/analytics/hiv-stats/mashup.html",
+        controller : "mashupCtrl"
+    
+        
+        
+    }).when("/proweb",{
+        templateUrl : "/analytics/hiv-stats/proweb.html",
+        controller : "prowebCtrl"
+    
+        
+        
     })
 
     
