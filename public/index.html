@@ -1,9 +1,36 @@
-
 <!DOCTYPE html>
-<html ng-app ="sos09-app">
-    
-    <head>
-        <title>SOS1617-09</title>
+<html ng-app="sos09-app">
+
+<head>
+    <title>SOS1617-09</title>
+
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.css" type="text/css">
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/bower_components/chartist/dist/chartist.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script type="text/javascript" src="/bower_components/vis/dist/vis.min.js"></script>
+    <link href="/bower_components/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
+
+
+    <!-- Scripts para EJSCharts -->
+    <script type="text/javascript" src="/bower_components/EJSCharts/EJSChart.js"></script>
+    <script type="text/javascript" src="/bower_components/EJSCharts/EJSChart.js"></script>
+
+    <!-- Scripts para usar RGraph -->
+    <script src="/bower_components/RGraph/libraries/RGraph.common.core.js"></script>
+    <script src="/bower_components/RGraph/libraries/RGraph.common.key.js"></script>
+    <script src="/bower_components/RGraph/libraries/RGraph.bar.js"></script>
 
         
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
@@ -34,23 +61,32 @@
 <script type="text/javascript" src="/EJSCharts/EJSChart.js"></script>
 
 
+
 <script type="text/javascript" src="/bower_components/EJSCharts/EJSChart.js"></script>
 <script type="text/javascript" src="/bower_components/EJSCharts/EJSChart.js"></script>
 
 
-<!-- Scripts para usar RGraph -->
-<script src="/bower_components/RGraph/libraries/RGraph.common.core.js"></script>
-<script src="/bower_components/RGraph/libraries/RGraph.common.key.js"></script>
-<script src="/bower_components/RGraph/libraries/RGraph.bar.js"></script>
+    <!--Scripts para introducit mashup -->
 
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />
 
+    <script type="text/javascript" src="/sos-09-app.js"></script>
 
-<!--Scripts para introducit mashup -->
+    <script type="text/javascript" src="/ticsathome-manager/list-controller.js"></script>
+    <script type="text/javascript" src="/ticsathome-manager/edit-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/mine-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/charts-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/chartist-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/wages-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/proxy-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/population-controller.js"></script>
+    <script type="text/javascript" src="/analytics/ticsathome/p-controller.js"></script>
 
-<script src='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Integración widget grupal-->
 
-<script type="text/javascript" src="/sos-09-app.js"></script>
+    <script type="text/javascript" src="/analytics/analytics.js"></script>
+
 
 <script type="text/javascript" src="/ticsathome-manager/list-controller.js"></script>
 <script type="text/javascript" src="/ticsathome-manager/edit-controller.js"></script>
@@ -66,45 +102,39 @@
 <script type="text/javascript" src="/integrations/ticsathomestats/integration-G03.js"></script>
 
 
-<!-- Integración widget grupal-->
+    <!-- Hiv stats js-->
 
-<script type="text/javascript" src="/analytics/analytics.js"></script>
-
-
-
-<!-- Hiv stats js-->
-
-<script type="text/javascript" src="/hiv-manager/listCtrl.js"></script>
-<script type="text/javascript" src="/hiv-manager/editCtrl.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/ejschartsCtrl.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/ext1.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/ext2proxy.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/widgetMostrar.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/mashupIntegration.js"></script>
-<script type="text/javascript" src="/analytics/hiv-stats/prograwebIntegration.js"></script>
+    <script type="text/javascript" src="/hiv-manager/listCtrl.js"></script>
+    <script type="text/javascript" src="/hiv-manager/editCtrl.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/ejschartsCtrl.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/ext1.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/ext2proxy.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/widgetMostrar.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/mashupIntegration.js"></script>
+    <script type="text/javascript" src="/analytics/hiv-stats/prograwebIntegration.js"></script>
 
 
 
 
 
 
-<script type="text/javascript" src="/internetstats-manager/list-cntrl-internet.js"></script>
-<script type="text/javascript" src="/internetstats-manager/editv-controller.js"></script>
-<script type="text/javascript" src="/analytics/internetstats/widget.js"></script>
-<script type="text/javascript" src="/integrations/internetstats/integration.js"></script>
-<script type="text/javascript" src="/integrations/internetstats/integration2.js"></script>
+    <script type="text/javascript" src="/internetstats-manager/list-cntrl-internet.js"></script>
+    <script type="text/javascript" src="/internetstats-manager/editv-controller.js"></script>
+    <script type="text/javascript" src="/analytics/internetstats/widget.js"></script>
+    <script type="text/javascript" src="/integrations/internetstats/integration.js"></script>
+    <script type="text/javascript" src="/integrations/internetstats/integration2.js"></script>
 
 
 
 
 
-        </head>
-        
-        <body >
-            <div ng-view>
-              
-            </div>
-            
-        </body>
+</head>
+
+<body>
+    <div ng-view>
+
+    </div>
+
+</body>
 
 </html>

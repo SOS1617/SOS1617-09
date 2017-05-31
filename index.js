@@ -98,7 +98,7 @@ app.get("/proxy/hiv-stats",(req,res)=>{
  
  var options = {
      host:'sos1617-07.herokuapp.com',
-     path: "/api/v2/salaries/?apikey=sos07"
+     path: "/api/v1/salaries/?apikey=sos07"
  };
  
  callback = function(response){
