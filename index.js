@@ -75,13 +75,21 @@ app.delete(routeManuel + "/:country" , metodosManuel.deleteData);
 app.delete(routeManuel + "/:country/:year" , metodosManuel.deleteTwoData);
 
 var routeManuel2 = "/api/v2/hiv-stats";
+var routeManuel3 = "/api/v3/hiv-stats";
 
 var metodosManuel2 = require("./public/hiv-manager/v2/ApiManu.js");
+var metodosManuel3 = require("./public/hiv-manager/v3/ApiManu.js");
 
 app.get(routeManuel2 + "/loadInitialData",metodosManuel2.getCreateStats);
 app.get(routeManuel2,metodosManuel2.getObtainStats);
 app.get(routeManuel2 + "/:name",metodosManuel2.getDataName);
 app.get(routeManuel2 + "/:name/:year",metodosManuel2.getDataNameYear);
+
+/*Solo dispondré de GET en la tercera versión, para el tema de governify*/
+app.get(routeManuel3 + "/loadInitialData",metodosManuel3.getCreateStats);
+app.get(routeManuel3,metodosManuel3.getObtainStats);
+app.get(routeManuel3 + "/:name",metodosManuel3.getDataName);
+app.get(routeManuel3 + "/:name/:year",metodosManuel3.getDataNameYear);
 
 /**PROXY**/
 app.get("/proxy/hiv-stats",(req,res)=>{
