@@ -1,6 +1,5 @@
 /*global angular*/
 /*global Highcharts*/
-/*global $*/
 /*global EJSC*/
 angular
     .module("sos09-app")
@@ -47,7 +46,7 @@ angular
                 }
 
 
-            });
+            
 
         $http
             .get("https://sos1617-01.herokuapp.com/api/v2/startups-stats?apikey=sos161701")
@@ -66,6 +65,7 @@ angular
                     console.log($scope.data2[i].country);
 
                 }
+
 
                 /**INTEGRACIÓN EN HIGHCHARTS**/
                 Highcharts.chart('hiv&startups', {
@@ -111,7 +111,6 @@ angular
 
 
 
-            });
 
 
         /***Integración en EJSChartS***/
@@ -155,4 +154,6 @@ angular
 
         chart.addSeries(union);
 
+            });
+});
     }]);
