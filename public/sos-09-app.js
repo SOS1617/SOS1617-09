@@ -19,7 +19,7 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
         templateUrl : "/about.html"
     
     //Luis
-    .when("/ticsathome",{
+   }).when("/ticsathome",{
         templateUrl : "/ticsathome-manager/list.html",
         controller : "ListController"
    
@@ -123,15 +123,12 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/proweb",{
         templateUrl : "/analytics/hiv-stats/proweb.html",
         controller : "prowebCtrl"
-    
-        
-        
-    })
+    });
 
     
     
     
-    ;
+    
      console.log("APP INIT");
      
     
