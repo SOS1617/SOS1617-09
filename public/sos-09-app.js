@@ -15,7 +15,8 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/governance",{
         templateUrl : "/governance.html"
         
-    })
+    }).when("/about",{
+        templateUrl : "/about.html"
     
     //Luis
     .when("/ticsathome",{
