@@ -8,7 +8,6 @@ angular
     .controller("mashupCtrl", ["$http", "$scope", function($http, $scope) {
 
         //Variables de mi API
-        $scope.apikey = "manuel";
         $scope.country = [];
         $scope.year = [];
         $scope.incidence = [];
@@ -66,7 +65,28 @@ angular
                 }
                 
                 });     
-                
+                 
+                 $http
+            .get("https://sos1617-09.herokuapp.com/api/v2/hiv-stats?apikey=manuel")
+            .then(function(response) {
+
+                data = response.data;
+                $scope.data = data;
+
+                for (var i = 0; i < response.data.length; i++) {
+
+                    $scope.country.push($scope.data[i].country);
+                    $scope.year.push(Number($scope.data[i].year));
+                    $scope.incidence.push(Number($scope.data[i].incidence));
+                    $scope.total.push(Number($scope.data[i].total));
+                    $scope.percentage.push(Number($scope.data[i].percentage));
+
+                    console.log($scope.data[i].country);
+
+                }
+
+            });     
+
                
             $http(mashape2)
                 .then(function(response) {
@@ -83,26 +103,26 @@ angular
 
         new RGraph.Bar({
         id: 'cvs',
-        data: [ [$scope.author.length,$scope.author2.length]],
+        data: [ [$scope.author.length,$scope.author2.length,$scope.percentage[3]]],
         options: {
             textAccessible: true,
             variant: '3d',
-            variantThreedAngle: 0.1,
+            variantThreedAngle: 0.3,
             strokestyle: 'rgba(0,0,0,0)',
             colors: ['Gradient(#fbb:red)', 'Gradient(#bfb:green)','Gradient(#bbf:blue)'],
             gutterTop: 5,
             gutterLeft: 5,
             gutterRight: 15,
             gutterBottom: 50,
-            labels: ['Numbers of authors'],
+            labels: ['Numbers of authors and hiv %'],
             shadowColor:'#ccc',
             shadowOffsetx: 3,
             backgroundGridColor: '#eee',
             scaleZerostart: true,
             axisColor: '#ddd',
-            unitsPost: 'km',
-            title: 'Distance run in the past week',
-            key: ['Black friday page','Silicon Valley page'],
+            unitsPost: '',
+            title: 'Numbers of authors and spain hiv % compare',
+            key: ['Black friday page','Silicon Valley page','hiv Spain %'],
             keyShadow: true,
             keyShadowColor: '#ccc',
             keyShadowOffsety: 0,
