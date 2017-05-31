@@ -4,9 +4,9 @@ angular.module("sos09-app").controller("listCtrl", ["$scope", "$http", function(
     $scope.url = "/api/v2/hiv-stats";
     $scope.apikey = "manuel";
     $scope.datos = [];
-    $scope.currentPage = 0;
+   /* $scope.currentPage = 0;
     $scope.pageSize = 6;
-    $scope.pages = [];
+    $scope.pages = [];*/
     var datos = [];
 
 
@@ -160,7 +160,7 @@ angular.module("sos09-app").controller("listCtrl", ["$scope", "$http", function(
     };
 
     //GET A UN CONJUNTO CON PAGINACIÓN SIMPLE
-    $scope.paginacion = function() {
+    /*$scope.paginacion = function() {
 
         $http
             .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
@@ -168,7 +168,7 @@ angular.module("sos09-app").controller("listCtrl", ["$scope", "$http", function(
                 $scope.listData = response.data;
                 console.log("entrando en la paginacion");
                 console.log(datos);
-                if ($scope.limit == 0 || !$scope.limit) {
+               /* if ($scope.limit == 0 || !$scope.limit) {
 
                     $scope.pageSize = 6;
 
@@ -184,7 +184,7 @@ angular.module("sos09-app").controller("listCtrl", ["$scope", "$http", function(
 
     };
 
-    refresh();
+    refresh();*/
 
     //Paginacion 
 
@@ -232,44 +232,144 @@ angular.module("sos09-app").controller("listCtrl", ["$scope", "$http", function(
         console.log("Estoy en el setPage " + index);
         $scope.currentPage = index - 1;
     };*/
-    
-    $scope.configPages = function() {
-        $scope.pages.length = 0;
-        var ini = $scope.currentPage - 4;
-        var fin = $scope.currentPage + 5;
-        if (ini < 1) {
-          ini = 1;
-          if (Math.ceil($scope.datos.length / $scope.pageSize) > 10)
-            fin = 10;
-          else
-            fin = Math.ceil($scope.datos.length / $scope.pageSize);
-        } else {
-          if (ini >= Math.ceil($scope.datos.length / $scope.pageSize) - 10) {
-            ini = Math.ceil($scope.datos.length / $scope.pageSize) - 10;
-            fin = Math.ceil($scope.datos.length / $scope.pageSize);
+
+    /*  
+      $scope.configPages = function() {
+          $scope.pages.length = 0;
+          var ini = $scope.currentPage - 4;
+          var fin = $scope.currentPage + 5;
+          if (ini < 1) {
+            ini = 1;
+            if (Math.ceil($scope.datos.length / $scope.pageSize) > 10)
+              fin = 10;
+            else
+              fin = Math.ceil($scope.datos.length / $scope.pageSize);
+          } else {
+            if (ini >= Math.ceil($scope.datos.length / $scope.pageSize) - 10) {
+              ini = Math.ceil($scope.datos.length / $scope.pageSize) - 10;
+              fin = Math.ceil($scope.datos.length / $scope.pageSize);
+            }
           }
-        }
-        if (ini < 1) ini = 1;
-        for (var i = ini; i <= fin; i++) {
-          $scope.pages.push({
-            no: i
-          });
-        }
+          if (ini < 1) ini = 1;
+          for (var i = ini; i <= fin; i++) {
+            $scope.pages.push({
+              no: i
+            });
+          }
 
-        if ($scope.currentPage >= $scope.pages.length)
-          $scope.currentPage = $scope.pages.length - 1;
-      };
+          if ($scope.currentPage >= $scope.pages.length)
+            $scope.currentPage = $scope.pages.length - 1;
+        };
 
-      $scope.setPage = function(index) {
-        $scope.currentPage = index - 1;
-      };
-
-   
+        $scope.setPage = function(index) {
+          $scope.currentPage = index - 1;
+        };*/
 
 
-}]).filter('startFromGrid', function() {
+    $scope.paginacion = function() {
+
+        $http
+            .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+            .then(function(response) {
+                $scope.internetandphones = response.data;
+            });
+
+    };
+    //Paginación
+    $scope.viewby = 0;
+    $scope.totalItems = function() {
+        return $scope.listData.length;
+    };
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = function() {
+        return $scope.limit;
+    };
+    $scope.maxSize = 5; //Number of pages buttons to show
+
+    $scope.offset = 0;
+
+
+
+
+    $scope.newPage = function(pageNo) {
+        var viewby = $scope.viewby;
+        $scope.currentPage = pageNo;
+        $scope.offset = pageNo * viewby - parseInt($scope.viewby);
+        $scope.limit = $scope.viewby;
+        $http
+            .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+            .then(function(response) {
+                $scope.listData = response.data;
+            });
+
+    };
+
+    $scope.nextPage = function(pageNo) {
+        $scope.currentPage = pageNo;
+        $scope.offset = parseInt($scope.offset) + parseInt($scope.viewby);
+        console.log($scope.offset);
+        $scope.limit = $scope.viewby;
+        $http
+            .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+            .then(function(response) {
+                $scope.listData = response.data;
+            });
+
+    };
+
+    $scope.previousPage = function(pageNo) {
+        var viewby = $scope.viewby;
+        $scope.currentPage = pageNo;
+        $scope.offset -= viewby;
+
+        $http
+            .get($scope.url + "?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+            .then(function(response) {
+                $scope.listData = response.data;
+            });
+
+    };
+
+    $scope.setItemsPerPage = function(num) {
+        $scope.itemsPerPage = num;
+        $scope.currentPage = 1;
+        $scope.offset = 0;
+        var pages = [];
+        $http
+            .get($scope.url + "?apikey=" + $scope.apikey)
+            .then(function(response) {
+                for (var i = 1; i <= response.data.length / $scope.viewby; i++) {
+                    pages.push(i);
+
+                }
+                if (pages.length * $scope.viewby < response.data.length) {
+                    pages.push(pages.length + 1);
+                }
+                $scope.pages = pages;
+                document.getElementById("pagination").style.display = "block";
+                document.getElementById("pagination").disabled = false;
+            });
+
+
+
+
+
+        $http
+            .get("/api/v2/hiv-stats?apikey=" + $scope.apikey + "&limit=" + $scope.limit + "&offset=" + $scope.offset)
+            .then(function(response) {
+                $scope.listData = response.data;
+            });
+
+    };
+
+
+    refresh();
+
+
+}]);
+/*.filter('startFromGrid', function() {
     return function(input, start) {
         start = +start;
         return input.slice(start);
     };
-});
+});*/

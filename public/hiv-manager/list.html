@@ -1,6 +1,6 @@
 <div>
 
-    <body style="width:600px;margin-left:350px; border:solid" ng-controller = "listCtrl">
+    <body style="width:600px;margin-left:350px; border:solid" ng-controller="listCtrl">
 
 
         <h1>Hiv-Stats Api</h1>
@@ -43,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr dir-paginate="data in listData">
                     <td><input class="form-control" ng-model="newData.country" /></td>
                     <td><input class="form-control" ng-model="newData.year" /></td>
                     <td><input class="form-control" ng-model="newData.incidence" /></td>
@@ -54,8 +54,10 @@
 
                 </tr>
 
-                <tr ng-repeat="data in listData | startFromGrid: currentPage * pageSize | limitTo: pageSize">
-                    <td><a href="#!/hiv-stats/edit/{{data.country}}/{{data.year}}">{{data.country}}</td>
+                <!--<tr ng-repeat="data in listData  | startFromGrid: currentPage * pageSize | limitTo: pageSize">-->
+                <tr ng-repeat="data in listData ">
+
+                        <td><a href="#!/hiv-stats/edit/{{data.country}}/{{data.year}}">{{data.country}}</td>
             <td>{{data.year}}</td>
             <td>{{data.incidence}}</td>
             <td>{{data.total}}</td>
@@ -63,7 +65,7 @@
             <td><button class="btn btn-danger" ng-click="deleteData(data.country, data.year)">Delete</button></td>
             <td><a href="#!/hiv-stats/edit/{{data.country}}/{{data.year}}"><button class="btn btn-secondary" >Edit</button></a></td>
 
-                </tr>
+                    </tr>
 
 
             </tbody>
@@ -77,24 +79,47 @@
 
 
 
+        View <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+            </select> records at a time.
+        <pre>The selected page no: {{currentPage}}</pre>
+
+        <div id="pagination" style="display:none;" disabled=t rue>
+
+            <table>
+                <td><button class="btn btn-info" ng-click="previousPage(currentPage-1)" ng-disabled="currentPage==1">Prev</button></td>
+                <td ng-repeat="page in pages">
+                    <a><button class="btn btn-info" ng-click="newPage(page)">{{page}}</button></a>
+                </td>
+                <td><button class="btn btn-info" ng-click="nextPage(currentPage+1)" ng-disabled="currentPage == pages.length">Next</button></td>
+            </table>
+
+
+
+        </div>
+
+
+        <!-- 
         <tr>
 
-            <button type='button' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1'>&laquo;</button>
-            <button type='button' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages'>{{page.no}}</button>
-            <button
-                type='button' ng-disabled='currentPage >= listData.length/pageSize - 1' ng-click='currentPage = currentPage + 1'>&raquo;</button>
+            <li dir-paginate="item in items | itemsPerPage: 2"></li>
+            <dir-pagination-controls></dir-pagination-controls>
 
                 <!-- Navegar hacia atrás -->
-                <button type='button' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1'>&laquo;</button>
+        <!--  <button type='button' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1'>&laquo;</button>
 
                 <!-- Navegar a una página especifica-->
-                <button type='button' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages'>{{page.no}}</button>
+        <!--<button type='button' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages'>{{page.no}}</button>
 
                 <!-- Navegar hacia adelante -->
-                <button type='button' ng-disabled='currentPage >= listData.length/(pageSize - 1)' ng-click='currentPage = currentPage + 1'>&raquo;</button>
+        <!-- <button type='button' ng-disabled='currentPage >= listData.length/(pageSize - 1)' ng-click='currentPage = currentPage + 1'>&raquo;</button>
         </tr>
 
-
+-->
 
 
 
