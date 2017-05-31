@@ -18,6 +18,7 @@
     "angular-route": "^1.6.4",
     "angular": "^1.6.4",
     "bootstrap": "^3.3.7",
-    "chartist": "^0.11.0"
+    "chartist": "^0.11.0",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1"
   }
 }
