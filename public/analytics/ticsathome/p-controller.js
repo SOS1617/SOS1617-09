@@ -7,7 +7,7 @@ angular
       
 var req = {
  method: 'GET',
- url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?&cat=movies&count=10',
+ url: 'https://digital-canary-pricejson-v1.p.mashape.com/',
  headers: {
    'X-Mashape-Key': 'il3oS7alzjmshawAV4LRnpo7Xvowp1fhV4mjsnffIYbO8HjLMB'
  }
@@ -17,12 +17,7 @@ var req = {
      
       $http(req)
       .then(function(response){
-         for(var i =0;i<response.data.length;i++){
-          
-             document.write("<br><li>"+"MOVIE: "+response.data[i].author+". Words: "+ response.data[i].quote+"</li></br>"); 
-         
-             
-         }
+         console.log(response.data);
          
         
         });
