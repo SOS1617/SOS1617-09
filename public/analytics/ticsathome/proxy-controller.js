@@ -141,18 +141,5 @@ angular
                 });
             });
             
-              $http.get("/proxy/weather").then(function(response) {
-                var weatherResult = response.data;
-               
-                for (var i = 0; i < beerResult.length; i++) {
-                    birthyears.push(beerResult[i].birthyear);
-                    beerCountries.push(beerResult[i].country);
-                    nameBeer.push(beerResult[i].name);
-                    
-                    
-                    
-                }
-                
-              });
 
     }]);
