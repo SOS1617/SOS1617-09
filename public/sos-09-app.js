@@ -50,6 +50,15 @@ angular.module("sos09-app",["ngRoute"]).config(function($routeProvider){
     }).when("/integrations-ticsathome/p",{
         templateUrl : "/analytics/ticsathome/p.html",
          controller : "PController"
+    }).when("/integrations-ticsathome/G01",{
+        templateUrl : "/integrations/ticsathomestats/integration-G01.html",
+         controller : "G01Controller"
+    }).when("/integrations-ticsathome/G02",{
+        templateUrl : "/integrations/ticsathomestats/integration-G02.html",
+         controller : "G02Controller"
+    }).when("/integrations-ticsathome/G03",{
+        templateUrl : "/integrations/ticsathomestats/integration-G03.html",
+         controller : "G03Controller"
     })
    
         
