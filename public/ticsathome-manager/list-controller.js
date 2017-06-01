@@ -80,6 +80,8 @@ angular
 
 //Metodos scope
         $scope.add = function(newTic) {
+            $scope.newTic.tablet = Number($scope.newTic.tablet);
+            $scope.newTic.smartphone = Number($scope.newTic.smartphone);
 
             $http
                 .post($scope.url+"?apikey="+$scope.apikey,$scope.newTic)

@@ -28,8 +28,8 @@ angular
                 .put($scope.url +update.country + "?apikey=ticsathomeLuis",{
                     country: update.country,
                     year: update.year,
-                    smartphone: update.smartphone,
-                    tablet: update.tablet
+                    smartphone:Number( update.smartphone),
+                    tablet: Number(update.tablet)
                 })
                 .then(function(response) {
                     console.log("Tic Updated 2");

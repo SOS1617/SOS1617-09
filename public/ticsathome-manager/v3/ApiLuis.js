@@ -378,14 +378,9 @@ exports.errorInPost = function(req, res) {
 //PUT a una coleccion de datos
 
 exports.errorInPut = function(req, res) {
-    var paramKey = req.query.apikey;
-    if (!paramKey) {
-        res.sendStatus(401);
-    }
-    else {
+   
         console.log("WARNING: New PUT request to /contacts, sending 405...");
         res.sendStatus(405); // method not allowed
-    }
 };
 
 
@@ -394,11 +389,6 @@ exports.errorInPut = function(req, res) {
 
 exports.putSpecific = function(req, res) {
  
-    var paramKey = req.query.apikey;
-    if (!paramKey) {
-        res.sendStatus(401);
-    }
-    else {
            var updatedSpecific = req.body;
     var paramCountry = req.params.country;
         if (!updatedSpecific) {
@@ -406,13 +396,15 @@ exports.putSpecific = function(req, res) {
             res.sendStatus(400); // bad request
         }
         else {
-            console.log("INFO: New PUT request to /contacts/" + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
+    console.log("INFO: New PUT request to /contacts/" + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
             if (!updatedSpecific.country || !updatedSpecific.year || !updatedSpecific.smartphone || !updatedSpecific.tablet) {
                 console.log("WARNING: The specific data " + JSON.stringify(updatedSpecific, 2, null) + " is not well-formed, sending 422...");
                 res.sendStatus(422); // unprocessable entity
             }
             else {
+
                 db.find({}, function(err, stats) {
+
                     if (err) {
                         console.error('WARNING: Error getting data from DB');
                         res.sendStatus(500); // internal server error
@@ -420,11 +412,13 @@ exports.putSpecific = function(req, res) {
                     else {
 
                         if (paramCountry === updatedSpecific.country) {
+
                             db.update({
                                 country: paramCountry,
                             }, updatedSpecific);
                             console.log("INFO: Modifying data with country " + paramCountry + " with data " + JSON.stringify(updatedSpecific, 2, null));
                             res.send(updatedSpecific); // return the updated contact
+
                         }
                         else {
                             console.log("WARNING: There are not any data with country " + paramCountry);
@@ -432,9 +426,9 @@ exports.putSpecific = function(req, res) {
                         }
                     }
                 });
+
             }
-        }
-    }
+        }//A H I B C G D E
 };
 
 
